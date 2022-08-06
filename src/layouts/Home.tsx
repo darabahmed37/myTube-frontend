@@ -1,10 +1,10 @@
-import React, {ChangeEvent, FC} from "react";
+import React, { ChangeEvent, FC } from "react";
 import "./home.scss";
 import GoogleButton from "react-google-button";
-import {Link as MuiLink, TextField, useMediaQuery, useTheme} from "@mui/material";
-import {RoundedButton} from "../elements/button";
-import {Link} from "react-router-dom";
-import {HomeContainer, HomeMain, InputForm, Left, Right} from "./Homestyles";
+import { Link as MuiLink, TextField } from "@mui/material";
+import { RoundedButton } from "../elements/button";
+import { Link } from "react-router-dom";
+import { HomeContainer, HomeMain, InputForm, Left, Right } from "./Homestyles";
 
 export interface IHome {
   title: string;
@@ -27,8 +27,7 @@ interface IValidation {
   error: boolean;
 }
 
-const Home: FC<IHome> = ({title, googleTitle, buttonText, navigation}) => {
-
+const Home: FC<IHome> = ({ title, googleTitle, buttonText, navigation }) => {
   const [credentialsForm, setCredentialsForm] = React.useState<ICredentials>({
     email: "",
     password: "",
@@ -96,13 +95,12 @@ const Home: FC<IHome> = ({title, googleTitle, buttonText, navigation}) => {
     validation();
   }, [credentialsForm]);
 
-  const theme = useTheme()
-  const md = useMediaQuery(theme.breakpoints.down("lg"))
   return (
     <>
       <HomeMain>
-        <HomeContainer>
-          <Left>
+        <HomeContainer >
+
+          <Left item>
             <div className="left-items">
               <h2>My Tube</h2>
             </div>
@@ -110,12 +108,15 @@ const Home: FC<IHome> = ({title, googleTitle, buttonText, navigation}) => {
               <span className={"light-text"}>{title}</span>
             </div>
             <div className="left-items">
-              <GoogleButton label={googleTitle} type={"light"}/>
+              <GoogleButton label={googleTitle} type={"light"} />
             </div>
             <div className="left-items">
               <p className={"light-text"}>OR</p>
             </div>
-            <InputForm className="left-items input-container" onSubmit={formSubmit}>
+            <InputForm
+              className="left-items input-container"
+              onSubmit={formSubmit}
+            >
               <TextField
                 fullWidth
                 error={emailValidation.error}
@@ -163,8 +164,8 @@ const Home: FC<IHome> = ({title, googleTitle, buttonText, navigation}) => {
                   cursor: "pointer",
                   textDecoration: "none",
                   "&:hover": {
-                    textDecoration: "underline"
-                  }
+                    textDecoration: "underline",
+                  },
                 }}
                 component={Link}
                 to={navigation.link}
@@ -173,11 +174,7 @@ const Home: FC<IHome> = ({title, googleTitle, buttonText, navigation}) => {
               </MuiLink>
             </div>
           </Left>
-          <Right
-            style={{
-              display: md ? "none" : "block",
-            }}
-          ></Right>
+          <Right item></Right>
         </HomeContainer>
       </HomeMain>
     </>
