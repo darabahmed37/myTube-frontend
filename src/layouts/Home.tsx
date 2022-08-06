@@ -1,9 +1,10 @@
 import React, {ChangeEvent, FC} from "react";
 import "./home.scss";
 import GoogleButton from "react-google-button";
-import {Link as MuiLink, TextField} from "@mui/material";
+import {Link as MuiLink, TextField, useMediaQuery, useTheme} from "@mui/material";
 import {RoundedButton} from "../elements/button";
 import {Link} from "react-router-dom";
+import {HomeContainer, HomeMain, InputForm, Left, Right} from "./Homestyles";
 
 export interface IHome {
   title: string;
@@ -27,6 +28,7 @@ interface IValidation {
 }
 
 const Home: FC<IHome> = ({title, googleTitle, buttonText, navigation}) => {
+
   const [credentialsForm, setCredentialsForm] = React.useState<ICredentials>({
     email: "",
     password: "",
@@ -94,11 +96,13 @@ const Home: FC<IHome> = ({title, googleTitle, buttonText, navigation}) => {
     validation();
   }, [credentialsForm]);
 
+  const theme = useTheme()
+  const md = useMediaQuery(theme.breakpoints.down("lg"))
   return (
     <>
-      <div className="home">
-        <div className="home-container">
-          <div className="left">
+      <HomeMain>
+        <HomeContainer>
+          <Left>
             <div className="left-items">
               <h2>My Tube</h2>
             </div>
@@ -111,7 +115,7 @@ const Home: FC<IHome> = ({title, googleTitle, buttonText, navigation}) => {
             <div className="left-items">
               <p className={"light-text"}>OR</p>
             </div>
-            <form className="left-items input-container" onSubmit={formSubmit}>
+            <InputForm className="left-items input-container" onSubmit={formSubmit}>
               <TextField
                 fullWidth
                 error={emailValidation.error}
@@ -143,7 +147,7 @@ const Home: FC<IHome> = ({title, googleTitle, buttonText, navigation}) => {
               >
                 {buttonText}
               </RoundedButton>
-            </form>
+            </InputForm>
 
             <div
               className="left-items"
@@ -152,7 +156,7 @@ const Home: FC<IHome> = ({title, googleTitle, buttonText, navigation}) => {
                 transform: "translateY(4rem)",
               }}
             >
-              {navigation.title+" "}
+              {navigation.title + " "}
 
               <MuiLink
                 sx={{
@@ -165,13 +169,17 @@ const Home: FC<IHome> = ({title, googleTitle, buttonText, navigation}) => {
                 component={Link}
                 to={navigation.link}
               >
-                { navigation.linkText}
+                {navigation.linkText}
               </MuiLink>
             </div>
-          </div>
-          <div className="right"></div>
-        </div>
-      </div>
+          </Left>
+          <Right
+            style={{
+              display: md ? "none" : "block",
+            }}
+          ></Right>
+        </HomeContainer>
+      </HomeMain>
     </>
   );
 };

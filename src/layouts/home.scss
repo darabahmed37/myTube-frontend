@@ -1,60 +1,6 @@
-.home {
-  background: #1e1e1e;
-  height: 100vh;
-  display: flex;
-  min-width: 1280px;
-  align-items: center;
-}
-
-.home-container {
-  display: flex;
-  margin: 0 auto;
-  width: 60%;
-  max-width: 80%;
-  min-height: 768px;
-}
-
-.left {
-  background: white;
-  flex: 0.5;
-  display: flex;
-  flex-direction: column;
-  gap: 2em;
-  justify-content: center;
-  align-items: center;
-  padding: 3rem;
-}
-
-.right {
-  position: relative;
-  flex: 0.5;
-  padding: 3rem;
-
-  background-color: #8EF1FF80;
-
-  &::before {
-    content: "";
-  transform: translateX(-3rem);
-    top: 0;
-    bottom: 0;
-
-    position: absolute;
-    opacity: 0.5;
-    width: 100%;
-    overflow: hidden;
-    background: url("../assets/beautiful-african-american-woman-wearing-earphones-city-remixed-media.jpg") -119%;
-    background-size: cover;
-
-  }
-}
 
 .light-text {
   color: #7c7b7b;
 }
 
-.input-container {
-  display: flex;
-  flex-direction: column;
-  gap: 2em;
-  width: 80%;
-}
+
