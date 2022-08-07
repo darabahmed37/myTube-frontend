@@ -96,88 +96,81 @@ const Home: FC<IHome> = ({ title, googleTitle, buttonText, navigation }) => {
   }, [credentialsForm]);
 
   return (
-    <>
-      <HomeMain>
-        <HomeContainer >
+    <HomeMain>
+      <HomeContainer>
+        <Left item container lg={6}>
+          <div>
+            <h2>My Tube</h2>
+          </div>
+          <div>
+            <span className={"light-text"}>{title}</span>
+          </div>
+          <div>
+            <GoogleButton label={googleTitle} type={"light"} />
+          </div>
+          <div>
+            <p className={"light-text"}>OR</p>
+          </div>
+          <InputForm onSubmit={formSubmit}>
+            <TextField
+              fullWidth
+              error={emailValidation.error}
+              size={"small"}
+              helperText={emailValidation.helperText}
+              variant={"standard"}
+              name={"email"}
+              label={"Email"}
+              value={credentialsForm.email}
+              onChange={onStateChange}
+            />
+            <TextField
+              error={passwordValidation.error}
+              helperText={passwordValidation.helperText}
+              name={"password"}
+              size={"small"}
+              variant={"standard"}
+              type={"password"}
+              value={credentialsForm.password}
+              onChange={onStateChange}
+              label="Password"
+            />
 
-          <Left item>
-            <div className="left-items">
-              <h2>My Tube</h2>
-            </div>
-            <div className="left-items">
-              <span className={"light-text"}>{title}</span>
-            </div>
-            <div className="left-items">
-              <GoogleButton label={googleTitle} type={"light"} />
-            </div>
-            <div className="left-items">
-              <p className={"light-text"}>OR</p>
-            </div>
-            <InputForm
-              className="left-items input-container"
-              onSubmit={formSubmit}
-            >
-              <TextField
-                fullWidth
-                error={emailValidation.error}
-                size={"small"}
-                helperText={emailValidation.helperText}
-                variant={"standard"}
-                name={"email"}
-                label={"Email"}
-                value={credentialsForm.email}
-                onChange={onStateChange}
-              />
-              <TextField
-                error={passwordValidation.error}
-                helperText={passwordValidation.helperText}
-                name={"password"}
-                size={"small"}
-                variant={"standard"}
-                type={"password"}
-                value={credentialsForm.password}
-                onChange={onStateChange}
-                label="Password"
-              />
-
-              <RoundedButton
-                sx={{
-                  margin: "0 auto",
-                }}
-                type={"submit"}
-              >
-                {buttonText}
-              </RoundedButton>
-            </InputForm>
-
-            <div
-              className="left-items"
-              style={{
-                fontSize: ".8rem",
-                transform: "translateY(4rem)",
+            <RoundedButton
+              sx={{
+                margin: "0 auto",
               }}
+              type={"submit"}
             >
-              {navigation.title + " "}
+              {buttonText}
+            </RoundedButton>
+          </InputForm>
 
-              <MuiLink
-                sx={{
-                  cursor: "pointer",
-                  textDecoration: "none",
-                  "&:hover": {
-                    textDecoration: "underline",
-                  },
-                }}
-                component={Link}
-                to={navigation.link}
-              >
-                {navigation.linkText}
-              </MuiLink>
-            </div>
-          </Left>
-          <Right item></Right>
-        </HomeContainer>
-      </HomeMain>
-    </>
+          <div
+            style={{
+              fontSize: ".8rem",
+              transform: "translateY(4rem)",
+            }}
+          >
+            {navigation.title + " "}
+
+            <MuiLink
+              sx={{
+                cursor: "pointer",
+                textDecoration: "none",
+                "&:hover": {
+                  textDecoration: "underline",
+                },
+              }}
+              component={Link}
+              to={navigation.link}
+            >
+              {navigation.linkText}
+            </MuiLink>
+          </div>
+        </Left>
+        <Right lg={6} item container></Right>
+      </HomeContainer>
+    </HomeMain>
   );
 };
 export default Home;
