@@ -1,5 +1,5 @@
-import React, { FC } from "react"
-import { Card, CardContent, CardMedia, Typography } from "@mui/material"
+import React, {FC} from "react"
+import {Card, CardContent, CardMedia, Typography} from "@mui/material"
 
 export interface VideoCardProps {
 	title: string
@@ -7,14 +7,13 @@ export interface VideoCardProps {
 	imageUrl: string
 }
 
-const VideoCard: FC<VideoCardProps> = ({ title, description, imageUrl }) => {
+const VideoCard: FC<VideoCardProps> = ({title, description, imageUrl}) => {
 	return (
 		<Card
 			sx={{
 				display: "flex",
-				width: "33rem",
-				maxHeight: "13rem",
 				padding: ".7rem",
+				maxWidth:"30rem"
 			}}
 		>
 			<CardMedia
@@ -22,11 +21,13 @@ const VideoCard: FC<VideoCardProps> = ({ title, description, imageUrl }) => {
 				image={imageUrl}
 				alt={"Video Logo"}
 				sx={{
-					width: "18rem",
+				maxWidth:"50%"
 				}}
 			/>
 
-			<CardContent>
+			<CardContent sx={{
+				maxWidth:"50%"
+			}}>
 				<Typography variant={"h6"} fontWeight={800} mb={2}>
 					{title}
 				</Typography>

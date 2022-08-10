@@ -20,8 +20,8 @@ import {SvgIconTypeMap} from "@mui/material"
 import DashboardIcon from "@mui/icons-material/Dashboard"
 
 import {AccountBoxSharp, SettingsOutlined, StackedLineChart,} from "@mui/icons-material"
-import {AppBar, DrawerHeader, drawerWidth, Main} from "./HomePageStyles";
-import Dashboard from "./Dashboard";
+import {AppBar, DrawerHeader, drawerWidth, Main} from "./HomePageStyles"
+import Dashboard from "./Dashboard"
 
 interface ListItem {
 	title: string
@@ -51,7 +51,8 @@ const items: ListItem[] = [
 
 export default function HomePage() {
 	const theme = useTheme()
-	const [open, setOpen] = React.useState(true)
+	/*eslint-disable-next-line*/
+	const [open, setOpen] = React.useState<boolean>(screen.width > 800)
 
 	const handleDrawerOpen = () => {
 		setOpen(true)

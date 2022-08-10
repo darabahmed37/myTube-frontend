@@ -1,10 +1,11 @@
-import React, { ChangeEvent, FC } from "react"
+import React, {ChangeEvent, FC} from "react"
 import "./home.scss"
 import GoogleButton from "react-google-button"
-import { Link as MuiLink, TextField } from "@mui/material"
-import { RoundedButton } from "../elements/button"
-import { useNavigate } from "react-router-dom"
-import { HomeContainer, HomeMain, InputForm, Left, Right } from "./Homestyles"
+import {Link as MuiLink, TextField} from "@mui/material"
+import {RoundedButton} from "../elements/button"
+import {useNavigate} from "react-router-dom"
+import {HomeContainer, HomeMain, InputForm, Left, Right} from "./Homestyles"
+import {AxiosError} from "axios";
 
 export interface IHome {
 	title: string
@@ -15,7 +16,7 @@ export interface IHome {
 		linkText: string
 		link: string
 	}
-	requestFunction: () => void
+	requestFunction?: (email: string, password: string) => Promise<boolean | AxiosError>
 }
 
 interface ICredentials {
@@ -29,12 +30,12 @@ interface IValidation {
 }
 
 const Home: FC<IHome> = ({
-	title,
-	googleTitle,
-	buttonText,
-	navigation,
-	requestFunction,
-}) => {
+													 title,
+													 googleTitle,
+													 buttonText,
+													 navigation,
+													 requestFunction,
+												 }) => {
 	const [credentialsForm, setCredentialsForm] = React.useState<ICredentials>({
 		email: "",
 		password: "",
@@ -88,7 +89,26 @@ const Home: FC<IHome> = ({
 	const formSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
 		event.preventDefault()
 		if (validation()) {
-			requestFunction()
+			if (requestFunction !== undefined && title === "Login") {
+				requestFunction(credentialsForm.email, credentialsForm.password).then((r) => {
+					if (r === true) {
+						navigate("/")
+					} else {
+						const error = r as AxiosError
+						if (error.response?.status === 403) {
+							setPasswordValidation({
+								error: true,
+								helperText: "Invalid password"
+							})
+						} else if (error.response?.status === 404) {
+							setEmailValidation({
+								error: true,
+								helperText: "User not found"
+							})
+						}
+					}
+				})
+			}
 		}
 	}
 
@@ -105,9 +125,11 @@ const Home: FC<IHome> = ({
 		validation()
 	}, [credentialsForm])
 	const navigate = useNavigate()
+
+
 	return (
 		<HomeMain>
-			<HomeContainer classes={"home__container"}>
+			<HomeContainer>
 				<Left item container lg={6}>
 					<div>
 						<h2>My Tube</h2>
@@ -116,7 +138,7 @@ const Home: FC<IHome> = ({
 						<span className={"light-text"}>{title}</span>
 					</div>
 					<div>
-						<GoogleButton label={googleTitle + " with Google"} type={"light"} />
+						<GoogleButton label={googleTitle + " with Google"} type={"light"}/>
 					</div>
 					<div>
 						<p className={"light-text"}>OR</p>

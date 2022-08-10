@@ -11,9 +11,9 @@ const App: FC = () => {
 		<ThemeProvider theme={theme}>
 			<BrowserRouter>
 				<Routes>
-					<Route path={"/signup"} element={<Signup />} />
+					<Route path={"/sign-up"} element={<Signup />} />
 
-					<Route path={"/signin"} element={<Signin />} />
+					<Route path={"/sign-in"} element={<Signin />} />
 
 					<Route path={"/"} element={<HomePage />} />
 				</Routes>

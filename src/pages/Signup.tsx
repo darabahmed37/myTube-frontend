@@ -12,9 +12,9 @@ const Signup: FC = () => {
 				navigation={{
 					title: "Already Have An Account",
 					linkText: "Signin",
-					link: "/signin",
+					link: "/sign-in",
 				}}
-				requestFunction={() => {}}
+
 			/>
 		</>
 	)
