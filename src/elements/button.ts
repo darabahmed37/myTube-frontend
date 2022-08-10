@@ -10,4 +10,5 @@ export const RoundedButton = styled(Button)<ButtonProps>((theme) => ({
 RoundedButton.defaultProps = {
 	variant: "contained",
 	size: "large",
+
 }

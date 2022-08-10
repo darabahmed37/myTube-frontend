@@ -1,11 +1,11 @@
-import React, {ChangeEvent, FC} from "react"
+import React, { ChangeEvent, FC } from "react"
 import "./home.scss"
 import GoogleButton from "react-google-button"
-import {Link as MuiLink, TextField} from "@mui/material"
-import {RoundedButton} from "../elements/button"
-import {useNavigate} from "react-router-dom"
-import {HomeContainer, HomeMain, InputForm, Left, Right} from "./Homestyles"
-import {AxiosError, AxiosResponse} from "axios"
+import { Link as MuiLink, TextField } from "@mui/material"
+import { RoundedButton } from "../elements/button"
+import { useNavigate } from "react-router-dom"
+import { HomeContainer, HomeMain, InputForm, Left, Right } from "./Homestyles"
+import { AxiosError, AxiosResponse } from "axios"
 import axios from "../axios"
 
 export interface IHome {
@@ -34,12 +34,12 @@ interface IValidation {
 }
 
 const Home: FC<IHome> = ({
-													 title,
-													 googleTitle,
-													 buttonText,
-													 navigation,
-													 requestFunction,
-												 }) => {
+	title,
+	googleTitle,
+	buttonText,
+	navigation,
+	requestFunction,
+}) => {
 	const [credentialsForm, setCredentialsForm] = React.useState<ICredentials>({
 		email: "",
 		password: "",
@@ -113,21 +113,20 @@ const Home: FC<IHome> = ({
 					helperText: "User not found",
 				})
 			} else if (response?.status === 307) {
-				const {redirectUrl} = response.data
+				const { redirectUrl } = response.data
 
 				const newResponse = await axios.get(redirectUrl)
-				window.location.href = newResponse.data.authorization_url
 
+				window.location.href = newResponse.data.authorization_url
+			} else {
+				console.error("Unhandled Error")
 			}
 		}
 	}
 
 	async function signUp() {
 		try {
-			await requestFunction(
-				credentialsForm.email,
-				credentialsForm.password
-			);
+			await requestFunction(credentialsForm.email, credentialsForm.password)
 			navigate("/sign-in")
 		} catch (e) {
 			// @ts-ignore
@@ -143,6 +142,7 @@ const Home: FC<IHome> = ({
 
 	const formSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
 		event.preventDefault()
+
 		if (credentialsForm.email.length === 0) {
 			setEmailValidation({
 				error: true,
