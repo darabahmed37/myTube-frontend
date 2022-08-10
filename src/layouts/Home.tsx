@@ -5,7 +5,8 @@ import {Link as MuiLink, TextField} from "@mui/material"
 import {RoundedButton} from "../elements/button"
 import {useNavigate} from "react-router-dom"
 import {HomeContainer, HomeMain, InputForm, Left, Right} from "./Homestyles"
-import {AxiosError} from "axios";
+import {AxiosError, AxiosResponse} from "axios"
+import axios from "../axios"
 
 export interface IHome {
 	title: string
@@ -16,7 +17,10 @@ export interface IHome {
 		linkText: string
 		link: string
 	}
-	requestFunction?: (email: string, password: string) => Promise<boolean | AxiosError>
+	requestFunction: (
+		email: string,
+		password: string
+	) => Promise<boolean | AxiosError>
 }
 
 interface ICredentials {
@@ -51,7 +55,7 @@ const Home: FC<IHome> = ({
 		})
 
 	function isValidEmail(email: string): boolean {
-		return /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(email)
+		return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
 	}
 
 	function validation(): boolean {
@@ -80,34 +84,85 @@ const Home: FC<IHome> = ({
 		} else {
 			setPasswordValidation(() => ({
 				error: true,
-				helperText: "Password must be at least 6 characters",
+				helperText: "Password must be at least 7 characters",
 			}))
 		}
 		return !(emailValidation.error && passwordValidation.error)
 	}
 
-	const formSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
-		event.preventDefault()
-		if (validation()) {
-			if (requestFunction !== undefined && title === "Login") {
-				requestFunction(credentialsForm.email, credentialsForm.password).then((r) => {
-					if (r === true) {
-						navigate("/")
-					} else {
-						const error = r as AxiosError
-						if (error.response?.status === 403) {
-							setPasswordValidation({
-								error: true,
-								helperText: "Invalid password"
-							})
-						} else if (error.response?.status === 404) {
-							setEmailValidation({
-								error: true,
-								helperText: "User not found"
-							})
-						}
-					}
+	async function signin() {
+		try {
+			// @ts-ignore
+			const r = await requestFunction(
+				credentialsForm.email,
+				credentialsForm.password
+			)
+
+			navigate("/")
+		} catch (e) {
+			// @ts-ignore
+			const response = e.response as AxiosResponse
+			if (response?.status === 403) {
+				setPasswordValidation({
+					error: true,
+					helperText: "Invalid password",
 				})
+			} else if (response?.status === 404) {
+				setEmailValidation({
+					error: true,
+					helperText: "User not found",
+				})
+			} else if (response?.status === 307) {
+				const {redirectUrl} = response.data
+
+				const newResponse = await axios.get(redirectUrl)
+				window.location.href = newResponse.data.authorization_url
+
+			}
+		}
+	}
+
+	async function signUp() {
+		try {
+			await requestFunction(
+				credentialsForm.email,
+				credentialsForm.password
+			);
+			navigate("/sign-in")
+		} catch (e) {
+			// @ts-ignore
+			const response = e.response as AxiosResponse
+			if (response.status === 409) {
+				setEmailValidation({
+					error: true,
+					helperText: "User already exists",
+				})
+			}
+		}
+	}
+
+	const formSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
+		event.preventDefault()
+		if (credentialsForm.email.length === 0) {
+			setEmailValidation({
+				error: true,
+				helperText: "Please enter an email",
+			})
+			return
+		}
+		if (credentialsForm.password.length === 0) {
+			setPasswordValidation({
+				error: true,
+				helperText: "Please enter a password",
+			})
+			return
+		}
+
+		if (validation()) {
+			if (googleTitle === "Signin") {
+				await signin()
+			} else if (googleTitle === "Signup") {
+				await signUp()
 			}
 		}
 	}
@@ -126,7 +181,6 @@ const Home: FC<IHome> = ({
 	}, [credentialsForm])
 	const navigate = useNavigate()
 
-
 	return (
 		<HomeMain>
 			<HomeContainer>
@@ -138,7 +192,17 @@ const Home: FC<IHome> = ({
 						<span className={"light-text"}>{title}</span>
 					</div>
 					<div>
-						<GoogleButton label={googleTitle + " with Google"} type={"light"}/>
+						<GoogleButton
+							onClick={() => {
+								axios.get("auth/login-with-google/").then((r) => {
+									if (r.status === 200) {
+										window.location.href = r.data.authorization_url
+									}
+								})
+							}}
+							label={googleTitle + " with Google"}
+							type={"light"}
+						/>
 					</div>
 					<div>
 						<p className={"light-text"}>OR</p>

@@ -1,6 +1,20 @@
-import React, { FC } from "react"
+import React, {FC} from "react"
 import Home from "../layouts/Home"
-import Box from "@mui/material/Box"
+import {AxiosError} from "axios";
+import axios from "../axios";
+
+async function request(
+	email: string,
+	password: string
+): Promise<boolean | AxiosError> {
+
+	await axios.post(`auth/sign-up/`, {
+		email, password
+	})
+	return true
+
+
+}
 
 const Signup: FC = () => {
 	return (
@@ -14,7 +28,7 @@ const Signup: FC = () => {
 					linkText: "Signin",
 					link: "/sign-in",
 				}}
-
+				requestFunction={request}
 			/>
 		</>
 	)

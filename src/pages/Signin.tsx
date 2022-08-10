@@ -8,19 +8,16 @@ import {AxiosError, AxiosResponse} from "axios";
 async function request(email: string, password: string): Promise<boolean | AxiosError> {
 	let response: AxiosResponse;
 
-	try {
-		response = await axios.post(`auth/sign-in/`, {
-			email, password
-		})
-		if (response.status === 200) {
 
-			localStorage.setItem("access", response.data.access)
-			localStorage.setItem("refresh", response.data.access)
-			return true
-		}
-	} catch (e) {
-		const error = e as AxiosError
-		return error
+	response = await axios.post(`auth/sign-in/`, {
+		email, password
+	})
+
+	if (response.status === 200) {
+
+		localStorage.setItem("access", response.data.access)
+		localStorage.setItem("refresh", response.data.access)
+		return true
 	}
 
 
