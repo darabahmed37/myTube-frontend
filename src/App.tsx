@@ -1,26 +1,25 @@
-import React, { FC } from "react";
-import Home from "./layouts/Home";
-import { ThemeProvider } from "@mui/material";
-import { theme } from "./theme";
-import { BrowserRouter } from "react-router-dom";
+import React, { FC } from "react"
+import { ThemeProvider } from "@mui/material"
+import { theme } from "./theme"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Signup from "./pages/Signup"
+import Signin from "./pages/Signin"
+import HomePage from "./pages/HomePage"
 
 const App: FC = () => {
-  return (
-    <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Home
-          title={"Create An Account"}
-          buttonText={"Get Started"}
-          googleTitle={"Signup  with Google"}
-          navigation={{
-            title: "Already Have An Account",
-            linkText: "Signup",
-            link: "",
-          }}
-        />
-      </BrowserRouter>
-    </ThemeProvider>
-  );
-};
+	return (
+		<ThemeProvider theme={theme}>
+			<BrowserRouter>
+				<Routes>
+					<Route path={"/signup"} element={<Signup />} />
 
-export default App;
+					<Route path={"/signin"} element={<Signin />} />
+
+					<Route path={"/"} element={<HomePage />} />
+				</Routes>
+			</BrowserRouter>
+		</ThemeProvider>
+	)
+}
+
+export default App
