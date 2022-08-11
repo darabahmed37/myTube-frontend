@@ -1,13 +1,9 @@
-import axios from "../../axios";
-import {AxiosResponse} from "axios";
+import axios from "utils/axios"
+import { AxiosResponse } from "axios"
 
 export async function googleNewToken(response: AxiosResponse) {
 	if (response.status === 307) {
-		const {redirectUrl} = response.data
-		window.location.href = (
-			await axios.get(redirectUrl)
-		).data.authorization_url
+		const { redirectUrl } = response.data
+		window.location.href = (await axios.get(redirectUrl)).data.authorization_url
 	}
 }
-
-

@@ -1,12 +1,13 @@
 import * as React from "react"
-import {useTheme} from "@mui/material/styles"
+import { createElement, useState } from "react"
+import { useTheme } from "@mui/material/styles"
 import Box from "@mui/material/Box"
 import Drawer from "@mui/material/Drawer"
 import CssBaseline from "@mui/material/CssBaseline"
 import Toolbar from "@mui/material/Toolbar"
 import List from "@mui/material/List"
 import Typography from "@mui/material/Typography"
-import {Divider} from "../elements/Divider"
+import { Divider } from "elements/Divider"
 import IconButton from "@mui/material/IconButton"
 import MenuIcon from "@mui/icons-material/Menu"
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
@@ -15,22 +16,26 @@ import ListItem from "@mui/material/ListItem"
 import ListItemButton from "@mui/material/ListItemButton"
 import ListItemIcon from "@mui/material/ListItemIcon"
 import ListItemText from "@mui/material/ListItemText"
-import {OverridableComponent} from "@mui/material/OverridableComponent"
-import {SvgIconTypeMap} from "@mui/material"
+import { OverridableComponent } from "@mui/material/OverridableComponent"
+import { SvgIconTypeMap } from "@mui/material"
 import DashboardIcon from "@mui/icons-material/Dashboard"
 
-import {AccountBoxSharp, SettingsOutlined, StackedLineChart,} from "@mui/icons-material"
-import {AppBar, DrawerHeader, drawerWidth, Main} from "./HomePageStyles"
+import {
+	AccountBoxSharp,
+	SettingsOutlined,
+	StackedLineChart,
+} from "@mui/icons-material"
+import { AppBar, DrawerHeader, drawerWidth, Main } from "./HomePageStyles"
 import Dashboard from "./Dashboard"
 
-interface ListItem {
+interface IListItem {
 	title: string
 	iconButton: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
 		muiName: string
 	}
 }
 
-const items: ListItem[] = [
+const items: IListItem[] = [
 	{
 		title: "Dashboard",
 		iconButton: DashboardIcon,
@@ -52,7 +57,7 @@ const items: ListItem[] = [
 export default function HomePage() {
 	const theme = useTheme()
 	/*eslint-disable-next-line*/
-	const [open, setOpen] = React.useState<boolean>(screen.width > 800)
+	const [open, setOpen] = useState<boolean>(screen.width > 800)
 
 	const handleDrawerOpen = () => {
 		setOpen(true)
@@ -63,29 +68,24 @@ export default function HomePage() {
 	}
 
 	return (
-		<Box sx={{display: "flex"}}>
-			<CssBaseline/>
-			<AppBar
-				position="fixed"
-				open={open}
-				sx={{background: "#fff", color: "#000"}}
-				elevation={0}
-			>
+		<Box sx={{ display: "flex" }}>
+			<CssBaseline />
+			<AppBar position="fixed" open={open} elevation={0}>
 				<Toolbar>
 					<IconButton
 						color="inherit"
 						aria-label="open drawer"
 						onClick={handleDrawerOpen}
 						edge="start"
-						sx={{mr: 2, ...(open && {display: "none"})}}
+						sx={{ mr: 2, ...(open && { display: "none" }) }}
 					>
-						<MenuIcon/>
+						<MenuIcon />
 					</IconButton>
 					<Typography variant="h6" noWrap component="div">
 						Dashboard
 					</Typography>
 				</Toolbar>
-				<Divider/>
+				<Divider />
 			</AppBar>
 			<Drawer
 				sx={{
@@ -113,13 +113,13 @@ export default function HomePage() {
 						}}
 					>
 						{theme.direction === "ltr" ? (
-							<ChevronLeftIcon/>
+							<ChevronLeftIcon />
 						) : (
-							<ChevronRightIcon/>
+							<ChevronRightIcon />
 						)}
 					</IconButton>
 				</DrawerHeader>
-				<Divider/>
+				<Divider />
 				<List>
 					{items.map((listItem, index) => (
 						<ListItem
@@ -133,19 +133,19 @@ export default function HomePage() {
 							key={index}
 						>
 							<ListItemButton>
-								<ListItemIcon sx={{minWidth: "38px"}}>
-									{React.createElement(listItem.iconButton)}
+								<ListItemIcon sx={{ minWidth: "38px" }}>
+									{createElement(listItem.iconButton)}
 								</ListItemIcon>
-								<ListItemText primary={listItem.title}/>
+								<ListItemText primary={listItem.title} />
 							</ListItemButton>
 						</ListItem>
 					))}
 				</List>
 			</Drawer>
 			<Main open={open}>
-				<DrawerHeader/>
+				<DrawerHeader />
 
-				<Dashboard/>
+				<Dashboard />
 			</Main>
 		</Box>
 	)

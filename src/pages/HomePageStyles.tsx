@@ -1,10 +1,12 @@
-import {styled} from "@mui/material/styles";
-import {AppBarProps as MuiAppBarProps} from "@mui/material/AppBar/AppBar";
-import MuiAppBar from "@mui/material/AppBar";
+import { styled } from "@mui/material/styles"
+import { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar/AppBar"
+import MuiAppBar from "@mui/material/AppBar"
 
-export  const drawerWidth = 240
+export const drawerWidth = 240
 
-export const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{
+export const Main = styled("main", {
+	shouldForwardProp: (prop) => prop !== "open",
+})<{
 	open?: boolean
 }>(({ theme, open }) => ({
 	flexGrow: 1,
@@ -34,6 +36,8 @@ export const AppBar = styled(MuiAppBar, {
 		easing: theme.transitions.easing.sharp,
 		duration: theme.transitions.duration.leavingScreen,
 	}),
+	background: "#fff",
+	color: "#000",
 	...(open && {
 		width: `calc(100% - ${drawerWidth}px)`,
 		marginLeft: `${drawerWidth}px`,

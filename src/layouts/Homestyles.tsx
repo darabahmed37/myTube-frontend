@@ -1,5 +1,5 @@
 import { Grid, styled } from "@mui/material"
-import background from "../assets/beautiful-african-american-woman-wearing-earphones-city-remixed-media.jpg"
+import background from "assets/beautiful-african-american-woman-wearing-earphones-city-remixed-media.jpg"
 
 export const HomeMain = styled("div")(({ theme }) => ({
 	display: "flex",

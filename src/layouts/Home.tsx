@@ -1,12 +1,12 @@
-import React, { ChangeEvent, FC } from "react"
+import React, {ChangeEvent, FC, FormEventHandler, useEffect, useState} from "react"
 import "./home.scss"
 import GoogleButton from "react-google-button"
-import { Link as MuiLink, TextField } from "@mui/material"
-import { RoundedButton } from "../elements/button"
-import { useNavigate } from "react-router-dom"
-import { HomeContainer, HomeMain, InputForm, Left, Right } from "./Homestyles"
-import { AxiosError, AxiosResponse } from "axios"
-import axios from "../axios"
+import {Link as MuiLink, TextField} from "@mui/material"
+import {RoundedButton} from "elements/button"
+import {useNavigate} from "react-router-dom"
+import {HomeContainer, HomeMain, InputForm, Left, Right} from "./Homestyles"
+import {AxiosResponse} from "axios"
+import axios from "utils/axios"
 
 export interface IHome {
 	title: string
@@ -20,7 +20,7 @@ export interface IHome {
 	requestFunction: (
 		email: string,
 		password: string
-	) => Promise<boolean | AxiosError>
+	) => Promise<boolean | undefined>
 }
 
 interface ICredentials {
@@ -34,28 +34,28 @@ interface IValidation {
 }
 
 const Home: FC<IHome> = ({
-	title,
-	googleTitle,
-	buttonText,
-	navigation,
-	requestFunction,
-}) => {
-	const [credentialsForm, setCredentialsForm] = React.useState<ICredentials>({
+													 title,
+													 googleTitle,
+													 buttonText,
+													 navigation,
+													 requestFunction,
+												 }) => {
+	const [credentialsForm, setCredentialsForm] = useState<ICredentials>({
 		email: "",
 		password: "",
 	})
-	const [emailValidation, setEmailValidation] = React.useState<IValidation>({
+	const [emailValidation, setEmailValidation] = useState<IValidation>({
 		helperText: "",
 		error: false,
 	})
 	const [passwordValidation, setPasswordValidation] =
-		React.useState<IValidation>({
+		useState<IValidation>({
 			helperText: "",
 			error: false,
 		})
 
 	function isValidEmail(email: string): boolean {
-		return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+		return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)
 	}
 
 	function validation(): boolean {
@@ -93,7 +93,7 @@ const Home: FC<IHome> = ({
 	async function signin() {
 		try {
 			// @ts-ignore
-			const r = await requestFunction(
+			await requestFunction(
 				credentialsForm.email,
 				credentialsForm.password
 			)
@@ -113,7 +113,7 @@ const Home: FC<IHome> = ({
 					helperText: "User not found",
 				})
 			} else if (response?.status === 307) {
-				const { redirectUrl } = response.data
+				const {redirectUrl} = response.data
 
 				const newResponse = await axios.get(redirectUrl)
 
@@ -140,7 +140,7 @@ const Home: FC<IHome> = ({
 		}
 	}
 
-	const formSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
+	const formSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
 		event.preventDefault()
 
 		if (credentialsForm.email.length === 0) {
@@ -176,9 +176,10 @@ const Home: FC<IHome> = ({
 		})
 	}
 
-	React.useEffect(() => {
+	useEffect(() => {
 		validation()
-	}, [credentialsForm])
+
+	}, [credentialsForm]) // eslint-disable-line react-hooks/exhaustive-deps
 	const navigate = useNavigate()
 
 	return (
