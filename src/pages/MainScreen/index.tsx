@@ -21,8 +21,8 @@ import { SvgIconTypeMap } from "@mui/material"
 import DashboardIcon from "@mui/icons-material/Dashboard"
 
 import { AccountBoxSharp, SettingsOutlined, StackedLineChart } from "@mui/icons-material"
-import { AppBar, DrawerHeader, drawerWidth, Main } from "./HomePageStyles"
-import Dashboard from "./Dashboard"
+import { AppBar, DrawerHeader, DrawerStyles, ListItemStyle, Main, textWhite } from "pages/MainScreen/style"
+import Dashboard from "pages/Dashboard"
 
 interface IListItem {
 	title: string
@@ -83,47 +83,16 @@ export default function HomePage() {
 				</Toolbar>
 				<Divider />
 			</AppBar>
-			<Drawer
-				sx={{
-					width: drawerWidth,
-					flexShrink: 0,
-					"& .MuiDrawer-paper": {
-						width: drawerWidth,
-						boxSizing: "border-box",
-					},
-				}}
-				variant="persistent"
-				anchor="left"
-				open={open}
-				PaperProps={{
-					sx: {
-						background: theme.palette.secondary.main,
-					},
-				}}
-			>
+			<Drawer sx={DrawerStyles} variant="persistent" anchor="left" open={open}>
 				<DrawerHeader>
-					<IconButton
-						onClick={handleDrawerClose}
-						sx={{
-							color: "#fff",
-						}}
-					>
+					<IconButton onClick={handleDrawerClose} sx={textWhite}>
 						{theme.direction === "ltr" ? <ChevronLeftIcon /> : <ChevronRightIcon />}
 					</IconButton>
 				</DrawerHeader>
 				<Divider />
 				<List>
 					{items.map((listItem, index) => (
-						<ListItem
-							disablePadding
-							sx={{
-								paddingLeft: "1rem",
-								"& *": {
-									color: "#fff",
-								},
-							}}
-							key={index}
-						>
+						<ListItem disablePadding sx={ListItemStyle} key={index}>
 							<ListItemButton>
 								<ListItemIcon sx={{ minWidth: "38px" }}>{createElement(listItem.iconButton)}</ListItemIcon>
 								<ListItemText primary={listItem.title} />
