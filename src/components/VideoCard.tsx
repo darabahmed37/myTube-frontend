@@ -34,9 +34,7 @@ const VideoCard: FC<VideoCardProps> = ({ title, description, imageUrl }) => {
 					{title}
 				</Typography>
 				<Typography variant={"subtitle2"}>
-					{description.length > 100
-						? description.substring(0, 100) + "..."
-						: description}
+					{description.length > 100 ? description.substring(0, 100) + "..." : description}
 				</Typography>
 			</CardContent>
 		</Card>

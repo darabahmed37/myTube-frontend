@@ -1,35 +1,11 @@
-import React, {FC} from "react"
-import Home from "../layouts/Home"
-import axios from "utils/axios"
-import {AxiosResponse} from "axios"
-
-// @ts-ignore
-async function request(
-	email: string,
-	password: string
-): Promise<boolean | undefined> {
-	let response: AxiosResponse
-	try {
-		response = await axios.post("auth/sign-in/", {
-			email,
-			password,
-		})
-
-		if (response.status === 200) {
-			localStorage.setItem("access", response.data.access)
-			localStorage.setItem("refresh", response.data.access)
-			return true
-		}
-	} catch (e) {
-		// @ts-ignore
-		throw e
-	}
-}
+import React, { FC } from "react"
+import AuthenticateLayout from "layouts/AuthenticateLayout"
+import { signInWithEmailAndPassword } from "api/auth"
 
 const Signin: FC = () => {
 	return (
 		<>
-			<Home
+			<AuthenticateLayout
 				title={"Login"}
 				buttonText={"Get Started"}
 				googleTitle={"Signin"}
@@ -38,7 +14,7 @@ const Signin: FC = () => {
 					linkText: "Signup",
 					link: "/sign-up",
 				}}
-				requestFunction={request}
+				requestFunction={signInWithEmailAndPassword}
 			/>
 		</>
 	)

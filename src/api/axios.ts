@@ -1,16 +1,15 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios"
-
+import { BASE_BACKEND_URL } from "config"
 const accessToken = localStorage.getItem("access")
 
 function AuthorizationHeader(config: AxiosRequestConfig) {
-	if (config.headers && accessToken)
-		config.headers.Authorization = `Bearer ${accessToken}`
+	if (config.headers && accessToken) config.headers.Authorization = `Bearer ${accessToken}`
 
 	return config
 }
 
 const axiosApiInstance: AxiosInstance = axios.create({
-	baseURL: process.env.REACT_APP_BASE_BACKEND_URL,
+	baseURL: BASE_BACKEND_URL,
 	headers: {
 		"Content-Type": "application/json",
 	},
@@ -32,11 +31,7 @@ axiosApiInstance.interceptors.response.use(
 	},
 	async function (error) {
 		const originalRequest = error.config
-		if (
-			error.response.status === 401 &&
-			!originalRequest._retry &&
-			error.response.data.code === "token_not_valid"
-		) {
+		if (error.response.status === 401 && !originalRequest._retry && error.response.data.code === "token_not_valid") {
 			originalRequest._retry = true
 			const access_token = await refreshAccessToken()
 			axios.defaults.headers.common["Authorization"] = "Bearer " + access_token

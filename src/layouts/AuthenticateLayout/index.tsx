@@ -1,12 +1,22 @@
-import React, {ChangeEvent, FC, FormEventHandler, useEffect, useState} from "react"
-import "./home.scss"
+import React, { ChangeEvent, FC, FormEventHandler, useEffect, useState } from "react"
+
 import GoogleButton from "react-google-button"
-import {Link as MuiLink, TextField} from "@mui/material"
-import {RoundedButton} from "elements/button"
-import {useNavigate} from "react-router-dom"
-import {HomeContainer, HomeMain, InputForm, Left, Right} from "./Homestyles"
-import {AxiosResponse} from "axios"
-import axios from "utils/axios"
+import { Link as MuiLink, TextField } from "@mui/material"
+import { RoundedButton } from "elements/button"
+import { useNavigate } from "react-router-dom"
+import {
+	HomeContainer,
+	HomeMain,
+	InputForm,
+	Left,
+	lightText,
+	Link,
+	navigationTitle,
+	Right,
+} from "layouts/AuthenticateLayout/styles"
+import { AxiosResponse } from "axios"
+import { getGoogleAuthUrl } from "api/auth"
+import axios from "api/axios"
 
 export interface IHome {
 	title: string
@@ -17,10 +27,7 @@ export interface IHome {
 		linkText: string
 		link: string
 	}
-	requestFunction: (
-		email: string,
-		password: string
-	) => Promise<boolean | undefined>
+	requestFunction: (email: string, password: string) => Promise<AxiosResponse>
 }
 
 interface ICredentials {
@@ -33,13 +40,7 @@ interface IValidation {
 	error: boolean
 }
 
-const Home: FC<IHome> = ({
-													 title,
-													 googleTitle,
-													 buttonText,
-													 navigation,
-													 requestFunction,
-												 }) => {
+const AuthenticateLayout: FC<IHome> = ({ title, googleTitle, buttonText, navigation, requestFunction }) => {
 	const [credentialsForm, setCredentialsForm] = useState<ICredentials>({
 		email: "",
 		password: "",
@@ -48,21 +49,17 @@ const Home: FC<IHome> = ({
 		helperText: "",
 		error: false,
 	})
-	const [passwordValidation, setPasswordValidation] =
-		useState<IValidation>({
-			helperText: "",
-			error: false,
-		})
+	const [passwordValidation, setPasswordValidation] = useState<IValidation>({
+		helperText: "",
+		error: false,
+	})
 
 	function isValidEmail(email: string): boolean {
 		return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)
 	}
 
 	function validation(): boolean {
-		if (
-			isValidEmail(credentialsForm.email) ||
-			credentialsForm.email.length === 0
-		) {
+		if (isValidEmail(credentialsForm.email) || credentialsForm.email.length === 0) {
 			setEmailValidation(() => ({
 				error: false,
 				helperText: "",
@@ -73,10 +70,7 @@ const Home: FC<IHome> = ({
 				helperText: "Please enter a valid email",
 			}))
 		}
-		if (
-			credentialsForm.password.length > 6 ||
-			credentialsForm.password.length === 0
-		) {
+		if (credentialsForm.password.length > 6 || credentialsForm.password.length === 0) {
 			setPasswordValidation(() => ({
 				error: false,
 				helperText: "",
@@ -91,17 +85,15 @@ const Home: FC<IHome> = ({
 	}
 
 	async function signin() {
+		let response: AxiosResponse
 		try {
 			// @ts-ignore
-			await requestFunction(
-				credentialsForm.email,
-				credentialsForm.password
-			)
+			await requestFunction(credentialsForm.email, credentialsForm.password)
 
 			navigate("/")
 		} catch (e) {
 			// @ts-ignore
-			const response = e.response as AxiosResponse
+			response = e.response as AxiosResponse
 			if (response?.status === 403) {
 				setPasswordValidation({
 					error: true,
@@ -112,25 +104,21 @@ const Home: FC<IHome> = ({
 					error: true,
 					helperText: "User not found",
 				})
-			} else if (response?.status === 307) {
-				const {redirectUrl} = response.data
-
-				const newResponse = await axios.get(redirectUrl)
-
-				window.location.href = newResponse.data.authorization_url
-			} else {
-				console.error("Unhandled Error")
+			} else if (response.status === 307) {
+				response = await axios.get(response.data.redirectUrl)
+				window.location.href = response.data.authorization_url
 			}
 		}
 	}
 
 	async function signUp() {
+		let response: AxiosResponse
 		try {
-			await requestFunction(credentialsForm.email, credentialsForm.password)
+			response = await requestFunction(credentialsForm.email, credentialsForm.password)
 			navigate("/sign-in")
 		} catch (e) {
 			// @ts-ignore
-			const response = e.response as AxiosResponse
+			response = e.response as AxiosResponse
 			if (response.status === 409) {
 				setEmailValidation({
 					error: true,
@@ -167,9 +155,7 @@ const Home: FC<IHome> = ({
 		}
 	}
 
-	function onStateChange(
-		event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-	) {
+	function onStateChange(event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
 		setCredentialsForm({
 			...credentialsForm,
 			[event.target.name]: event.target.value,
@@ -178,8 +164,8 @@ const Home: FC<IHome> = ({
 
 	useEffect(() => {
 		validation()
-
 	}, [credentialsForm]) // eslint-disable-line react-hooks/exhaustive-deps
+
 	const navigate = useNavigate()
 
 	return (
@@ -190,23 +176,19 @@ const Home: FC<IHome> = ({
 						<h2>My Tube</h2>
 					</div>
 					<div>
-						<span className={"light-text"}>{title}</span>
+						<span style={lightText}>{title}</span>
 					</div>
 					<div>
 						<GoogleButton
-							onClick={() => {
-								axios.get("auth/login-with-google/").then((r) => {
-									if (r.status === 200) {
-										window.location.href = r.data.authorization_url
-									}
-								})
+							onClick={async () => {
+								await getGoogleAuthUrl()
 							}}
 							label={googleTitle + " with Google"}
 							type={"light"}
 						/>
 					</div>
 					<div>
-						<p className={"light-text"}>OR</p>
+						<p style={lightText}>OR</p>
 					</div>
 					<InputForm onSubmit={formSubmit}>
 						<TextField
@@ -232,32 +214,14 @@ const Home: FC<IHome> = ({
 							label="Password"
 						/>
 
-						<RoundedButton
-							sx={{
-								margin: "0 auto",
-							}}
-							type={"submit"}
-						>
-							{buttonText}
-						</RoundedButton>
+						<RoundedButton type={"submit"}>{buttonText}</RoundedButton>
 					</InputForm>
 
-					<div
-						style={{
-							fontSize: ".8rem",
-							transform: "translateY(4rem)",
-						}}
-					>
+					<div style={navigationTitle}>
 						{navigation.title + " "}
 
 						<MuiLink
-							sx={{
-								cursor: "pointer",
-								textDecoration: "none",
-								"&:hover": {
-									textDecoration: "underline",
-								},
-							}}
+							sx={Link}
 							onClick={() => {
 								navigate(navigation.link)
 							}}
@@ -271,4 +235,4 @@ const Home: FC<IHome> = ({
 		</HomeMain>
 	)
 }
-export default Home
+export default AuthenticateLayout

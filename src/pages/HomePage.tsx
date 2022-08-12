@@ -20,11 +20,7 @@ import { OverridableComponent } from "@mui/material/OverridableComponent"
 import { SvgIconTypeMap } from "@mui/material"
 import DashboardIcon from "@mui/icons-material/Dashboard"
 
-import {
-	AccountBoxSharp,
-	SettingsOutlined,
-	StackedLineChart,
-} from "@mui/icons-material"
+import { AccountBoxSharp, SettingsOutlined, StackedLineChart } from "@mui/icons-material"
 import { AppBar, DrawerHeader, drawerWidth, Main } from "./HomePageStyles"
 import Dashboard from "./Dashboard"
 
@@ -112,11 +108,7 @@ export default function HomePage() {
 							color: "#fff",
 						}}
 					>
-						{theme.direction === "ltr" ? (
-							<ChevronLeftIcon />
-						) : (
-							<ChevronRightIcon />
-						)}
+						{theme.direction === "ltr" ? <ChevronLeftIcon /> : <ChevronRightIcon />}
 					</IconButton>
 				</DrawerHeader>
 				<Divider />
@@ -133,9 +125,7 @@ export default function HomePage() {
 							key={index}
 						>
 							<ListItemButton>
-								<ListItemIcon sx={{ minWidth: "38px" }}>
-									{createElement(listItem.iconButton)}
-								</ListItemIcon>
+								<ListItemIcon sx={{ minWidth: "38px" }}>{createElement(listItem.iconButton)}</ListItemIcon>
 								<ListItemText primary={listItem.title} />
 							</ListItemButton>
 						</ListItem>

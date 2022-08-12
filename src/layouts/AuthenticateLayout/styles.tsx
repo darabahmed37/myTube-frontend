@@ -1,5 +1,6 @@
-import { Grid, styled } from "@mui/material"
+import { Grid, styled, SxProps, Theme } from "@mui/material"
 import background from "assets/beautiful-african-american-woman-wearing-earphones-city-remixed-media.jpg"
+import { CSSProperties } from "react"
 
 export const HomeMain = styled("div")(({ theme }) => ({
 	display: "flex",
@@ -77,3 +78,20 @@ export const InputForm = styled("form")(({ theme }) => ({
 	gap: "2em",
 	width: "80%",
 }))
+
+export const lightText: CSSProperties = {
+	color: "#7C7B7B",
+}
+
+export const Link: SxProps<Theme> = (theme) => ({
+	cursor: "pointer",
+	textDecoration: "none",
+	"&:hover": {
+		textDecoration: "underline",
+	},
+})
+
+export const navigationTitle: CSSProperties = {
+	fontSize: "0.8rem",
+	transform: "translateY(4rem)",
+}
