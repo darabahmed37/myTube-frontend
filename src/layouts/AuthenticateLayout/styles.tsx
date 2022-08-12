@@ -95,3 +95,4 @@ export const navigationTitle: CSSProperties = {
 	fontSize: "0.8rem",
 	transform: "translateY(4rem)",
 }
+

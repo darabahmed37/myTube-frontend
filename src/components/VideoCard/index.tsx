@@ -1,5 +1,6 @@
 import React, { FC } from "react"
 import { Card, CardContent, CardMedia, Typography } from "@mui/material"
+import { CardChildMaxWidth, CardStyles } from "components/VideoCard/style"
 
 export interface VideoCardProps {
 	title: string
@@ -10,25 +11,17 @@ export interface VideoCardProps {
 const VideoCard: FC<VideoCardProps> = ({ title, description, imageUrl }) => {
 	return (
 		<Card
-			sx={{
-				display: "flex",
-				padding: ".7rem",
-				maxWidth: "30rem",
-			}}
+			sx={CardStyles}
 		>
 			<CardMedia
 				component={"img"}
 				image={imageUrl}
 				alt={"Video Logo"}
-				sx={{
-					maxWidth: "50%",
-				}}
+				sx={CardChildMaxWidth}
 			/>
 
 			<CardContent
-				sx={{
-					maxWidth: "50%",
-				}}
+				sx={CardChildMaxWidth}
 			>
 				<Typography variant={"h6"} fontWeight={800} mb={2}>
 					{title}

@@ -1,5 +1,7 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios"
 import { BASE_BACKEND_URL } from "config"
+import {BackendRoutes} from "api/auth/backend.routes"
+
 const accessToken = localStorage.getItem("access")
 
 function AuthorizationHeader(config: AxiosRequestConfig) {
@@ -18,7 +20,7 @@ const axiosApiInstance: AxiosInstance = axios.create({
 async function refreshAccessToken() {
 	const refreshToken = localStorage.getItem("refresh")
 	if (!refreshToken) return
-	const response = await axiosApiInstance.post("/auth/refresh/", {
+	const response = await axiosApiInstance.post(BackendRoutes.REFRESH, {
 		refresh: refreshToken,
 	})
 	localStorage.removeItem("access")
