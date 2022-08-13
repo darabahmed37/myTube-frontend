@@ -1,7 +1,6 @@
-import React, { ChangeEvent, FC, FormEventHandler, useEffect, useState } from "react"
+import React, { ChangeEvent, FC, FormEventHandler, useState } from "react"
 import { AxiosResponse } from "axios"
 import axios from "api/axios"
-import { isValidEmail } from "utils"
 import { ICredentials, IValidation } from "types/IAuth"
 import { useNavigate } from "react-router-dom"
 import { InputForm, lightText, Link, navigationTitle } from "layouts/AuthenticateLayout/styles"
@@ -13,7 +12,7 @@ import { RoundedButton } from "elements/button"
 const Signin: FC = () => {
 	const navigate = useNavigate()
 
-	const [credentialsForm, setCredentialsForm] = useState<ICredentials>({
+	const [signInForm, setSignInForm] = useState<ICredentials>({
 		email: "",
 		password: "",
 	})
@@ -30,7 +29,7 @@ const Signin: FC = () => {
 		let response: AxiosResponse
 		try {
 			// @ts-ignore
-			await signInWithEmailAndPassword(credentialsForm.email, credentialsForm.password)
+			await signInWithEmailAndPassword(signInForm.email, signInForm.password)
 
 			navigate("/")
 		} catch (e) {
@@ -53,43 +52,21 @@ const Signin: FC = () => {
 		}
 	}
 
-	function validation(): boolean {
-		if (isValidEmail(credentialsForm.email) || credentialsForm.email.length === 0) {
-			setEmailValidation(() => ({
-				error: false,
-				helperText: "",
-			}))
-		} else {
-			setEmailValidation(() => ({
-				error: true,
-				helperText: "Please enter a valid email",
-			}))
-		}
-		if (credentialsForm.password.length > 6 || credentialsForm.password.length === 0) {
-			setPasswordValidation(() => ({
-				error: false,
-				helperText: "",
-			}))
-		} else {
-			setPasswordValidation(() => ({
-				error: true,
-				helperText: "Password must be at least 7 characters",
-			}))
-		}
-		return !(emailValidation.error && passwordValidation.error)
+	function validation() {
+		return !emailValidation && passwordValidation
 	}
 
 	const formSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
 		event.preventDefault()
 
-		if (credentialsForm.email.length === 0) {
+		if (signInForm.email.length === 0) {
 			setEmailValidation({
 				error: true,
 				helperText: "Please enter an email",
 			})
 			return
 		}
-		if (credentialsForm.password.length === 0) {
+		if (signInForm.password.length === 0) {
 			setPasswordValidation({
 				error: true,
 				helperText: "Please enter a password",
@@ -103,15 +80,11 @@ const Signin: FC = () => {
 	}
 
 	function onStateChange(event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
-		setCredentialsForm({
-			...credentialsForm,
+		setSignInForm({
+			...signInForm,
 			[event.target.name]: event.target.value,
 		})
 	}
-
-	useEffect(() => {
-		validation()
-	}, [credentialsForm]) // eslint-disable-line react-hooks/exhaustive-deps
 
 	return (
 		<>
@@ -139,7 +112,7 @@ const Signin: FC = () => {
 					variant={"standard"}
 					name={"email"}
 					label={"Email"}
-					value={credentialsForm.email}
+					value={signInForm.email}
 					onChange={onStateChange}
 				/>
 				<TextField
@@ -149,7 +122,7 @@ const Signin: FC = () => {
 					size={"small"}
 					variant={"standard"}
 					type={"password"}
-					value={credentialsForm.password}
+					value={signInForm.password}
 					onChange={onStateChange}
 					label="Password"
 				/>

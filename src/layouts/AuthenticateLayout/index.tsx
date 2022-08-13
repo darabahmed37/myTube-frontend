@@ -3,8 +3,6 @@ import { Outlet } from "react-router-dom"
 import { HomeContainer, HomeMain, Left, Right } from "layouts/AuthenticateLayout/styles"
 
 const AuthenticateLayout: FC = () => {
-
-
 	return (
 		<HomeMain>
 			<HomeContainer>
