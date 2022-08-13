@@ -23,6 +23,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard"
 import { AccountBoxSharp, SettingsOutlined, StackedLineChart } from "@mui/icons-material"
 import { AppBar, DrawerHeader, DrawerStyles, ListItemStyle, Main, textWhite } from "pages/MainScreen/style"
 import Dashboard from "pages/Dashboard"
+import { Outlet } from "react-router-dom"
 
 interface IListItem {
 	title: string
@@ -50,7 +51,7 @@ const items: IListItem[] = [
 	},
 ]
 
-export default function HomePage() {
+export default function MainScreen() {
 	const theme = useTheme()
 	/*eslint-disable-next-line*/
 	const [open, setOpen] = useState<boolean>(screen.width > 800)
@@ -104,7 +105,7 @@ export default function HomePage() {
 			<Main open={open}>
 				<DrawerHeader />
 
-				<Dashboard />
+				<Outlet />
 			</Main>
 		</Box>
 	)

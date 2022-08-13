@@ -5,6 +5,7 @@ import Signup from "pages/Signup"
 import Dashboard from "pages/Dashboard"
 import Redirecting from "pages/Redirecting"
 import { Route } from "react-router-dom"
+import MainScreen from "pages/MainScreen"
 
 export interface IRoute {
 	link: string
@@ -29,7 +30,11 @@ export const Routes: IRoute[] = [
 	},
 	{
 		link: "/",
-		element: <Dashboard />,
+		element: <MainScreen />,
+		child: [{
+			link: "dashboard",
+			element: <Dashboard />,
+		}],
 	},
 
 	{
@@ -38,7 +43,7 @@ export const Routes: IRoute[] = [
 	},
 ]
 
-function createRoutes(Routes: IRoute[]) {
+export function createRoutes(Routes: IRoute[]) {
 	let outputRoutes: ReactNode[] = Routes.map((route) => {
 		if (route.child === undefined) {
 			return <Route path={route.link} element={route.element} />
@@ -50,3 +55,10 @@ function createRoutes(Routes: IRoute[]) {
 	return outputRoutes
 }
 
+
+export enum ERoutes {
+	SIGN_IN = "/auth/sign-in",
+	SIGN_UP = "/auth/sign-up",
+	DASHBOARD = "/dashboard",
+	REDIRECTING = "/redirecting",
+}

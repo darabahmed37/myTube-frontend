@@ -89,9 +89,13 @@ export const Link: SxProps<Theme> = (theme) => ({
 	"&:hover": {
 		textDecoration: "underline",
 	},
+
+	display: "inline-block",
+	marginLeft: "4px",
 })
 
 export const navigationTitle: CSSProperties = {
+	display:"inline-block",
 	fontSize: "0.8rem",
 	transform: "translateY(4rem)",
 }

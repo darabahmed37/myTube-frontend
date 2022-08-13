@@ -8,6 +8,7 @@ import GoogleButton from "react-google-button"
 import { getGoogleAuthUrl, signInWithEmailAndPassword } from "api/auth"
 import { Link as MuiLink, TextField } from "@mui/material"
 import { RoundedButton } from "elements/button"
+import { ERoutes } from "routes"
 
 const Signin: FC = () => {
 	const navigate = useNavigate()
@@ -31,7 +32,7 @@ const Signin: FC = () => {
 			// @ts-ignore
 			await signInWithEmailAndPassword(signInForm.email, signInForm.password)
 
-			navigate("/")
+			navigate(ERoutes.REDIRECTING)
 		} catch (e) {
 			// @ts-ignore
 			response = e.response as AxiosResponse
@@ -135,7 +136,7 @@ const Signin: FC = () => {
 				<MuiLink
 					sx={Link}
 					onClick={() => {
-						navigate("/sign-up")
+						navigate(ERoutes.SIGN_UP)
 					}}
 				>
 					SignUp

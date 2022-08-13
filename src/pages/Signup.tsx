@@ -9,6 +9,7 @@ import GoogleButton from "react-google-button"
 import { getGoogleAuthUrl, signUpWithEmailAndPassword } from "api/auth"
 import { Link as MuiLink, TextField } from "@mui/material"
 import { RoundedButton } from "elements/button"
+import {ERoutes} from "routes"
 
 const Signin: FC = () => {
 	const navigate = useNavigate()
@@ -152,10 +153,11 @@ const Signin: FC = () => {
 				<MuiLink
 					sx={Link}
 					onClick={() => {
-						navigate("/sign-in")
+						navigate(ERoutes.SIGN_IN)
 					}}
+
 				>
-					SignIn
+					 SignIn
 				</MuiLink>
 			</div>
 		</>
