@@ -10,19 +10,10 @@ export interface VideoCardProps {
 
 const VideoCard: FC<VideoCardProps> = ({ title, description, imageUrl }) => {
 	return (
-		<Card
-			sx={CardStyles}
-		>
-			<CardMedia
-				component={"img"}
-				image={imageUrl}
-				alt={"Video Logo"}
-				sx={CardChildMaxWidth}
-			/>
+		<Card sx={CardStyles}>
+			<CardMedia component={"img"} image={imageUrl} alt={"Video Logo"} sx={CardChildMaxWidth} />
 
-			<CardContent
-				sx={CardChildMaxWidth}
-			>
+			<CardContent sx={CardChildMaxWidth}>
 				<Typography variant={"h6"} fontWeight={800} mb={2}>
 					{title}
 				</Typography>

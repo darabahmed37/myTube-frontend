@@ -1,6 +1,6 @@
 import axios from "api/axios"
 import { AxiosResponse } from "axios"
-import {BackendRoutes} from "api/auth/backend.routes"
+import { BackendRoutes } from "api/auth/backend.routes"
 
 export function setAccessToken(accessToken: string) {
 	localStorage.setItem("access", accessToken)
@@ -21,12 +21,12 @@ export function getRefreshToken() {
 export async function signInWithEmailAndPassword(email: string, password: string): Promise<AxiosResponse> {
 	let response: AxiosResponse
 
-		response = await axios.post(BackendRoutes.SIGN_IN, {
-			email,
-			password,
-		})
-		setAccessToken(response.data.access)
-		setRefreshToken(response.data.refresh)
+	response = await axios.post(BackendRoutes.SIGN_IN, {
+		email,
+		password,
+	})
+	setAccessToken(response.data.access)
+	setRefreshToken(response.data.refresh)
 
 	return response
 }
@@ -39,17 +39,15 @@ export async function signUpWithEmailAndPassword(email: string, password: string
 		password,
 	})
 
-
 	return response
 }
 
 export async function getGoogleAuthUrl(): Promise<void> {
 	let response: AxiosResponse
 
-		response = await axios.get(BackendRoutes.LOGIN_WITH_GOOGLE)
+	response = await axios.get(BackendRoutes.LOGIN_WITH_GOOGLE)
 
-		window.location.href = response.data.authorization_url
-
+	window.location.href = response.data.authorization_url
 }
 
 export async function getAccessTokenFromGoogle(code: string): Promise<AxiosResponse> {

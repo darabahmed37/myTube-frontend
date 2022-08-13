@@ -4,13 +4,8 @@ export const CardStyles: SxProps<Theme> = (theme) => ({
 	display: "flex",
 	padding: ".7rem",
 	maxWidth: "30rem",
-
 })
-
 
 export const CardChildMaxWidth: SxProps<Theme> = (theme) => ({
-
-		maxWidth: "50%",
-
+	maxWidth: "50%",
 })
-

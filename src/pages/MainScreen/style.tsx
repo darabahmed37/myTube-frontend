@@ -64,7 +64,6 @@ export const ListItemStyle: SxProps<Theme> = {
 	},
 }
 
-
 export const textWhite: SxProps<Theme> = {
 	color: "#fff",
 }
@@ -76,5 +75,5 @@ export const DrawerStyles: SxProps<Theme> = (theme) => ({
 		width: drawerWidth,
 		boxSizing: "border-box",
 		backgroundColor: theme.palette.secondary.main,
-	}
+	},
 })

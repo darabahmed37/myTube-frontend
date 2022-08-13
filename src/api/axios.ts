@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios"
 import { BASE_BACKEND_URL } from "config"
-import {BackendRoutes} from "api/auth/backend.routes"
+import { BackendRoutes } from "api/auth/backend.routes"
 
 const accessToken = localStorage.getItem("access")
 
