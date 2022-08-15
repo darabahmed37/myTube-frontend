@@ -8,37 +8,43 @@ import { Route } from "react-router-dom"
 import MainScreen from "pages/MainScreen"
 
 export interface IRoute {
-	link: string
+	path: string
 	element: ReactNode
 	child?: IRoute[]
+	index?: boolean
 }
 
 export const Routes: IRoute[] = [
 	{
-		link: "auth",
+		path: "auth",
 		element: <AuthenticateLayout />,
+
 		child: [
 			{
-				link: "sign-in/",
+				path: "sign-in/",
 				element: <Signin />,
+				index: true,
 			},
 			{
-				link: "sign-up/",
+				path: "sign-up/",
 				element: <Signup />,
 			},
 		],
 	},
 	{
-		link: "/",
+		path: "/",
 		element: <MainScreen />,
-		child: [{
-			link: "dashboard",
-			element: <Dashboard />,
-		}],
+		child: [
+			{
+				path: "dashboard",
+				element: <Dashboard />,
+				index: true,
+			},
+		],
 	},
 
 	{
-		link: "/redirecting",
+		path: "/redirecting",
 		element: <Redirecting />,
 	},
 ]
@@ -46,15 +52,16 @@ export const Routes: IRoute[] = [
 export function createRoutes(Routes: IRoute[]) {
 	let outputRoutes: ReactNode[] = Routes.map((route) => {
 		if (route.child === undefined) {
-			return <Route path={route.link} element={route.element} />
+			return <Route {...route} />
 		}
-		return <Route path={route.link} element={route.element}>
-			{createRoutes(route.child)}
-		</Route>
+		return (
+			<Route path={route.path} element={route.element} >
+				{createRoutes(route.child)}
+			</Route>
+		)
 	})
 	return outputRoutes
 }
-
 
 export enum ERoutes {
 	SIGN_IN = "/auth/sign-in",

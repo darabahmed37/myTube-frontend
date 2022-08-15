@@ -95,7 +95,7 @@ export const Link: SxProps<Theme> = (theme) => ({
 })
 
 export const navigationTitle: CSSProperties = {
-	display:"inline-block",
+	display: "inline-block",
 	fontSize: "0.8rem",
 	transform: "translateY(4rem)",
 }
