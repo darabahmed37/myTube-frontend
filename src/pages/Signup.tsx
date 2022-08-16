@@ -1,20 +1,19 @@
-import React, { ChangeEvent, FC, FormEventHandler, useState } from "react"
+import React, { ChangeEvent, FC, FormEventHandler, useEffect, useState } from "react"
 import { AxiosResponse } from "axios"
-import axios from "api/axios"
+import { isValidEmail } from "utils"
 import { ICredentials, IValidation } from "types/IAuth"
 import { useNavigate } from "react-router-dom"
 import { InputForm, lightText, Link, navigationTitle } from "layouts/AuthenticateLayout/styles"
 import GoogleButton from "react-google-button"
-import { getGoogleAuthUrl, signInWithEmailAndPassword } from "api/auth"
+import { getGoogleAuthUrl, signUpWithEmailAndPassword } from "api/auth"
 import { Link as MuiLink, TextField } from "@mui/material"
 import { RoundedButton } from "elements/button"
 import { ERoutes } from "routes"
-import { isValidEmail } from "utils"
 
 const Signin: FC = () => {
 	const navigate = useNavigate()
 
-	const [signInForm, setSignInForm] = useState<ICredentials>({
+	const [credentialsForm, setCredentialsForm] = useState<ICredentials>({
 		email: "",
 		password: "",
 	})
@@ -27,35 +26,25 @@ const Signin: FC = () => {
 		error: false,
 	})
 
-	async function signin() {
+	async function signUp() {
 		let response: AxiosResponse
 		try {
-			// @ts-ignore
-			const r=await signInWithEmailAndPassword(signInForm.email, signInForm.password)
-
-			navigate(ERoutes.DASHBOARD)
+			response = await signUpWithEmailAndPassword(credentialsForm.email, credentialsForm.password)
+			navigate("/sign-in")
 		} catch (e) {
 			// @ts-ignore
 			response = e.response as AxiosResponse
-			if (response?.status === 403) {
-				setPasswordValidation({
-					error: true,
-					helperText: "Invalid password",
-				})
-			} else if (response?.status === 404) {
+			if (response.status === 409) {
 				setEmailValidation({
 					error: true,
-					helperText: "User not found",
+					helperText: "User already exists",
 				})
-			} else if (response.status === 307) {
-				response = await axios.get(response.data.redirectUrl)
-				window.location.href = response.data.authorization_url
 			}
 		}
 	}
 
 	function validation(): boolean {
-		if (isValidEmail(signInForm.email) || signInForm.email.length === 0) {
+		if (isValidEmail(credentialsForm.email) || credentialsForm.email.length === 0) {
 			setEmailValidation(() => ({
 				error: false,
 				helperText: "",
@@ -66,7 +55,7 @@ const Signin: FC = () => {
 				helperText: "Please enter a valid email",
 			}))
 		}
-		if (signInForm.password.length > 6 || signInForm.password.length === 0) {
+		if (credentialsForm.password.length > 6 || credentialsForm.password.length === 0) {
 			setPasswordValidation(() => ({
 				error: false,
 				helperText: "",
@@ -83,14 +72,14 @@ const Signin: FC = () => {
 	const formSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
 		event.preventDefault()
 
-		if (signInForm.email.length === 0) {
+		if (credentialsForm.email.length === 0) {
 			setEmailValidation({
 				error: true,
 				helperText: "Please enter an email",
 			})
 			return
 		}
-		if (signInForm.password.length === 0) {
+		if (credentialsForm.password.length === 0) {
 			setPasswordValidation({
 				error: true,
 				helperText: "Please enter a password",
@@ -99,28 +88,32 @@ const Signin: FC = () => {
 		}
 
 		if (validation()) {
-			await signin()
+			await signUp()
 		}
 	}
 
 	function onStateChange(event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
-		setSignInForm({
-			...signInForm,
+		setCredentialsForm({
+			...credentialsForm,
 			[event.target.name]: event.target.value,
 		})
 	}
 
+	useEffect(() => {
+		validation()
+	}, [credentialsForm]) // eslint-disable-line react-hooks/exhaustive-deps
+
 	return (
 		<>
 			<div>
-				<span style={lightText}>SignIn</span>
+				<span style={lightText}>SignUp</span>
 			</div>
 			<div>
 				<GoogleButton
 					onClick={async () => {
 						await getGoogleAuthUrl()
 					}}
-					label={"SignIn with Google"}
+					label={"SignUp with Google"}
 					type={"light"}
 				/>
 			</div>
@@ -136,7 +129,7 @@ const Signin: FC = () => {
 					variant={"standard"}
 					name={"email"}
 					label={"Email"}
-					value={signInForm.email}
+					value={credentialsForm.email}
 					onChange={onStateChange}
 				/>
 				<TextField
@@ -146,7 +139,7 @@ const Signin: FC = () => {
 					size={"small"}
 					variant={"standard"}
 					type={"password"}
-					value={signInForm.password}
+					value={credentialsForm.password}
 					onChange={onStateChange}
 					label="Password"
 				/>
@@ -155,14 +148,14 @@ const Signin: FC = () => {
 			</InputForm>
 
 			<div style={navigationTitle}>
-				Don't have an Account
+				Already Have an Account
 				<MuiLink
 					sx={Link}
 					onClick={() => {
-						navigate(ERoutes.SIGN_UP)
+						navigate(ERoutes.SIGN_IN)
 					}}
 				>
-					SignUp
+					SignIn
 				</MuiLink>
 			</div>
 		</>
