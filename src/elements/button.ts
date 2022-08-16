@@ -1,5 +1,4 @@
-import { styled } from "@mui/material"
-import { Button, ButtonProps } from "@mui/material"
+import { Button, ButtonProps, styled } from "@mui/material"
 
 export const RoundedButton = styled(Button)<ButtonProps>((theme) => ({
 	borderRadius: "5em",

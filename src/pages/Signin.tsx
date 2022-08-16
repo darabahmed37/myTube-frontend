@@ -9,6 +9,7 @@ import { getGoogleAuthUrl, signInWithEmailAndPassword } from "api/auth"
 import { Link as MuiLink, TextField } from "@mui/material"
 import { RoundedButton } from "elements/button"
 import { ERoutes } from "routes"
+import { isValidEmail } from "utils"
 
 const Signin: FC = () => {
 	const navigate = useNavigate()
@@ -30,9 +31,9 @@ const Signin: FC = () => {
 		let response: AxiosResponse
 		try {
 			// @ts-ignore
-			await signInWithEmailAndPassword(signInForm.email, signInForm.password)
+			const r=await signInWithEmailAndPassword(signInForm.email, signInForm.password)
 
-			navigate(ERoutes.REDIRECTING)
+			navigate(ERoutes.DASHBOARD)
 		} catch (e) {
 			// @ts-ignore
 			response = e.response as AxiosResponse
@@ -53,8 +54,30 @@ const Signin: FC = () => {
 		}
 	}
 
-	function validation() {
-		return !emailValidation && passwordValidation
+	function validation(): boolean {
+		if (isValidEmail(signInForm.email) || signInForm.email.length === 0) {
+			setEmailValidation(() => ({
+				error: false,
+				helperText: "",
+			}))
+		} else {
+			setEmailValidation(() => ({
+				error: true,
+				helperText: "Please enter a valid email",
+			}))
+		}
+		if (signInForm.password.length > 6 || signInForm.password.length === 0) {
+			setPasswordValidation(() => ({
+				error: false,
+				helperText: "",
+			}))
+		} else {
+			setPasswordValidation(() => ({
+				error: true,
+				helperText: "Password must be at least 7 characters",
+			}))
+		}
+		return !(emailValidation.error && passwordValidation.error)
 	}
 
 	const formSubmit: FormEventHandler<HTMLFormElement> = async (event) => {

@@ -2,9 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom/client"
 import "index.css"
 import reportWebVitals from "./reportWebVitals"
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/react"
+
 import App from "./App"
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)

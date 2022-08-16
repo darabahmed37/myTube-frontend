@@ -6,7 +6,6 @@ import Drawer from "@mui/material/Drawer"
 import CssBaseline from "@mui/material/CssBaseline"
 import Toolbar from "@mui/material/Toolbar"
 import List from "@mui/material/List"
-import Typography from "@mui/material/Typography"
 import { Divider } from "elements/Divider"
 import IconButton from "@mui/material/IconButton"
 import MenuIcon from "@mui/icons-material/Menu"
@@ -20,9 +19,8 @@ import { OverridableComponent } from "@mui/material/OverridableComponent"
 import { SvgIconTypeMap } from "@mui/material"
 import DashboardIcon from "@mui/icons-material/Dashboard"
 
-import { AccountBoxSharp, SettingsOutlined, StackedLineChart } from "@mui/icons-material"
-import { AppBar, DrawerHeader, DrawerStyles, ListItemStyle, Main, textWhite } from "pages/MainScreen/style"
-import Dashboard from "pages/Dashboard"
+import { AccountBox, SettingsOutlined, StackedLineChart } from "@mui/icons-material"
+import { AppBar, DrawerHeader, DrawerStyles, ListItemStyle, Main, Profile, textWhite } from "layouts/MainScreen/style"
 import { Outlet } from "react-router-dom"
 
 interface IListItem {
@@ -45,10 +43,7 @@ const items: IListItem[] = [
 		title: "Settings",
 		iconButton: SettingsOutlined,
 	},
-	{
-		title: "Account",
-		iconButton: AccountBoxSharp,
-	},
+
 ]
 
 export default function MainScreen() {
@@ -78,9 +73,13 @@ export default function MainScreen() {
 					>
 						<MenuIcon />
 					</IconButton>
-					<Typography variant="h6" noWrap component="div">
-						Dashboard
-					</Typography>
+
+					<Profile>
+						<IconButton>
+							<AccountBox color={"secondary"} />
+						</IconButton>
+					</Profile>
+
 				</Toolbar>
 				<Divider />
 			</AppBar>

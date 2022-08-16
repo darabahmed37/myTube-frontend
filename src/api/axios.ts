@@ -16,6 +16,7 @@ const axiosApiInstance: AxiosInstance = axios.create({
 		"Content-Type": "application/json",
 	},
 })
+axiosApiInstance.interceptors.request.use(AuthorizationHeader)
 
 async function refreshAccessToken() {
 	const refreshToken = localStorage.getItem("refresh")
@@ -31,7 +32,7 @@ axiosApiInstance.interceptors.response.use(
 	(response) => {
 		return response
 	},
-	async function (error) {
+	async function(error) {
 		const originalRequest = error.config
 		if (error.response.status === 401 && !originalRequest._retry && error.response.data.code === "token_not_valid") {
 			originalRequest._retry = true
@@ -41,10 +42,10 @@ axiosApiInstance.interceptors.response.use(
 		}
 
 		localStorage.clear()
+		axios.defaults.headers.common["Authorization"] = ""
 		return Promise.reject(error)
-	}
+	},
 )
 
-axios.interceptors.request.use(AuthorizationHeader)
 
 export default axiosApiInstance

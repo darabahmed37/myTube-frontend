@@ -1,12 +1,9 @@
 import React, { FC } from "react"
 import { Card, CardContent, CardMedia, Typography } from "@mui/material"
 import { CardChildMaxWidth, CardStyles } from "components/VideoCard/style"
+import { VideoCardProps } from "types/ComponentProps"
 
-export interface VideoCardProps {
-	title: string
-	description: string
-	imageUrl: string
-}
+
 
 const VideoCard: FC<VideoCardProps> = ({ title, description, imageUrl }) => {
 	return (

@@ -1,6 +1,5 @@
 import React, { ChangeEvent, FC, FormEventHandler, useEffect, useState } from "react"
 import { AxiosResponse } from "axios"
-import axios from "api/axios"
 import { isValidEmail } from "utils"
 import { ICredentials, IValidation } from "types/IAuth"
 import { useNavigate } from "react-router-dom"

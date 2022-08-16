@@ -10,13 +10,6 @@ export function setRefreshToken(refreshToken: string) {
 	localStorage.setItem("refresh", refreshToken)
 }
 
-export function getAccessToken() {
-	return localStorage.getItem("access")
-}
-
-export function getRefreshToken() {
-	return localStorage.getItem("refresh")
-}
 
 export async function signInWithEmailAndPassword(email: string, password: string): Promise<AxiosResponse> {
 	let response: AxiosResponse
@@ -67,5 +60,13 @@ export async function getAccessTokenFromGoogle(code: string): Promise<AxiosRespo
 			window.location.href = (await axios.get(redirectUrl)).data.authorization_url
 		}
 	}
+	return response
+}
+
+
+export async function GetAllPlayLists(): Promise<AxiosResponse> {
+	let response: AxiosResponse
+
+	response = await axios.get(BackendRoutes.ALL_PLAYLISTS, {})
 	return response
 }

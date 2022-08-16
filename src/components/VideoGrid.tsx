@@ -1,12 +1,10 @@
 import React, { FC } from "react"
 import { Grid } from "@mui/material"
-import VideoCard, { VideoCardProps } from "components/VideoCard"
+import VideoCard from "components/VideoCard"
+import { VideoCardProps, VideoGridProps } from "types/ComponentProps"
 
-interface VideoGridProps {
-	videos: VideoCardProps[]
-}
 
-const VideoGrid: FC<VideoGridProps> = ({ videos }) => {
+const VideoGrid: FC<VideoCardProps[]> = (videos ) => {
 	return (
 		<Grid container gap={"2.5em"}>
 			{videos.map((video, index) => (

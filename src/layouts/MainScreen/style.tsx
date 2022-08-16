@@ -77,3 +77,10 @@ export const DrawerStyles: SxProps<Theme> = (theme) => ({
 		backgroundColor: theme.palette.secondary.main,
 	},
 })
+
+export const Profile = styled("div")`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  color: #000;
+`
