@@ -5,10 +5,10 @@ import { VideoCardProps } from "types/ComponentProps"
 
 
 
-const VideoCard: FC<VideoCardProps> = ({ title, description, imageUrl }) => {
+const VideoCard: FC<VideoCardProps> = ({ title, description, thumbnails }) => {
 	return (
 		<Card sx={CardStyles}>
-			<CardMedia component={"img"} image={imageUrl} alt={"Video Logo"} sx={CardChildMaxWidth} />
+			<CardMedia component={"img"} image={thumbnails.high.url} alt={"Video Logo"} sx={CardChildMaxWidth} />
 
 			<CardContent sx={CardChildMaxWidth}>
 				<Typography variant={"h6"} fontWeight={800} mb={2}>

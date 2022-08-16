@@ -3,10 +3,12 @@ import { AxiosResponse } from "axios"
 import { BackendRoutes } from "api/auth/backend.routes"
 
 export function setAccessToken(accessToken: string) {
+	localStorage.removeItem("access")
 	localStorage.setItem("access", accessToken)
 }
 
 export function setRefreshToken(refreshToken: string) {
+	localStorage.removeItem("refresh")
 	localStorage.setItem("refresh", refreshToken)
 }
 

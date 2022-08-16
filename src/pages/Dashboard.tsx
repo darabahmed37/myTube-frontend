@@ -24,7 +24,7 @@ const Dashboard: FC = () => {
 
 	useEffect(() => {
 		getPlayLists()
-	})
+	},[])
 	return (
 		<>
 			<VideoGrid videos={playlists} />
