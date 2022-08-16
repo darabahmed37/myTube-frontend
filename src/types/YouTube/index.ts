@@ -4,7 +4,7 @@ interface IYTImage {
 	height: number
 }
 
-interface IThumbnails {
+export interface IThumbnails {
 	default: IYTImage
 	medium: IYTImage
 	high: IYTImage
@@ -13,11 +13,15 @@ interface IThumbnails {
 }
 
 export interface YouTubePlayLists {
-	id: string
-	snippet: {
-		title: string
-		thumbnails: IThumbnails
-	}
+
+	items: {
+		id: string
+		snippet: {
+			title: string
+			thumbnails: IThumbnails
+			description:string
+		}
+	}[]
 }
 
 export interface YouTubePlayListItems {
