@@ -7,10 +7,10 @@ import { InputForm, lightText, Link, navigationTitle } from "layouts/Authenticat
 import GoogleButton from "react-google-button"
 import { getGoogleAuthUrl, signUpWithEmailAndPassword } from "api/auth"
 import { Link as MuiLink, TextField } from "@mui/material"
-import { RoundedButton } from "elements/button"
+import { RoundedButton } from "elements/Button"
 import { ERoutes } from "routes"
 
-const Signin: FC = () => {
+const Signup: FC = () => {
 	const navigate = useNavigate()
 
 	const [credentialsForm, setCredentialsForm] = useState<ICredentials>({
@@ -162,4 +162,4 @@ const Signin: FC = () => {
 	)
 }
 
-export default Signin
+export default Signup
