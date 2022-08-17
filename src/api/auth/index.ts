@@ -1,10 +1,14 @@
-import axios from "api/axios"
+import axios, { publicRoutes } from "api/axios"
 import { AxiosResponse } from "axios"
 import { BackendRoutes } from "api/auth/backend.routes"
 
 export function setAccessToken(accessToken: string) {
 	localStorage.removeItem("access")
 	localStorage.setItem("access", accessToken)
+}
+
+export function getAccessToken() {
+	return localStorage.getItem("access")
 }
 
 export function setRefreshToken(refreshToken: string) {
@@ -16,7 +20,7 @@ export function setRefreshToken(refreshToken: string) {
 export async function signInWithEmailAndPassword(email: string, password: string): Promise<AxiosResponse> {
 	let response: AxiosResponse
 
-	response = await axios.post(BackendRoutes.SIGN_IN, {
+	response = await publicRoutes.post(BackendRoutes.SIGN_IN, {
 		email,
 		password,
 	})
@@ -29,7 +33,7 @@ export async function signInWithEmailAndPassword(email: string, password: string
 export async function signUpWithEmailAndPassword(email: string, password: string): Promise<AxiosResponse> {
 	let response: AxiosResponse
 
-	response = await axios.post(BackendRoutes.SIGN_UP, {
+	response = await publicRoutes.post(BackendRoutes.SIGN_UP, {
 		email,
 		password,
 	})
@@ -40,7 +44,7 @@ export async function signUpWithEmailAndPassword(email: string, password: string
 export async function getGoogleAuthUrl(): Promise<void> {
 	let response: AxiosResponse
 
-	response = await axios.get(BackendRoutes.LOGIN_WITH_GOOGLE)
+	response = await publicRoutes.get(BackendRoutes.LOGIN_WITH_GOOGLE)
 
 	window.location.href = response.data.authorization_url
 }
@@ -48,7 +52,7 @@ export async function getGoogleAuthUrl(): Promise<void> {
 export async function getAccessTokenFromGoogle(code: string): Promise<AxiosResponse> {
 	let response: AxiosResponse
 	try {
-		response = await axios.post(BackendRoutes.OAUTH2CALLBACK, {
+		response = await publicRoutes.post(BackendRoutes.OAUTH2CALLBACK, {
 			code,
 		})
 		setAccessToken(response.data.access)
@@ -59,16 +63,31 @@ export async function getAccessTokenFromGoogle(code: string): Promise<AxiosRespo
 
 		if (response.status === 307) {
 			const { redirectUrl } = response.data
-			window.location.href = (await axios.get(redirectUrl)).data.authorization_url
+			window.location.href = (await publicRoutes.get(redirectUrl)).data.authorization_url
 		}
 	}
 	return response
+}
+
+export async function refreshAccessToken() {
+	const refreshToken = localStorage.getItem("refresh")
+	if (!refreshToken) {
+		localStorage.clear()
+		delete axios.defaults.headers.common["Authorization"]
+		throw new Error("No refresh token")
+	}
+
+	const response = await publicRoutes.post(BackendRoutes.REFRESH, {
+		refresh: refreshToken,
+	})
+	setAccessToken(response.data.access)
+	return response.data.access
 }
 
 
 export async function GetAllPlayLists(): Promise<AxiosResponse> {
 	let response: AxiosResponse
 
-	response = await axios.get(BackendRoutes.ALL_PLAYLISTS, {})
+	response = await axios.get(BackendRoutes.ALL_PLAYLISTS)
 	return response
 }
