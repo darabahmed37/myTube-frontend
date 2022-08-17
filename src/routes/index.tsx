@@ -6,7 +6,8 @@ import Dashboard from "pages/Dashboard"
 import Redirecting from "pages/Redirecting"
 import { Navigate, Route } from "react-router-dom"
 import MainScreen from "layouts/MainScreen"
-import { PrivateRoutes, PublicRoutes } from "utils/AuthRoutes"
+import { PrivateRoutes, PublicRoutes, } from "utils/AuthRoutes"
+import {uuid} from "utils"
 
 export interface IRoute {
 	path: string
@@ -15,6 +16,7 @@ export interface IRoute {
 	index?: boolean
 	protected?: boolean
 }
+
 
 export enum ERoutes {
 	SIGN_IN = "/auth",
@@ -60,32 +62,32 @@ export const Routes: IRoute[] = [
 ]
 
 export function createRoutes(Routes: IRoute[]) {
-	let outputRoutes: ReactNode[] = Routes.map((route, index) => {
+	let outputRoutes: ReactNode[] = Routes.map((route) => {
 		if (route.child === undefined) {
 			return route.protected ? (
-				<Route element={<PrivateRoutes />} key={index}>
-					<Route {...route} key={index} />
+				<Route element={<PrivateRoutes />} key={uuid()}>
+					<Route {...route} key={uuid()} />
 				</Route>
 			) : (
-				<Route element={<PublicRoutes />}>
-					<Route {...route} key={index} />
-				</Route>
+
+					<Route {...route} key={uuid()} />
+
 			)
 		}
 		return route.protected ? (
-			<Route element={<PrivateRoutes />} key={index}>
-				<Route path={route.path} key={index} element={route.element}>
+			<Route element={<PrivateRoutes />} key={uuid()}>
+				<Route path={route.path} key={uuid()} element={route.element}>
 					{createRoutes(route.child)}
 				</Route>
 			</Route>
 		) : (
-			<Route key={index} element={<PublicRoutes />}>
-				<Route path={route.path} key={index} element={route.element}>
+			<Route element={<PublicRoutes />}>
+				<Route path={route.path} key={uuid()} element={route.element}>
 					{createRoutes(route.child)}
 				</Route>
 			</Route>
 		)
 	})
-	outputRoutes.push(<Route key={Math.random() + 100000} path="*" element={<Navigate to={"/"} />} />)
+	outputRoutes.push(<Route key={uuid()} path="*" element={<Navigate to={"/"} />} />)
 	return outputRoutes
 }

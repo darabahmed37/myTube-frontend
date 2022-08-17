@@ -6,7 +6,11 @@ export const PrivateRoutes = () => {
 	return auth ? <Outlet /> : <Navigate to={ERoutes.SIGN_IN} />
 }
 
-export const PublicRoutes = () => {
+
+export function PublicRoutes() {
 	let auth = localStorage.getItem("access")
-	return auth ? <Navigate to={ERoutes.DASHBOARD} /> : <Outlet />
+
+	const outlet = <Outlet />
+	const navigate = <Navigate to={ERoutes.DASHBOARD} />
+	return auth ? navigate : outlet
 }
