@@ -14,4 +14,5 @@ export interface User {
 	picture: string
 	given_name: string
 	family_name: string
+	playlist: string
 }

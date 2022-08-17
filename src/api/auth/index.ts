@@ -19,8 +19,7 @@ export function setRefreshToken(refreshToken: string) {
 }
 
 export function logOut() {
-	localStorage.removeItem("access")
-	localStorage.removeItem("refresh")
+	localStorage.clear()
 	delete axios.defaults.headers.common["Authorization"]
 	window.location.href = "/"
 }

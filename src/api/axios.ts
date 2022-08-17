@@ -24,7 +24,7 @@ axiosApiInstance.interceptors.response.use(
 	(response) => {
 		return response
 	},
-	async function (error) {
+	async function(error) {
 		const originalRequest = error.config
 
 		if (error.response.status === 401) {
@@ -35,11 +35,12 @@ axiosApiInstance.interceptors.response.use(
 				return axiosApiInstance(originalRequest)
 			}
 			delete axiosApiInstance.defaults.headers.common["Authorization"]
+			console.log("Clear LocalStorage")
+			localStorage.clear()
+			return Promise.reject(error)
 		}
-		console.log("Clear LocalStorage")
-		localStorage.clear()
-		return Promise.reject(error)
-	}
+
+	},
 )
 
 export default axiosApiInstance

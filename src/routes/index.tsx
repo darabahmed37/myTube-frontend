@@ -6,8 +6,9 @@ import Dashboard from "pages/Dashboard"
 import Redirecting from "pages/Redirecting"
 import { Navigate, Route } from "react-router-dom"
 import MainScreen from "layouts/MainScreen"
-import { PrivateRoutes, PublicRoutes, } from "utils/AuthRoutes"
-import {uuid} from "utils"
+import { PrivateRoutes, PublicRoutes } from "utils/AuthRoutes"
+import { uuid } from "utils"
+import Player from "pages/Player"
 
 export interface IRoute {
 	path: string
@@ -47,9 +48,14 @@ export const Routes: IRoute[] = [
 		element: <MainScreen />,
 		protected: true,
 		child: [
+			// {
+			// 	path: "",
+			// 	element: <Dashboard />,
+			// 	index: true,
+			// },
 			{
 				path: "",
-				element: <Dashboard />,
+				element: <Player />,
 				index: true,
 			},
 		],
@@ -70,7 +76,7 @@ export function createRoutes(Routes: IRoute[]) {
 				</Route>
 			) : (
 
-					<Route {...route} key={uuid()} />
+				<Route {...route} key={uuid()} />
 
 			)
 		}

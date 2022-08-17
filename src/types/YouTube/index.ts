@@ -48,7 +48,19 @@ export interface YouTubeVideo {
 				tags: string[]
 				categoryId: string
 			}
-			player: string
+			player: {
+				embedHtml: string
+			}
 		}
 	]
+}
+
+
+export interface IFrameProps{
+	allow:string
+	allowFullScreen:string
+	frameBorder:string
+	height:string
+	src:string
+	width:string
 }

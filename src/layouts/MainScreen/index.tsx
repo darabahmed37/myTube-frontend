@@ -18,7 +18,7 @@ import ListItemText from "@mui/material/ListItemText"
 import { OverridableComponent } from "@mui/material/OverridableComponent"
 import { SvgIconTypeMap } from "@mui/material"
 import DashboardIcon from "@mui/icons-material/Dashboard"
-
+import {useNavigate} from "react-router-dom"
 import { SettingsOutlined, StackedLineChart } from "@mui/icons-material"
 import { AppBar, DrawerHeader, DrawerStyles, ListItemStyle, Main, Profile, textWhite } from "layouts/MainScreen/style"
 import { Outlet } from "react-router-dom"
@@ -29,20 +29,24 @@ interface IListItem {
 	iconButton: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
 		muiName: string
 	}
+	path: string
 }
 
 const items: IListItem[] = [
 	{
 		title: "Dashboard",
 		iconButton: DashboardIcon,
+		path: "/"
 	},
 	{
 		title: "Statistics",
 		iconButton: StackedLineChart,
+		path: "/statistics"
 	},
 	{
 		title: "Settings",
 		iconButton: SettingsOutlined,
+		path: "/settings"
 	},
 ]
 
@@ -58,7 +62,7 @@ export default function MainScreen() {
 	const handleDrawerClose = () => {
 		setOpen(false)
 	}
-
+const navigate=useNavigate()
 	return (
 		<Box sx={{ display: "flex" }}>
 			<CssBaseline />
@@ -89,7 +93,9 @@ export default function MainScreen() {
 				<Divider />
 				<List>
 					{items.map((listItem, index) => (
-						<ListItem disablePadding sx={ListItemStyle} key={index}>
+						<ListItem disablePadding sx={ListItemStyle} key={index} onClick={()=>{
+							navigate(listItem.path)
+						}}>
 							<ListItemButton>
 								<ListItemIcon sx={{ minWidth: "38px" }}>{createElement(listItem.iconButton)}</ListItemIcon>
 								<ListItemText primary={listItem.title} />
