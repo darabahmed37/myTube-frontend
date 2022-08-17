@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from "react"
-import { GetAllPlayLists } from "api/youtube"
-import { YouTubePlayLists } from "types/YouTube"
+import { GetPlayListById } from "api/youtube"
+import { YouTubePlayListItems } from "types/YouTube"
 import { VideoCardProps } from "types/ComponentProps"
 import VideoGrid from "components/VideoGrid"
 
@@ -10,7 +10,7 @@ const Dashboard: FC = () => {
 	async function getPlayLists() {
 		const temp: VideoCardProps[] = []
 
-		const youTubePlayLists: YouTubePlayLists = (await GetAllPlayLists()).data
+		const youTubePlayLists: YouTubePlayListItems = await GetPlayListById("PLwajP6X62-C5jtqbacQD4YElNnMOj1tFK")
 		youTubePlayLists.items.map((item) => {
 			temp.push({
 				title: item.snippet.title,
@@ -24,7 +24,7 @@ const Dashboard: FC = () => {
 
 	useEffect(() => {
 		getPlayLists()
-	},[])
+	}, [])
 	return (
 		<>
 			<VideoGrid videos={playlists} />

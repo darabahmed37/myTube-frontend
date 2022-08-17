@@ -44,7 +44,6 @@ const items: IListItem[] = [
 		title: "Settings",
 		iconButton: SettingsOutlined,
 	},
-
 ]
 
 export default function MainScreen() {
@@ -78,7 +77,6 @@ export default function MainScreen() {
 					<Profile>
 						<ProfileMenu />
 					</Profile>
-
 				</Toolbar>
 				<Divider />
 			</AppBar>

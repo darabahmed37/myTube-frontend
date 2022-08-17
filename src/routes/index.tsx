@@ -1,12 +1,12 @@
 import React, { ReactNode } from "react"
 import AuthenticateLayout from "layouts/AuthenticateLayout"
-import Signin from "pages/Signin/Signin"
-import Signup from "pages/Signup/Signup"
-import Dashboard from "pages/Dashboard/Dashboard"
-import Redirecting from "pages/Redirecting/Redirecting"
+import Signin from "pages/Signin"
+import Signup from "pages/Signup"
+import Dashboard from "pages/Dashboard"
+import Redirecting from "pages/Redirecting"
 import { Navigate, Route } from "react-router-dom"
 import MainScreen from "layouts/MainScreen"
-import { PrivateRoutes } from "utils/PrivateRoute"
+import { PrivateRoutes, PublicRoutes } from "utils/AuthRoutes"
 
 export interface IRoute {
 	path: string
@@ -67,7 +67,9 @@ export function createRoutes(Routes: IRoute[]) {
 					<Route {...route} key={index} />
 				</Route>
 			) : (
-				<Route {...route} key={index} />
+				<Route element={<PublicRoutes />}>
+					<Route {...route} key={index} />
+				</Route>
 			)
 		}
 		return route.protected ? (
@@ -77,8 +79,10 @@ export function createRoutes(Routes: IRoute[]) {
 				</Route>
 			</Route>
 		) : (
-			<Route path={route.path} key={index} element={route.element}>
-				{createRoutes(route.child)}
+			<Route key={index} element={<PublicRoutes />}>
+				<Route path={route.path} key={index} element={route.element}>
+					{createRoutes(route.child)}
+				</Route>
 			</Route>
 		)
 	})

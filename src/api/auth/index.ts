@@ -91,5 +91,3 @@ export async function refreshAccessToken() {
 	setAccessToken(response.data.access)
 	return response.data.access
 }
-
-

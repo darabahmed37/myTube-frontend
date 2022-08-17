@@ -32,7 +32,7 @@ const Signin: FC = () => {
 		try {
 			// @ts-ignore
 
-			const r=await signInWithEmailAndPassword(signInForm.email, signInForm.password)
+			const r = await signInWithEmailAndPassword(signInForm.email, signInForm.password)
 
 			navigate(ERoutes.DASHBOARD)
 		} catch (e) {

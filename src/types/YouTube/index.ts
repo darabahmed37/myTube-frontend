@@ -13,13 +13,12 @@ export interface IThumbnails {
 }
 
 export interface YouTubePlayLists {
-
 	items: {
 		id: string
 		snippet: {
 			title: string
 			thumbnails: IThumbnails
-			description:string
+			description: string
 		}
 	}[]
 }

@@ -1,10 +1,8 @@
-import { theme } from "theme"
 import { PaperProps } from "@mui/material"
 
 export const MenuPaperSxProps: Partial<PaperProps> = {
 	elevation: 0,
 	sx: {
-
 		overflow: "visible",
 		filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
 		mt: 1.5,
@@ -16,7 +14,7 @@ export const MenuPaperSxProps: Partial<PaperProps> = {
 			mr: 1,
 		},
 		"&:before": {
-			content: "\"\"",
+			content: '""',
 			display: "block",
 			position: "absolute",
 			top: 0,

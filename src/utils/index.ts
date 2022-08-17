@@ -5,5 +5,5 @@ export function isValidEmail(email: string): boolean {
 }
 
 export function getUser(): User {
-	return (JSON.parse(localStorage.getItem("user") || "{}")).user as User
+	return JSON.parse(localStorage.getItem("user") || "{}").user as User
 }

@@ -8,8 +8,6 @@ const App: FC = () => {
 	return (
 		<ThemeProvider theme={theme}>
 			<BrowserRouter>
-
-
 				<Routes>{createRoutes(RouteList)}</Routes>
 			</BrowserRouter>
 		</ThemeProvider>

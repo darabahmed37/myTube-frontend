@@ -11,7 +11,6 @@ import Settings from "@mui/icons-material/Settings"
 import Logout from "@mui/icons-material/Logout"
 import { MenuBoxSxProps, MenuPaperSxProps } from "layouts/MainScreen/ProfileMenu/style"
 import { logOut } from "api/auth"
-import { AccountBox } from "@mui/icons-material"
 import { getUser } from "utils"
 
 export default function ProfileMenu() {
@@ -23,7 +22,7 @@ export default function ProfileMenu() {
 	const handleClose = () => {
 		setAnchorEl(null)
 	}
-const user=getUser()
+	const user = getUser()
 	return (
 		<>
 			<Box sx={MenuBoxSxProps}>
@@ -36,7 +35,7 @@ const user=getUser()
 						aria-haspopup="true"
 						aria-expanded={open ? "true" : undefined}
 					>
-					<Avatar src={user.picture}/>
+						<Avatar src={user.picture} />
 					</IconButton>
 				</Tooltip>
 			</Box>
@@ -51,7 +50,7 @@ const user=getUser()
 				anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
 			>
 				<MenuItem>
-					<Avatar  src={getUser().picture} alt={getUser().given_name}/> {getUser().given_name}
+					<Avatar src={getUser().picture} alt={getUser().given_name} /> {getUser().given_name}
 				</MenuItem>
 
 				<Divider />
