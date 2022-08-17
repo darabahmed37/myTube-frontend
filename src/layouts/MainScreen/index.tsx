@@ -19,9 +19,10 @@ import { OverridableComponent } from "@mui/material/OverridableComponent"
 import { SvgIconTypeMap } from "@mui/material"
 import DashboardIcon from "@mui/icons-material/Dashboard"
 
-import { AccountBox, SettingsOutlined, StackedLineChart } from "@mui/icons-material"
+import { SettingsOutlined, StackedLineChart } from "@mui/icons-material"
 import { AppBar, DrawerHeader, DrawerStyles, ListItemStyle, Main, Profile, textWhite } from "layouts/MainScreen/style"
 import { Outlet } from "react-router-dom"
+import ProfileMenu from "layouts/MainScreen/ProfileMenu"
 
 interface IListItem {
 	title: string
@@ -75,9 +76,7 @@ export default function MainScreen() {
 					</IconButton>
 
 					<Profile>
-						<IconButton>
-							<AccountBox color={"secondary"} />
-						</IconButton>
+						<ProfileMenu />
 					</Profile>
 
 				</Toolbar>

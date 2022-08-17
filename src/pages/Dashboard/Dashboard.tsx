@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react"
-import { GetAllPlayLists } from "api/auth"
+import { GetAllPlayLists } from "api/youtube"
 import { YouTubePlayLists } from "types/YouTube"
 import { VideoCardProps } from "types/ComponentProps"
 import VideoGrid from "components/VideoGrid"

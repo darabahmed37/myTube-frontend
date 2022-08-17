@@ -33,7 +33,6 @@ axiosApiInstance.interceptors.response.use(
 			if (!originalRequest._retry && error.response.data.code === "token_not_valid") {
 				originalRequest._retry = true
 				const access_token = await refreshAccessToken()
-				console.log(access_token)
 				axiosApiInstance.defaults.headers.common["Authorization"] = "Bearer " + access_token
 				return axiosApiInstance(originalRequest)
 			}
