@@ -10,7 +10,6 @@ interface YouTubeVideoProps {
 }
 
 const YouTube: FC<YouTubeVideoProps> = ({ embedHtml, title }) => {
-
 	const [props, setProps] = useState<IFrameProps>({
 		src: "",
 		frameBorder: "0",
@@ -19,7 +18,6 @@ const YouTube: FC<YouTubeVideoProps> = ({ embedHtml, title }) => {
 	})
 
 	useEffect(() => {
-		console.log("useEffect called")
 		const iframe = parse(embedHtml) as JSX.Element
 
 		setProps({
@@ -27,9 +25,7 @@ const YouTube: FC<YouTubeVideoProps> = ({ embedHtml, title }) => {
 			frameBorder: iframe.props.frameBorder,
 			allow: iframe.props.allow,
 			allowFullScreen: iframe.props.allowFullScreen,
-
 		})
-
 	}, [embedHtml])
 
 	return (
@@ -39,4 +35,4 @@ const YouTube: FC<YouTubeVideoProps> = ({ embedHtml, title }) => {
 	)
 }
 
-export default YouTube
+export default React.memo(YouTube)

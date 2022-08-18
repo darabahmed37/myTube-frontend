@@ -59,4 +59,4 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 	)
 }
 
-export default Player
+export default React.memo(Player)

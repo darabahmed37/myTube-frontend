@@ -21,4 +21,4 @@ const VideoGrid: FC<VideoGridProps> = ({ videos }) => {
 	)
 }
 
-export default VideoGrid
+export default React.memo(VideoGrid)
