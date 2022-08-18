@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios"
 import axios from "api/axios"
-import { generatePlayListByIdUrl, YoutubeRoutes } from "api/youtube/routes"
-import { YouTubePlayListItems } from "types/YouTube"
+import { generatePlayListByIdUrl, generateVideoByIdUrl, YoutubeRoutes } from "api/youtube/routes"
+import { IYouTubePlayListItems, IYouTubeVideo } from "types/YouTube"
 
 export async function GetAllPlayLists(): Promise<AxiosResponse> {
 	let response: AxiosResponse
@@ -10,9 +10,16 @@ export async function GetAllPlayLists(): Promise<AxiosResponse> {
 	return response
 }
 
-export async function GetPlayListById(id: string): Promise<YouTubePlayListItems> {
+export async function GetPlayListById(id: string): Promise<IYouTubePlayListItems> {
 	let response: AxiosResponse
 
 	response = await axios.get(generatePlayListByIdUrl(id))
-	return response.data as YouTubePlayListItems
+	return response.data as IYouTubePlayListItems
+}
+
+export async function getVideoById(id: string): Promise<IYouTubeVideo> {
+	let response: AxiosResponse
+
+	response = await axios.get(generateVideoByIdUrl(id))
+	return response.data as IYouTubeVideo
 }

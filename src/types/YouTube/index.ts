@@ -12,7 +12,7 @@ export interface IThumbnails {
 	maxres: IYTImage
 }
 
-export interface YouTubePlayLists {
+export interface IYouTubePlayLists {
 	items: {
 		id: string
 		snippet: {
@@ -23,21 +23,22 @@ export interface YouTubePlayLists {
 	}[]
 }
 
-export interface YouTubePlayListItems {
+export interface IYouTubePlayListItems {
 	items: {
 		id: string
 		snippet: {
 			title: string
 			description: string
 			thumbnails: IThumbnails
+			resourceId: {
+				videoId: string
+			}
 		}
-		resourceId: {
-			videoId: string
-		}
+
 	}[]
 }
 
-export interface YouTubeVideo {
+export interface IYouTubeVideo {
 	items: [
 		{
 			id: string
@@ -56,11 +57,11 @@ export interface YouTubeVideo {
 }
 
 
-export interface IFrameProps{
-	allow:string
-	allowFullScreen:string
-	frameBorder:string
-	height:string
-	src:string
-	width:string
+export interface IFrameProps {
+	allow: string
+	allowFullScreen: string
+	frameBorder: string
+	height: string
+	src: string
+	width: string
 }

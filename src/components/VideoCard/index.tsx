@@ -2,16 +2,21 @@ import React, { FC } from "react"
 import { Card, CardContent, CardMedia, Typography } from "@mui/material"
 import { CardMediaSx, CardStyles } from "components/VideoCard/style"
 import { VideoCardProps } from "types/ComponentProps"
+import { useNavigate } from "react-router-dom"
 
-const VideoCard: FC<VideoCardProps> = ({ title, description, thumbnails }) => {
+const VideoCard: FC<VideoCardProps> = ({ title, description, thumbnails, videoId }) => {
 	const [elevation, setElevation] = React.useState(0)
-
+	const navigate = useNavigate()
 	return (
 		<Card sx={CardStyles} elevation={elevation} onMouseEnter={() => {
 			setElevation(5)
 		}} onMouseLeave={() => {
 			setElevation(0)
-		}}>
+		}}
+					onClick={() => {
+						navigate(`/${videoId}`)
+					}}
+		>
 			<CardMedia component={"img"} image={thumbnails.high.url} alt={"Video Logo"} sx={CardMediaSx} />
 
 			<CardContent sx={CardMediaSx}>

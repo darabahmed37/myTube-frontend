@@ -5,4 +5,5 @@ export interface VideoCardProps {
 	description: string
 	thumbnails: IThumbnails
 	id: string
+	videoId: string
 }
