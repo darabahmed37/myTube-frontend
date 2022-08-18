@@ -1,22 +1,23 @@
-import React, { FC } from "react"
-import { Grid } from "@mui/material"
+import React, { FC, useContext } from "react"
+import { Grid, Typography } from "@mui/material"
 import VideoCard from "components/VideoCard"
 import { VideoCardProps } from "types/ComponentProps"
 import { CardGrid } from "components/VideoGrid/style"
+import { playListContext } from "App"
 
-
-interface VideoGridProps {
-	videos: VideoCardProps[]
-}
-
-const VideoGrid: FC<VideoGridProps> = ({ videos }) => {
+const VideoGrid: FC = () => {
+	const playlist = useContext<VideoCardProps[]>(playListContext)
 	return (
 		<Grid container gap={"2.5em"}>
-			{videos.map((vid, index) => (
-				<Grid item key={index} sx={CardGrid}>
-					<VideoCard {...vid} />
-				</Grid>
-			))}
+			{playlist.length ? (
+				playlist.map((vid, index) => (
+					<Grid item key={index} sx={CardGrid}>
+						<VideoCard {...vid} />
+					</Grid>
+				))
+			) : (
+				<Typography variant={"h3"}>Loading...</Typography>
+			)}
 		</Grid>
 	)
 }

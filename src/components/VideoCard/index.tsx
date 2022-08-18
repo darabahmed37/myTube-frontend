@@ -8,14 +8,23 @@ const VideoCard: FC<VideoCardProps> = ({ title, description, thumbnails, videoId
 	const [elevation, setElevation] = React.useState(0)
 	const navigate = useNavigate()
 	return (
-		<Card sx={CardStyles} elevation={elevation} onMouseEnter={() => {
-			setElevation(5)
-		}} onMouseLeave={() => {
-			setElevation(0)
-		}}
-					onClick={() => {
-						navigate(`/${videoId}`)
-					}}
+		<Card
+			sx={CardStyles}
+			elevation={elevation}
+			onMouseEnter={() => {
+				setElevation(5)
+			}}
+			onMouseLeave={() => {
+				setElevation(0)
+			}}
+			onClick={() => {
+				navigate(`/${videoId}`)
+				window.scroll({
+					top: 0,
+					left: 0,
+					behavior: "smooth",
+				})
+			}}
 		>
 			<CardMedia component={"img"} image={thumbnails.high.url} alt={"Video Logo"} sx={CardMediaSx} />
 
