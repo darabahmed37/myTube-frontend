@@ -34,7 +34,6 @@ export interface IYouTubePlayListItems {
 				videoId: string
 			}
 		}
-
 	}[]
 }
 
@@ -55,7 +54,6 @@ export interface IYouTubeVideo {
 		}
 	]
 }
-
 
 export interface IFrameProps {
 	allow: string

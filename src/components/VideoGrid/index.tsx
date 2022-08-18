@@ -1,12 +1,12 @@
 import React, { FC, useContext } from "react"
-import { Grid, Typography } from "@mui/material"
+import { Grid, LinearProgress } from "@mui/material"
 import VideoCard from "components/VideoCard"
 import { VideoCardProps } from "types/ComponentProps"
 import { CardGrid } from "components/VideoGrid/style"
-import { playListContext } from "App"
+import { PlaylistContext } from "App"
 
 const VideoGrid: FC = () => {
-	const playlist = useContext<VideoCardProps[]>(playListContext)
+	const playlist = useContext<VideoCardProps[]>(PlaylistContext)
 	return (
 		<Grid container gap={"2.5em"}>
 			{playlist.length ? (
@@ -16,7 +16,7 @@ const VideoGrid: FC = () => {
 					</Grid>
 				))
 			) : (
-				<Typography variant={"h3"}>Loading...</Typography>
+				<LinearProgress />
 			)}
 		</Grid>
 	)

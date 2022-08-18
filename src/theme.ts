@@ -11,6 +11,16 @@ export const theme = createTheme({
 				fontFamily: "Inter, Arial, Helvetica, sans-serif",
 			},
 		},
+		MuiLinearProgress: {
+			styleOverrides: {
+				root: {
+					width: "100%",
+				},
+			},
+			defaultProps: {
+				color: "secondary",
+			},
+		},
 	},
 
 	palette: {

@@ -6,24 +6,26 @@ import { createRoutes, Routes as RouteList } from "routes"
 import { VideoCardProps } from "types/ComponentProps"
 import { getPlayLists, getUser } from "utils"
 
-export const playListContext = React.createContext<VideoCardProps[]>([])
+export const PlaylistContext = React.createContext<VideoCardProps[]>([])
 const App: FC = () => {
 	const [playLists, setPlayLists] = React.useState<VideoCardProps[]>([])
 
 	const user = getUser()
 	useEffect(() => {
-		getPlayLists(user.playlist).then((data) => {
-			setPlayLists(data)
-		})
-	})
+		if (user) {
+			getPlayLists(user.playlist).then((data) => {
+				setPlayLists(data)
+			})
+		}
+	}, [user])
 	return (
-		<playListContext.Provider value={playLists}>
+		<PlaylistContext.Provider value={playLists}>
 			<ThemeProvider theme={theme}>
 				<BrowserRouter>
 					<Routes>{createRoutes(RouteList)}</Routes>
 				</BrowserRouter>
 			</ThemeProvider>
-		</playListContext.Provider>
+		</PlaylistContext.Provider>
 	)
 }
 

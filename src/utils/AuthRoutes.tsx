@@ -6,7 +6,6 @@ export const PrivateRoutes = () => {
 	return auth ? <Outlet /> : <Navigate to={ERoutes.SIGN_IN} />
 }
 
-
 export function PublicRoutes() {
 	let auth = localStorage.getItem("access")
 

@@ -7,10 +7,10 @@ export function isValidEmail(email: string): boolean {
 	return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)
 }
 
-export function getUser(): User {
-	return JSON.parse(localStorage.getItem("user") || "{}").user as User
+export function getUser(): User | null {
+	const user = localStorage.getItem("user")
+	return user ? JSON.parse(user).user : null
 }
-
 
 export async function getPlayLists(id: string) {
 	const youTubePlayLists: IYouTubePlayListItems = await GetPlayListById(id)

@@ -4,8 +4,9 @@ import Box from "@mui/material/Box"
 import VideoGrid from "components/VideoGrid"
 import { getVideoById } from "api/youtube"
 import { IYouTubeVideo } from "types/YouTube"
-import { Typography } from "@mui/material"
+import { LinearProgress, Paper, Typography } from "@mui/material"
 import YouTube from "components/YouTube"
+import { PaperSx } from "layouts/Player/style"
 
 interface VideoValues {
 	embedHTML: string
@@ -34,18 +35,18 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 
 	return (
 		<Container>
-			<Box>
-				{video.embedHTML ? (
+			{video.embedHTML ? (
+				<Paper sx={PaperSx}>
 					<YouTube embedHtml={video?.embedHTML} title={video?.title} />
-				) : (
-					<Typography variant={"h3"}>Loading...</Typography>
-				)}
-				<Typography variant={"h5"} fontWeight={"600"}>
-					{video?.title}
-				</Typography>
-				<Typography variant={"body1"}>{video.description}</Typography>
-			</Box>
 
+					<Typography variant={"h5"} fontWeight={"600"}>
+						{video?.title}
+					</Typography>
+					<Typography variant={"body1"}>{video.description}</Typography>
+				</Paper>
+			) : (
+				<LinearProgress />
+			)}
 			<Box>
 				<VideoGrid />
 			</Box>

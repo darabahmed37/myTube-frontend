@@ -35,7 +35,7 @@ export default function ProfileMenu() {
 						aria-haspopup="true"
 						aria-expanded={open ? "true" : undefined}
 					>
-						<Avatar src={user.picture} />
+						<Avatar src={user?.picture} />
 					</IconButton>
 				</Tooltip>
 			</Box>
@@ -50,7 +50,7 @@ export default function ProfileMenu() {
 				anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
 			>
 				<MenuItem>
-					<Avatar src={getUser().picture} alt={getUser().given_name} /> {getUser().given_name}
+					<Avatar src={getUser()?.picture} alt={getUser()?.given_name} /> {getUser()?.given_name}
 				</MenuItem>
 
 				<Divider />
