@@ -61,7 +61,6 @@ export interface IFrameProps {
 	allow: string
 	allowFullScreen: string
 	frameBorder: string
-	height: string
+
 	src: string
-	width: string
 }
