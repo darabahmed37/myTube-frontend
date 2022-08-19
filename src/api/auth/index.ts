@@ -1,12 +1,13 @@
 import axios, { publicRoutes } from "api/axios"
 import { AxiosResponse } from "axios"
 import { AuthRoutes } from "api/auth/routes"
-import { getUser } from "api/profile"
+import { setUser } from "api/profile"
 
-export function setAccessToken(accessToken: string) {
+export async function setAccessToken(accessToken: string) {
 	localStorage.removeItem("access")
-	getUser()
+
 	localStorage.setItem("access", accessToken)
+	await setUser()
 }
 
 export function getAccessToken() {
@@ -15,6 +16,7 @@ export function getAccessToken() {
 
 export function setRefreshToken(refreshToken: string) {
 	localStorage.removeItem("refresh")
+
 	localStorage.setItem("refresh", refreshToken)
 }
 
@@ -31,7 +33,7 @@ export async function signInWithEmailAndPassword(email: string, password: string
 		email,
 		password,
 	})
-	setAccessToken(response.data.access)
+	await setAccessToken(response.data.access)
 	setRefreshToken(response.data.refresh)
 
 	return response
@@ -62,7 +64,7 @@ export async function getAccessTokenFromGoogle(code: string): Promise<AxiosRespo
 		response = await publicRoutes.post(AuthRoutes.OAUTH2CALLBACK, {
 			code,
 		})
-		setAccessToken(response.data.access)
+		await setAccessToken(response.data.access)
 		setRefreshToken(response.data.refresh)
 	} catch (e) {
 		// @ts-ignore
@@ -87,6 +89,7 @@ export async function refreshAccessToken() {
 	const response = await publicRoutes.post(AuthRoutes.REFRESH, {
 		refresh: refreshToken,
 	})
-	setAccessToken(response.data.access)
+
+	await setAccessToken(response.data.access)
 	return response.data.access
 }

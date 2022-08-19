@@ -11,10 +11,12 @@ const VideoGrid: FC = () => {
 	const user = getUser()
 
 	useEffect(() => {
-		getPlayLists(user?.playlist as string).then(data => {
-			setPlaylist(data)
-		})
-	},[user?.playlist])
+		if (user?.playlist)
+			getPlayLists(user?.playlist).then(data => {
+				setPlaylist(data)
+
+			})
+	}, [user?.playlist])
 	return (
 		<Grid container gap={"2.5em"}>
 			{playlist.length ? (

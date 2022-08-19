@@ -14,6 +14,7 @@ export function getUser(): User | null {
 
 export async function getPlayLists(id: string) {
 	const youTubePlayLists: IYouTubePlayListItems = await getPlayListById(id)
+
 	const temp: VideoCardProps[] = youTubePlayLists.items.map((item) => ({
 		title: item.snippet.title,
 		thumbnails: item.snippet.thumbnails,
