@@ -3,7 +3,8 @@ import { Grid, LinearProgress } from "@mui/material"
 import VideoCard from "components/VideoCard"
 import { CardGrid } from "components/VideoGrid/style"
 import { VideoCardProps } from "types/ComponentProps"
-import { getPlayLists, getUser } from "utils"
+import {  getUser } from "utils"
+import { getPlayLists } from "components/VideoGrid/services"
 
 
 const VideoGrid: FC = () => {

@@ -6,7 +6,7 @@ import Dashboard from "pages/Dashboard"
 import Redirecting from "pages/Redirecting"
 import { Navigate, Route } from "react-router-dom"
 import MainScreen from "layouts/MainScreen"
-import { PrivateRoutes, PublicRoutes } from "utils/AuthRoutes"
+import { PrivateRoutes, PublicRoutes } from "routes/AuthRoutes"
 import PlayerScreen from "pages/PlayerScreen"
 
 export interface IRoute {

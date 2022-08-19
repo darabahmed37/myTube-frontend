@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom"
-import { ERoutes } from "routes"
+import { ERoutes } from "routes/index"
 
 export const PrivateRoutes = () => {
 	let auth = localStorage.getItem("access")
