@@ -1,6 +1,6 @@
 import { User } from "types/IAuth"
 import { IYouTubePlayListItems } from "types/YouTube"
-import { GetPlayListById } from "api/youtube"
+import { getPlayListById } from "api/youtube"
 import { VideoCardProps } from "types/ComponentProps"
 
 export function isValidEmail(email: string): boolean {
@@ -13,7 +13,7 @@ export function getUser(): User | null {
 }
 
 export async function getPlayLists(id: string) {
-	const youTubePlayLists: IYouTubePlayListItems = await GetPlayListById(id)
+	const youTubePlayLists: IYouTubePlayListItems = await getPlayListById(id)
 	const temp: VideoCardProps[] = youTubePlayLists.items.map((item) => ({
 		title: item.snippet.title,
 		thumbnails: item.snippet.thumbnails,
@@ -23,3 +23,5 @@ export async function getPlayLists(id: string) {
 	}))
 	return temp
 }
+
+

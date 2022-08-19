@@ -1,12 +1,20 @@
-import React, { FC, useContext } from "react"
+import React, { FC, useEffect } from "react"
 import { Grid, LinearProgress } from "@mui/material"
 import VideoCard from "components/VideoCard"
-import { VideoCardProps } from "types/ComponentProps"
 import { CardGrid } from "components/VideoGrid/style"
-import { PlaylistContext } from "App"
+import { VideoCardProps } from "types/ComponentProps"
+import { getPlayLists, getUser } from "utils"
+
 
 const VideoGrid: FC = () => {
-	const playlist = useContext<VideoCardProps[]>(PlaylistContext)
+	const [playlist, setPlaylist] = React.useState<VideoCardProps[]>([])
+	const user = getUser()
+
+	useEffect(() => {
+		getPlayLists(user?.playlist as string).then(data => {
+			setPlaylist(data)
+		})
+	},[user?.playlist])
 	return (
 		<Grid container gap={"2.5em"}>
 			{playlist.length ? (
