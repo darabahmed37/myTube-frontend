@@ -29,9 +29,11 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 			description: videoTemp.items[0].snippet.description,
 		})
 	}, [videoId])
+
 	useEffect(() => {
-		initialize()
-	}, [initialize, videoId])
+		initialize().then(() => {
+		})
+	}, [initialize])
 
 	return (
 		<Container>

@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react"
+import React, { FC, useCallback, useEffect } from "react"
 import { ThemeProvider } from "@mui/material"
 import { theme } from "theme"
 import { BrowserRouter, Routes } from "react-router-dom"
@@ -11,13 +11,19 @@ const App: FC = () => {
 	const [playLists, setPlayLists] = React.useState<VideoCardProps[]>([])
 
 	const user = getUser()
-	useEffect(() => {
-		if (user) {
+
+	const initializePlayList = useCallback(async () => {
+		if (user?.playlist) {
 			getPlayLists(user.playlist).then((data) => {
 				setPlayLists(data)
 			})
 		}
-	}, [user])
+	}, [user?.playlist])
+
+	useEffect(() => {
+		initializePlayList().then(() => {
+		})
+	}, [initializePlayList])
 	return (
 		<PlaylistContext.Provider value={playLists}>
 			<ThemeProvider theme={theme}>
