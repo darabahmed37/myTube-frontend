@@ -21,7 +21,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard"
 import { Outlet, useNavigate } from "react-router-dom"
 import { SettingsOutlined, StackedLineChart } from "@mui/icons-material"
 import { AppBar, DrawerHeader, DrawerStyles, ListItemStyle, Main, Profile, textWhite } from "layouts/MainScreen/style"
-import ProfileMenu from "layouts/MainScreen/ProfileMenu"
+import ProfileMenu from "components/ProfileMenu"
 
 interface IListItem {
 	title: string

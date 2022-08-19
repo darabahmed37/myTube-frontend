@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton"
 import Tooltip from "@mui/material/Tooltip"
 import Settings from "@mui/icons-material/Settings"
 import Logout from "@mui/icons-material/Logout"
-import { MenuBoxSxProps, MenuPaperSxProps } from "layouts/MainScreen/ProfileMenu/style"
+import { MenuBoxSxProps, MenuPaperSxProps } from "components/ProfileMenu/style"
 import { logOut } from "api/auth"
 import { getUser } from "utils"
 

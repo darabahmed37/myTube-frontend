@@ -21,7 +21,6 @@ export const MenuPaperSxProps: Partial<PaperProps> = {
 			right: 14,
 			width: 10,
 			height: 10,
-			// bgcolor: "theme.pa.colors.primary",
 			transform: "translateY(-50%) rotate(45deg)",
 			zIndex: 0,
 		},
