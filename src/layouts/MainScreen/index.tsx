@@ -1,7 +1,6 @@
 import * as React from "react"
 import { createElement, useState } from "react"
 import { useTheme } from "@mui/material/styles"
-import Box from "@mui/material/Box"
 import Drawer from "@mui/material/Drawer"
 import CssBaseline from "@mui/material/CssBaseline"
 import Toolbar from "@mui/material/Toolbar"
@@ -20,8 +19,9 @@ import { SvgIconTypeMap } from "@mui/material"
 import DashboardIcon from "@mui/icons-material/Dashboard"
 import { Outlet, useNavigate } from "react-router-dom"
 import { SettingsOutlined, StackedLineChart } from "@mui/icons-material"
-import { AppBar, DrawerHeader, DrawerStyles, ListItemStyle, Main, Profile, textWhite } from "layouts/MainScreen/style"
+import { DrawerStyles, ListItemStyle, textWhite } from "layouts/MainScreen/style"
 import ProfileMenu from "components/ProfileMenu"
+import { AppBar, DrawerHeader, Main, MainBox, Profile } from "./emotion"
 
 interface IListItem {
 	title: string
@@ -63,7 +63,7 @@ export default function MainScreen() {
 	}
 	const navigate = useNavigate()
 	return (
-		<Box sx={{ display: "flex" }}>
+		<MainBox>
 			<CssBaseline />
 			<AppBar position="fixed" open={open} elevation={0}>
 				<Toolbar>
@@ -113,6 +113,6 @@ export default function MainScreen() {
 
 				<Outlet />
 			</Main>
-		</Box>
+		</MainBox>
 	)
 }

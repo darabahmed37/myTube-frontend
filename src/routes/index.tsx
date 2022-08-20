@@ -8,6 +8,7 @@ import { Navigate, Route } from "react-router-dom"
 import MainScreen from "layouts/MainScreen"
 import { PrivateRoutes, PublicRoutes } from "routes/AuthRoutes"
 import PlayerScreen from "pages/PlayerScreen"
+import Settings from "pages/Settings"
 
 export interface IRoute {
 	path: string
@@ -22,6 +23,7 @@ export enum ERoutes {
 	SIGN_UP = "/auth/sign-up",
 	DASHBOARD = "/",
 	REDIRECTING = "/redirecting",
+	SETTINGS = "/settings",
 }
 
 export const Routes: IRoute[] = [
@@ -55,6 +57,10 @@ export const Routes: IRoute[] = [
 				path: ":videoId",
 				element: <PlayerScreen />,
 			},
+			{
+				path: "settings",
+				element:<Settings />,
+			}
 		],
 	},
 
