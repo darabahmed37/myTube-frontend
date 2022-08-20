@@ -23,6 +23,8 @@ export const Main = styled("main", {
 		}),
 		marginLeft: 0,
 	}),
+
+
 }))
 
 export interface AppBarProps extends MuiAppBarProps {
@@ -36,7 +38,7 @@ export const AppBar = styled(MuiAppBar, {
 		easing: theme.transitions.easing.sharp,
 		duration: theme.transitions.duration.leavingScreen,
 	}),
-	background: "#fff",
+	background: "#FBF9F9",
 	color: "#000",
 	...(open && {
 		width: `calc(100% - ${drawerWidth}px)`,
@@ -67,6 +69,6 @@ export const Profile = styled("div")`
 
 export const MainBox = styled(Box)`
   display: flex;
-  background: #FBF9F9;
+
 
 `

@@ -59,8 +59,8 @@ export const Routes: IRoute[] = [
 			},
 			{
 				path: "settings",
-				element:<Settings />,
-			}
+				element: <Settings />,
+			},
 		],
 	},
 

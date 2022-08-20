@@ -1,7 +1,7 @@
 import { SxProps, Theme } from "@mui/material"
 
 export const CardStyles: SxProps<Theme> = (theme) => ({
-	background:"#FBF9F9",
+	background: "#FBF9F9",
 	display: "flex",
 	padding: ".7rem",
 	maxWidth: "35rem",
