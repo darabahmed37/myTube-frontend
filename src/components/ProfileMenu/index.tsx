@@ -12,6 +12,8 @@ import Logout from "@mui/icons-material/Logout"
 import { MenuBoxSxProps, MenuPaperSxProps } from "components/ProfileMenu/style"
 import { logOut } from "api/auth"
 import { getUser } from "utils"
+import { useNavigate } from "react-router-dom"
+import { ERoutes } from "routes"
 
 export default function ProfileMenu() {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -22,6 +24,7 @@ export default function ProfileMenu() {
 	const handleClose = () => {
 		setAnchorEl(null)
 	}
+	const navigate=useNavigate()
 	const user = getUser()
 	return (
 		<>
@@ -66,7 +69,9 @@ export default function ProfileMenu() {
 				</MenuItem>
 
 				<Divider />
-				<MenuItem>
+				<MenuItem onClick={()=>{
+					navigate(ERoutes.SETTINGS)
+				}}>
 					<ListItemIcon>
 						<Settings fontSize="small" />
 					</ListItemIcon>

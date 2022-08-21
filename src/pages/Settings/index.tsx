@@ -148,7 +148,7 @@ const Settings: FC = () => {
 								onChange={onPasswordChange}
 								value={passwordForm.password}
 								name={"password"}
-								// type="password"
+								type="password"
 								autoComplete="current-password"
 							/>
 
@@ -161,7 +161,7 @@ const Settings: FC = () => {
 								onChange={onPasswordChange}
 								value={passwordForm.passwordConfirm}
 								name={"passwordConfirm"}
-								// type="password"
+								type="password"
 								autoComplete="current-password"
 							/>
 
