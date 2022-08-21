@@ -83,8 +83,6 @@ const Settings: FC = () => {
 				passwordConfirm: "",
 			})
 			setSnackbarOpen(true)
-
-
 		})
 	}
 

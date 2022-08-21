@@ -1,9 +1,9 @@
-import React, { FC } from "react";
-import { ThemeProvider } from "@mui/material";
-import { theme } from "theme";
-import { BrowserRouter, Routes } from "react-router-dom";
-import { createRoutes, Routes as RouteList } from "routes";
-import { ThemeProvider as EmotionThemeProvider } from "@emotion/react";
+import React, { FC } from "react"
+import { ThemeProvider } from "@mui/material"
+import { theme } from "theme"
+import { BrowserRouter, Routes } from "react-router-dom"
+import { createRoutes, Routes as RouteList } from "routes"
+import { ThemeProvider as EmotionThemeProvider } from "@emotion/react"
 
 const App: FC = () => {
 	return (
@@ -14,7 +14,7 @@ const App: FC = () => {
 				</BrowserRouter>
 			</ThemeProvider>
 		</EmotionThemeProvider>
-	);
-};
+	)
+}
 
-export default App;
+export default App

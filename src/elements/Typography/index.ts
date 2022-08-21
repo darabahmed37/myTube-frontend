@@ -1,4 +1,4 @@
-import {Typography } from "@mui/material"
+import { Typography } from "@mui/material"
 import styled from "@emotion/styled/macro"
 
 export const H1 = styled(Typography)`

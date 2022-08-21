@@ -25,8 +25,7 @@ async function _GetVideoById(id: string): Promise<IYouTubeVideo> {
 	return response.data as IYouTubeVideo
 }
 
-
-export async function setUserPlaylist(id: string):Promise<void> {
+export async function setUserPlaylist(id: string): Promise<void> {
 	await axios.post(YoutubeRoutes.SET_PLAYLIST, { id })
 }
 
