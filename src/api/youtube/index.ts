@@ -4,28 +4,32 @@ import { generatePlayListByIdUrl, generateVideoByIdUrl, YoutubeRoutes } from "ap
 import { IYouTubePlayListItems, IYouTubeVideo } from "types/YouTube"
 import { memoize } from "lodash"
 
-async function MGetAllPlayLists(): Promise<AxiosResponse> {
+async function _GetAllPlayLists(): Promise<IYouTubePlayListItems> {
 	let response: AxiosResponse
 
 	response = await axios.get(YoutubeRoutes.ALL_PLAYLISTS)
-	return response
+	return response.data as IYouTubePlayListItems
 }
 
-async function MGetPlayListById(id: string): Promise<IYouTubePlayListItems> {
+async function _GetPlayListById(id: string): Promise<IYouTubePlayListItems> {
 	let response: AxiosResponse
 
 	response = await axios.get(generatePlayListByIdUrl(id))
 	return response.data as IYouTubePlayListItems
 }
 
-async function MGetVideoById(id: string): Promise<IYouTubeVideo> {
-
+async function _GetVideoById(id: string): Promise<IYouTubeVideo> {
 	let response: AxiosResponse
 
 	response = await axios.get(generateVideoByIdUrl(id))
 	return response.data as IYouTubeVideo
 }
 
-export const getVideoById = memoize(MGetVideoById)
-export const getPlayListById = memoize(MGetPlayListById)
-export const GetAllPlayLists = memoize(MGetAllPlayLists)
+
+export async function setUserPlaylist(id: string):Promise<void> {
+	await axios.post(YoutubeRoutes.SET_PLAYLIST, { id })
+}
+
+export const getVideoById = memoize(_GetVideoById)
+export const getPlayListById = memoize(_GetPlayListById)
+export const getAllPlayLists = memoize(_GetAllPlayLists)

@@ -9,9 +9,9 @@ import YouTube from "components/YouTube"
 import { PaperSx } from "layouts/Player/style"
 
 interface VideoValues {
-	embedHTML: string
-	title: string
-	description: string
+	embedHTML: string;
+	title: string;
+	description: string;
 }
 
 const Player: FC<{ videoId: string }> = ({ videoId }) => {

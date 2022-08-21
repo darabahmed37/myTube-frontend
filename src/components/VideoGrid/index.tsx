@@ -6,16 +6,14 @@ import { VideoCardProps } from "types/ComponentProps"
 import { getUser } from "utils"
 import { getPlayLists } from "components/VideoGrid/services"
 
-
 const VideoGrid: FC = () => {
 	const [playlist, setPlaylist] = React.useState<VideoCardProps[]>([])
 	const user = getUser()
 
 	useEffect(() => {
 		if (user?.playlist)
-			getPlayLists(user?.playlist).then(data => {
+			getPlayLists(user?.playlist).then((data) => {
 				setPlaylist(data)
-
 			})
 	}, [user?.playlist])
 	return (

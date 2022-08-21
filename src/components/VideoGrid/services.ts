@@ -14,4 +14,3 @@ export async function getPlayLists(id: string) {
 	}))
 	return temp
 }
-

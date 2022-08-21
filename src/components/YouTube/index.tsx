@@ -5,8 +5,8 @@ import { IFrameProps } from "types/YouTube"
 import { Iframe, IFrameContainer } from "components/YouTube/emotion"
 
 interface YouTubeVideoProps {
-	embedHtml: string
-	title: string
+	embedHtml: string;
+	title: string;
 }
 
 const YouTube: FC<YouTubeVideoProps> = ({ embedHtml, title }) => {

@@ -11,11 +11,11 @@ import PlayerScreen from "pages/PlayerScreen"
 import Settings from "pages/Settings"
 
 export interface IRoute {
-	path: string
-	element: ReactNode
-	child?: IRoute[]
-	index?: boolean
-	protected?: boolean
+	path: string;
+	element: ReactNode;
+	child?: IRoute[];
+	index?: boolean;
+	protected?: boolean;
 }
 
 export enum ERoutes {

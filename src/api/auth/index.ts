@@ -93,3 +93,11 @@ export async function refreshAccessToken() {
 	await setAccessToken(response.data.access)
 	return response.data.access
 }
+
+export async function changePassword(password: string): Promise<string> {
+	return (
+		await axios.post(AuthRoutes.CHANGE_PASSWORD, {
+			password,
+		})
+	).data.message
+}

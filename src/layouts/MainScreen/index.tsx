@@ -24,11 +24,11 @@ import ProfileMenu from "components/ProfileMenu"
 import { AppBar, DrawerHeader, Main, MainBox, Profile } from "./emotion"
 
 interface IListItem {
-	title: string
+	title: string;
 	iconButton: OverridableComponent<SvgIconTypeMap<{}, "svg">> & {
-		muiName: string
-	}
-	path: string
+		muiName: string;
+	};
+	path: string;
 }
 
 const items: IListItem[] = [

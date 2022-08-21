@@ -8,5 +8,3 @@ export function getUser(): User | null {
 	const user = localStorage.getItem("user")
 	return user ? JSON.parse(user).user : null
 }
-
-

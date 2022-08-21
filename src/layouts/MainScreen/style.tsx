@@ -22,4 +22,3 @@ export const DrawerStyles: SxProps<Theme> = (theme) => ({
 		backgroundColor: theme.palette.secondary.main,
 	},
 })
-

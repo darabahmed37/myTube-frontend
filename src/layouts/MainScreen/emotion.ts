@@ -7,7 +7,7 @@ import Box from "@mui/material/Box"
 export const Main = styled("main", {
 	shouldForwardProp: (prop) => prop !== "open",
 })<{
-	open?: boolean
+	open?: boolean;
 }>(({ theme, open }) => ({
 	flexGrow: 1,
 	padding: theme.spacing(3),
@@ -23,12 +23,10 @@ export const Main = styled("main", {
 		}),
 		marginLeft: 0,
 	}),
-
-
 }))
 
 export interface AppBarProps extends MuiAppBarProps {
-	open?: boolean
+	open?: boolean;
 }
 
 export const AppBar = styled(MuiAppBar, {
@@ -58,17 +56,13 @@ export const DrawerHeader = styled("div")(({ theme }) => ({
 	justifyContent: "flex-end",
 }))
 
-
 export const Profile = styled("div")`
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  color: #000;
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+	color: #000;
 `
 
-
 export const MainBox = styled(Box)`
-  display: flex;
-
-
+	display: flex;
 `
