@@ -22,8 +22,8 @@ export function handleRedirectGoogle(redirectUrl: string): Promise<AxiosResponse
 	return getRequest(redirectUrl, axios)
 }
 
-export function refreshAccessToken(refreshToken: string): Promise<AxiosResponse> {
-	return postRequest(AuthRoutes.REFRESH, { refreshToken }, axios)
+export function refreshAccessToken(refresh: string): Promise<AxiosResponse> {
+	return postRequest(AuthRoutes.REFRESH, { refresh }, axios)
 }
 
 export function changePassword(password: string): Promise<AxiosResponse> {

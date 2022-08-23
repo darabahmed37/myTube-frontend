@@ -6,6 +6,7 @@ export async function refreshAccessTokenAction() {
 	if (refreshToken) {
 		try {
 			const response = await refreshAccessToken(refreshToken)
+
 			await setAccessToken(response.data.access)
 			return response.data.access as string
 		} catch (e) {

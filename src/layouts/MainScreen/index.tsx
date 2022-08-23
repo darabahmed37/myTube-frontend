@@ -53,7 +53,7 @@ const items: IListItem[] = [
 	},
 ];
 
-export default function MainScreen() {
+export function MainScreen() {
 	const theme = useTheme();
 	/*eslint-disable-next-line*/
 	const [open, setOpen] = useState<boolean>(screen.width > 800);
@@ -68,13 +68,14 @@ export default function MainScreen() {
 
 	const [playlist, setPlaylist] = React.useState<VideoCardProps[]>([]);
 	const user = getUser();
+
 	useEffect(() => {
-		if (user) {
-			getPlaylistByIdAction(user.playlist).then((data) => {
-				setPlaylist(data);
-			});
-		}
-	}, [user]);
+		console.log("Hello");
+		getPlaylistByIdAction(user?.playlist as string).then((data) => {
+			setPlaylist(data);
+		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 	const navigate = useNavigate();
 	return (
 		<MainBox>
@@ -132,3 +133,5 @@ export default function MainScreen() {
 		</MainBox>
 	);
 }
+
+export default React.memo(MainScreen);
