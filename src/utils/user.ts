@@ -1,5 +1,14 @@
-import { setUser } from "api/profile"
 import axios from "api/axios"
+import { AxiosResponse } from "axios"
+import { initUser } from "api/profile"
+
+export async function setUser(): Promise<AxiosResponse> {
+	let response: AxiosResponse
+	response = await initUser()
+	localStorage.removeItem("user")
+	localStorage.setItem("user", JSON.stringify(response.data))
+	return response
+}
 
 export async function setAccessToken(accessToken: string) {
 	localStorage.removeItem("access")

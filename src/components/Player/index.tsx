@@ -1,12 +1,9 @@
 import React, { FC, useCallback, useEffect } from "react"
-import { Container } from "layouts/Player/emotion"
-import Box from "@mui/material/Box"
-import VideoGrid from "components/VideoGrid"
 import { getVideoById } from "api/youtube"
 import { IYouTubeVideo } from "types/YouTube"
 import { LinearProgress, Paper, Typography } from "@mui/material"
-import YouTube from "components/YouTube"
-import { PaperSx } from "layouts/Player/style"
+import YouTube from "elements/YouTube"
+import { PaperSx } from "components/Player/style"
 
 interface VideoValues {
 	embedHTML: string;
@@ -36,7 +33,7 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 	}, [initialize])
 
 	return (
-		<Container>
+		<>
 			{video.embedHTML ? (
 				<Paper sx={PaperSx}>
 					<YouTube embedHtml={video?.embedHTML} title={video?.title} />
@@ -49,10 +46,8 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 			) : (
 				<LinearProgress />
 			)}
-			<Box>
-				<VideoGrid />
-			</Box>
-		</Container>
+
+		</>
 	)
 }
 

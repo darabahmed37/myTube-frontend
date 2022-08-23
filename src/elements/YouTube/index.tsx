@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react"
 import parse from "html-react-parser"
 import { JSX } from "@emotion/react/dist/declarations/types/jsx-runtime"
 import { IFrameProps } from "types/YouTube"
-import { Iframe, IFrameContainer } from "components/YouTube/emotion"
+import { Iframe, IFrameContainer } from "elements/YouTube/emotion"
 
 interface YouTubeVideoProps {
 	embedHtml: string;
