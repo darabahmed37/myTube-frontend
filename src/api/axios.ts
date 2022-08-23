@@ -1,6 +1,7 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios"
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios"
 import { BASE_BACKEND_URL } from "config"
-import { getAccessToken, refreshAccessToken } from "api/auth"
+import { refreshAccessToken } from "api/auth"
+import { getAccessToken } from "utils"
 
 function AuthorizationHeader(config: AxiosRequestConfig) {
 	return {
@@ -49,3 +50,53 @@ export const publicRoutes: AxiosInstance = axios.create({
 		"Content-Type": "application/json",
 	},
 })
+
+// Requests format
+export const failedResponse = (error: AxiosError) => {
+	return Promise.reject(error);
+};
+
+export const getRequest = (route: string, data= {},instance=axiosApiInstance) => {
+	const backendRoute = `${BASE_BACKEND_URL}${route}`;
+	return instance
+	.get(backendRoute, data)
+	.then((response) => {
+		return response;
+	})
+	.catch((error) => {
+		return failedResponse(error);
+	});
+};
+export const postRequest = (route: string, data= {},instance=axiosApiInstance) => {
+	const backendRoute = `${BASE_BACKEND_URL}${route}`;
+	return instance
+	.post(backendRoute, data)
+	.then((response) => {
+		return response;
+	})
+	.catch((error) => {
+		return failedResponse(error);
+	});
+};
+export const deleteRequest = (route: string, data= {},instance=axiosApiInstance) => {
+	const backendRoute = `${BASE_BACKEND_URL}${route}`;
+	return instance
+	.post(backendRoute, data)
+	.then((response) => {
+		return response;
+	})
+	.catch((error) => {
+		return failedResponse(error);
+	});
+};
+export const putRequest = (route: string, data= {},instance=axiosApiInstance) => {
+	const backendRoute = `${BASE_BACKEND_URL}${route}`;
+	return instance
+	.post(backendRoute, data)
+	.then((response) => {
+		return response;
+	})
+	.catch((error) => {
+		return failedResponse(error);
+	});
+};
