@@ -24,9 +24,8 @@ import {
 } from "pages/Settings/emotion"
 import { Body1, H1, H3 } from "elements/Typography"
 import { IYouTubePlayListItems } from "types/YouTube"
-import { getAllPlayLists, setUserPlaylist } from "api/youtube"
 import { getUser } from "utils"
-import { changePasswordAction } from "pages/Settings/service"
+import { changePasswordAction, getAllPlayListsAction, setUserPlaylistAction } from "pages/Settings/service"
 
 const Settings: FC = () => {
 	const user = getUser()
@@ -61,7 +60,7 @@ const Settings: FC = () => {
 	}, [passwordForm])
 
 	function handleChange(e: SelectChangeEvent) {
-		setUserPlaylist(e.target.value).then(() => {
+		setUserPlaylistAction(e.target.value).then(() => {
 			setSelectedPlaylist(e.target.value)
 			localStorage.setItem(
 				"user",
@@ -87,7 +86,7 @@ const Settings: FC = () => {
 	}
 
 	useEffect(() => {
-		getAllPlayLists().then((data) => {
+		getAllPlayListsAction().then((data) => {
 			setPlaylists(data)
 			setSelectedPlaylist(getUser()?.playlist)
 			setPlaylistDisabled(false)

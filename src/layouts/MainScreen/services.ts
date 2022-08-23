@@ -1,9 +1,10 @@
 import { IYouTubePlayListItems } from "types/YouTube"
-import { getPlayListById } from "api/youtube"
-import { VideoCardProps } from "types/ComponentProps"
 
-export async function getPlayLists(id: string) {
-	const youTubePlayLists: IYouTubePlayListItems = await getPlayListById(id)
+import { VideoCardProps } from "types/ComponentProps"
+import { getPlayListById } from "api/youtube"
+
+export async function getPlaylistByIdAction(id: string) {
+	const youTubePlayLists: IYouTubePlayListItems = (await getPlayListById(id)).data
 
 	const temp: VideoCardProps[] = youTubePlayLists.items.map((item) => ({
 		title: item.snippet.title,

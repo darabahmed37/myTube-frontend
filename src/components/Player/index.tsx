@@ -19,7 +19,7 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 	})
 
 	const initialize = useCallback(async () => {
-		const videoTemp: IYouTubeVideo = await getVideoById(videoId as string)
+		const videoTemp: IYouTubeVideo = (await getVideoById(videoId as string)).data
 		setVideo({
 			embedHTML: videoTemp.items[0].player.embedHtml,
 			title: videoTemp.items[0].snippet.title,

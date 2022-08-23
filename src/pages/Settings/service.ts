@@ -1,5 +1,25 @@
-import { changePassword } from "api/auth"
+import { changePassword } from "api/auth";
+import { getAllPlayLists, setUserPlaylist } from "api/youtube";
+import { IYouTubePlayListItems } from "types/YouTube";
 
 export async function changePasswordAction(password: string): Promise<string> {
-	return (await changePassword(password)).data.message
+	return (await changePassword(password)).data.message;
+}
+
+export async function getAllPlayListsAction() {
+	let data: IYouTubePlayListItems;
+	try {
+		data = (await getAllPlayLists()).data;
+		return data;
+	} catch (e) {
+		console.error(e);
+	}
+}
+
+export async function setUserPlaylistAction(playlistId: string) {
+	try {
+		await setUserPlaylist(playlistId);
+	} catch (e) {
+		console.error(e);
+	}
 }
