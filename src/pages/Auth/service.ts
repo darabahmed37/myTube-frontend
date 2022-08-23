@@ -1,37 +1,37 @@
-import { AxiosResponse } from "axios";
-import { setAccessToken, setRefreshToken } from "utils";
+import { AxiosResponse } from "axios"
+import { setAccessToken, setRefreshToken } from "utils"
 import {
 	getGoogleAuthUrl,
 	handleRedirectGoogle,
 	signInWithEmailAndPassword,
 	signUpWithEmailAndPassword,
-} from "api/auth";
+} from "api/auth"
 
 export async function signInWithEmailAndPasswordAction(email: string, password: string): Promise<void> {
-	const response = await signInWithEmailAndPassword(email, password);
-	await setAccessToken(response.data.access);
-	setRefreshToken(response.data.refresh);
+	const response = await signInWithEmailAndPassword(email, password)
+	await setAccessToken(response.data.access)
+	setRefreshToken(response.data.refresh)
 }
 
 export async function signUpWithEmailAndPasswordAction(email: string, password: string): Promise<AxiosResponse> {
-	return signUpWithEmailAndPassword(email, password);
+	return signUpWithEmailAndPassword(email, password)
 }
 
 export async function getGoogleAuthUrlAction(): Promise<void> {
 	try {
-		const response = await getGoogleAuthUrl();
-		window.location.href = response.data.authorization_url;
+		const response = await getGoogleAuthUrl()
+		window.location.href = response.data.authorization_url
 	} catch (error) {
-		console.log(error);
+		console.log(error)
 	}
 }
 
 export async function handleGoogleRedirectAction(redirectURL: string) {
 	try {
-		const response = await handleRedirectGoogle(redirectURL);
+		const response = await handleRedirectGoogle(redirectURL)
 
-		window.location.href = response.data.authorization_url;
+		window.location.href = response.data.authorization_url
 	} catch (error) {
-		console.log(error);
+		console.log(error)
 	}
 }

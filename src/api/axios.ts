@@ -67,6 +67,7 @@ export const getRequest = (route: string, instance = axiosApiInstance) => {
 }
 export const postRequest = (route: string, data = {}, instance = axiosApiInstance) => {
 	const backendRoute = route.includes(BASE_BACKEND_URL) ? route : `${BASE_BACKEND_URL}${route}`
+
 	return instance
 		.post(backendRoute, data)
 		.then((response) => {

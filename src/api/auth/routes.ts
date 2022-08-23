@@ -4,5 +4,5 @@ export enum AuthRoutes {
 	LOGIN_WITH_GOOGLE = "/auth/login-with-google/",
 	OAUTH2CALLBACK = "/auth/oauth2callback/",
 	REFRESH = "/auth/refresh/",
-	CHANGE_PASSWORD = "auth/update-password/",
+	CHANGE_PASSWORD = "/auth/update-password/",
 }

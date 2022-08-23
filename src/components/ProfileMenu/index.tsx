@@ -23,7 +23,7 @@ export default function ProfileMenu() {
 	const handleClose = () => {
 		setAnchorEl(null)
 	}
-	const navigate=useNavigate()
+	const navigate = useNavigate()
 	const user = getUser()
 	return (
 		<>
@@ -68,9 +68,11 @@ export default function ProfileMenu() {
 				</MenuItem>
 
 				<Divider />
-				<MenuItem onClick={()=>{
-					navigate(ERoutes.SETTINGS)
-				}}>
+				<MenuItem
+					onClick={() => {
+						navigate(ERoutes.SETTINGS)
+					}}
+				>
 					<ListItemIcon>
 						<Settings fontSize="small" />
 					</ListItemIcon>
