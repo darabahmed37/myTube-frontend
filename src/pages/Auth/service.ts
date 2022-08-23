@@ -1,69 +1,37 @@
-import { logOut, setAccessToken, setRefreshToken } from "utils"
+import { AxiosResponse } from "axios";
+import { setAccessToken, setRefreshToken } from "utils";
 import {
-	changePassword,
-	getAccessTokenFromGoogle,
 	getGoogleAuthUrl,
 	handleRedirectGoogle,
-	refreshAccessToken,
 	signInWithEmailAndPassword,
 	signUpWithEmailAndPassword,
-} from "api/auth"
-import { AxiosResponse } from "axios"
+} from "api/auth";
 
 export async function signInWithEmailAndPasswordAction(email: string, password: string): Promise<void> {
-	const response = await signInWithEmailAndPassword(email, password)
-	await setAccessToken(response.data.access)
-	setRefreshToken(response.data.refresh)
+	const response = await signInWithEmailAndPassword(email, password);
+	await setAccessToken(response.data.access);
+	setRefreshToken(response.data.refresh);
 }
 
 export async function signUpWithEmailAndPasswordAction(email: string, password: string): Promise<AxiosResponse> {
-	return signUpWithEmailAndPassword(email, password)
+	return signUpWithEmailAndPassword(email, password);
 }
 
 export async function getGoogleAuthUrlAction(): Promise<void> {
 	try {
-		const response = await getGoogleAuthUrl()
-		window.location.href = response.data.authorization_url
+		const response = await getGoogleAuthUrl();
+		window.location.href = response.data.authorization_url;
 	} catch (error) {
-		console.error(error)
+		console.log(error);
 	}
 }
 
-export async function getAccessTokenFromGoogleAction(code: string) {
+export async function handleGoogleRedirectAction(redirectURL: string) {
 	try {
-		let response = await getAccessTokenFromGoogle(code)
-		await setAccessToken(response.data.access)
-		setRefreshToken(response.data.refresh)
-	} catch (e) {
-		// @ts-ignore
-		let response = e.response as AxiosResponse
+		const response = await handleRedirectGoogle(redirectURL);
 
-		if (response.status === 307) {
-			const { redirectUrl } = response.data
-			handleRedirectGoogle(redirectUrl).then((response) => {
-				window.location.href = response.data.authorization_url
-			})
-		}
+		window.location.href = response.data.authorization_url;
+	} catch (error) {
+		console.log(error);
 	}
-}
-
-export async function refreshAccessTokenAction() {
-	const refreshToken = localStorage.getItem("refresh")
-	if (refreshToken) {
-		try {
-			const response = await refreshAccessToken(refreshToken)
-			await setAccessToken(response.data.access)
-			return response.data.access as string
-		} catch (e) {
-			console.error(e)
-			logOut()
-		}
-	} else {
-		logOut()
-	}
-}
-
-
-export async function changePasswordAction(password: string): Promise<string> {
-	return (await changePassword(password)).data.message
 }

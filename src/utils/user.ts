@@ -1,9 +1,10 @@
 import { setUser } from "api/profile"
 import axios from "api/axios"
 
-export  function setAccessToken(accessToken: string) {
+export function setAccessToken(accessToken: string) {
 	localStorage.removeItem("access")
-
+	setUser().then(() => {
+	})
 	localStorage.setItem("access", accessToken)
 }
 

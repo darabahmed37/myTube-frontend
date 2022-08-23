@@ -2,7 +2,7 @@ import React, { FC, useEffect } from "react"
 import Typography from "@mui/material/Typography"
 import { useLocation, useNavigate } from "react-router-dom"
 import queryString from "query-string"
-import { getAccessTokenFromGoogle } from "api/auth"
+import { getAccessTokenFromGoogleAction } from "pages/Redirecting/service"
 
 const Redirecting: FC = () => {
 	const location = useLocation()
@@ -11,7 +11,7 @@ const Redirecting: FC = () => {
 	async function googleAuthentication() {
 		const query = queryString.parse(location.search)
 		const { code } = query
-		await getAccessTokenFromGoogle(code as string)
+		await getAccessTokenFromGoogleAction(code as string)
 		navigate("/")
 	}
 

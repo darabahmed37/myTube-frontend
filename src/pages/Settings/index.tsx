@@ -26,7 +26,7 @@ import { Body1, H1, H3 } from "elements/Typography"
 import { IYouTubePlayListItems } from "types/YouTube"
 import { getAllPlayLists, setUserPlaylist } from "api/youtube"
 import { getUser } from "utils"
-import { changePassword } from "api/auth"
+import { changePasswordAction } from "pages/Settings/service"
 
 const Settings: FC = () => {
 	const user = getUser()
@@ -77,7 +77,7 @@ const Settings: FC = () => {
 
 	function submitPasswordForm(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault()
-		changePassword(passwordForm.password).then(() => {
+		changePasswordAction(passwordForm.password).then(() => {
 			setPasswordForm({
 				password: "",
 				passwordConfirm: "",

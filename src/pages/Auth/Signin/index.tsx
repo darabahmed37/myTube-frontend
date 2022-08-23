@@ -1,15 +1,18 @@
 import React, { ChangeEvent, FC, FormEventHandler, useState } from "react"
 import { AxiosResponse } from "axios"
-import axios from "api/axios"
 import { ICredentials, IValidation } from "types/IAuth"
 import { useNavigate } from "react-router-dom"
 import { InputForm, lightText, Link, navigationTitle } from "layouts/AuthenticateLayout/styles"
 import GoogleButton from "react-google-button"
-import { getGoogleAuthUrl, signInWithEmailAndPassword } from "api/auth"
 import { Link as MuiLink, TextField } from "@mui/material"
 import { RoundedButton } from "elements/Button"
 import { ERoutes } from "routes"
 import { isValidEmail } from "utils"
+import {
+	getGoogleAuthUrlAction,
+	handleGoogleRedirectAction,
+	signInWithEmailAndPasswordAction,
+} from "pages/Auth/service"
 
 const Signin: FC = () => {
 	const navigate = useNavigate()
@@ -30,9 +33,7 @@ const Signin: FC = () => {
 	async function signin() {
 		let response: AxiosResponse
 		try {
-			// @ts-ignore
-
-			const r = await signInWithEmailAndPassword(signInForm.email, signInForm.password)
+			await signInWithEmailAndPasswordAction(signInForm.email, signInForm.password)
 
 			navigate(ERoutes.DASHBOARD)
 		} catch (e) {
@@ -49,8 +50,7 @@ const Signin: FC = () => {
 					helperText: "User not found",
 				})
 			} else if (response.status === 307) {
-				response = await axios.get(response.data.redirectUrl)
-				window.location.href = response.data.authorization_url
+				await handleGoogleRedirectAction(response.data.redirectUrl)
 			}
 		}
 	}
@@ -119,7 +119,7 @@ const Signin: FC = () => {
 			<div>
 				<GoogleButton
 					onClick={async () => {
-						await getGoogleAuthUrl()
+						await getGoogleAuthUrlAction()
 					}}
 					label={"SignIn with Google"}
 					type={"light"}

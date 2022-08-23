@@ -88,7 +88,7 @@ export function createRoutes(Routes: IRoute[]) {
 				</Route>
 			</Route>
 		) : (
-			<Route element={<PublicRoutes />}>
+			<Route element={<PublicRoutes />} key={index}>
 				<Route path={route.path} key={index} element={route.element}>
 					{createRoutes(route.child)}
 				</Route>

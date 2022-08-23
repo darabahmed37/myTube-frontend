@@ -1,5 +1,5 @@
-import { getRequest, postRequest } from "api/axios"
-import axios, { AxiosResponse } from "axios"
+import { getRequest, postRequest, publicRoutes as axios } from "api/axios"
+import { AxiosResponse } from "axios"
 import { AuthRoutes } from "api/auth/routes"
 
 export function signInWithEmailAndPassword(email: string, password: string): Promise<AxiosResponse> {
@@ -11,7 +11,7 @@ export function signUpWithEmailAndPassword(email: string, password: string): Pro
 }
 
 export function getGoogleAuthUrl(): Promise<AxiosResponse> {
-	return getRequest(AuthRoutes.LOGIN_WITH_GOOGLE, {}, axios)
+	return getRequest(AuthRoutes.LOGIN_WITH_GOOGLE, axios)
 
 
 }
@@ -23,7 +23,8 @@ export function getAccessTokenFromGoogle(code: string): Promise<AxiosResponse> {
 }
 
 export function handleRedirectGoogle(redirectUrl: string): Promise<AxiosResponse> {
-	return getRequest(redirectUrl, {}, axios)
+
+	return getRequest(redirectUrl, axios)
 }
 
 export function refreshAccessToken(refreshToken: string): Promise<AxiosResponse> {

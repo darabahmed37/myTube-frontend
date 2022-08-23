@@ -5,10 +5,10 @@ import { ICredentials, IValidation } from "types/IAuth"
 import { useNavigate } from "react-router-dom"
 import { InputForm, lightText, Link, navigationTitle } from "layouts/AuthenticateLayout/styles"
 import GoogleButton from "react-google-button"
-import { getGoogleAuthUrl, signUpWithEmailAndPassword } from "api/auth"
 import { Link as MuiLink, TextField } from "@mui/material"
 import { RoundedButton } from "elements/Button"
 import { ERoutes } from "routes"
+import { getGoogleAuthUrlAction, signUpWithEmailAndPasswordAction } from "pages/Auth/service"
 
 const Signup: FC = () => {
 	const navigate = useNavigate()
@@ -29,7 +29,7 @@ const Signup: FC = () => {
 	async function signUp() {
 		let response: AxiosResponse
 		try {
-			response = await signUpWithEmailAndPassword(credentialsForm.email, credentialsForm.password)
+			await signUpWithEmailAndPasswordAction(credentialsForm.email, credentialsForm.password)
 			navigate("/sign-in")
 		} catch (e) {
 			// @ts-ignore
@@ -111,7 +111,7 @@ const Signup: FC = () => {
 			<div>
 				<GoogleButton
 					onClick={async () => {
-						await getGoogleAuthUrl()
+						await getGoogleAuthUrlAction()
 					}}
 					label={"SignUp with Google"}
 					type={"light"}
