@@ -1,5 +1,5 @@
 import { refreshAccessToken } from "api/auth"
-import { logOut, setAccessToken } from "utils"
+import { logOut, setAccessToken } from "utils/user"
 
 export async function refreshAccessTokenAction() {
 	const refreshToken = localStorage.getItem("refresh")

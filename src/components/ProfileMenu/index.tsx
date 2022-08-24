@@ -10,9 +10,10 @@ import Tooltip from "@mui/material/Tooltip"
 import Settings from "@mui/icons-material/Settings"
 import Logout from "@mui/icons-material/Logout"
 import { MenuBoxSxProps, MenuPaperSxProps } from "components/ProfileMenu/style"
-import { getUser, logOut } from "utils"
+import {  logOut } from "utils/user"
 import { useNavigate } from "react-router-dom"
 import { ERoutes } from "routes"
+import {getUser} from "utils"
 
 export default function ProfileMenu() {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)

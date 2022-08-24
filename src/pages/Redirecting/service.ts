@@ -1,5 +1,5 @@
 import { getAccessTokenFromGoogle } from "api/auth"
-import { setAccessToken, setRefreshToken } from "utils"
+import { setAccessToken, setRefreshToken } from "utils/user"
 import { AxiosResponse } from "axios"
 import { handleGoogleRedirectAction } from "pages/Auth/service"
 

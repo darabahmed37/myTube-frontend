@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios"
-import { setAccessToken, setRefreshToken } from "utils"
+import { setAccessToken, setRefreshToken } from "utils/user"
 import {
 	getGoogleAuthUrl,
 	handleRedirectGoogle,

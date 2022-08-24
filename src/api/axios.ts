@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import { BASE_BACKEND_URL } from "config";
-import { getAccessToken, logOut } from "utils";
+import { getAccessToken, logOut } from "utils/user";
 import { refreshAccessTokenAction } from "api/service";
 
 function AuthorizationHeader(config: AxiosRequestConfig) {
