@@ -1,33 +1,33 @@
-import * as React from "react"
-import { createElement, useEffect, useState } from "react"
-import { useTheme } from "@mui/material/styles"
-import Drawer from "@mui/material/Drawer"
-import CssBaseline from "@mui/material/CssBaseline"
-import Toolbar from "@mui/material/Toolbar"
-import List from "@mui/material/List"
-import { Divider } from "elements/Divider"
-import IconButton from "@mui/material/IconButton"
-import MenuIcon from "@mui/icons-material/Menu"
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft"
-import ChevronRightIcon from "@mui/icons-material/ChevronRight"
-import ListItem from "@mui/material/ListItem"
-import ListItemButton from "@mui/material/ListItemButton"
-import ListItemIcon from "@mui/material/ListItemIcon"
-import ListItemText from "@mui/material/ListItemText"
-import { OverridableComponent } from "@mui/material/OverridableComponent"
-import { SvgIconTypeMap } from "@mui/material"
-import DashboardIcon from "@mui/icons-material/Dashboard"
-import { Outlet, useNavigate } from "react-router-dom"
-import { SettingsOutlined, StackedLineChart } from "@mui/icons-material"
-import { DrawerStyles, ListItemStyle, textWhite } from "layouts/MainScreen/style"
-import ProfileMenu from "components/ProfileMenu"
-import { AppBar, DrawerHeader, Main, MainBox, Profile } from "./emotion"
-import { DashboardContext } from "context/DashboardContext"
-import { VideoCardProps } from "types/ComponentProps"
-import { getPlaylistByIdAction } from "layouts/MainScreen/services"
-import { UserContext } from "context/usercontext"
-import { User } from "types/IAuth"
-import { initUser } from "api/profile"
+import * as React from "react";
+import { createElement, useEffect, useState } from "react";
+import { useTheme } from "@mui/material/styles";
+import Drawer from "@mui/material/Drawer";
+import CssBaseline from "@mui/material/CssBaseline";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import { Divider } from "elements/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import { OverridableComponent } from "@mui/material/OverridableComponent";
+import { SvgIconTypeMap } from "@mui/material";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import { Outlet, useNavigate } from "react-router-dom";
+import { SettingsOutlined, StackedLineChart } from "@mui/icons-material";
+import { DrawerStyles, ListItemStyle, textWhite } from "layouts/MainScreen/style";
+import ProfileMenu from "components/ProfileMenu";
+import { AppBar, DrawerHeader, Main, MainBox, Profile } from "./emotion";
+import { DashboardContext } from "context/DashboardContext";
+import { VideoCardProps } from "types/ComponentProps";
+import { getPlaylistByIdAction } from "layouts/MainScreen/services";
+import { UserContext } from "context/usercontext";
+import { User } from "types/IAuth";
+import { initUser } from "api/profile";
 
 interface IListItem {
 	title: string;
@@ -53,37 +53,36 @@ const items: IListItem[] = [
 		iconButton: SettingsOutlined,
 		path: "/settings",
 	},
-]
+];
 
 export default function MainScreen() {
-	const theme = useTheme()
+	const theme = useTheme();
 	/*eslint-disable-next-line*/
-	const [open, setOpen] = useState<boolean>(screen.width > 800)
-
+	const [open, setOpen] = useState<boolean>(screen.width > 800);
+	const [user, setUser] = useState<User | null>(null);
+	const [playlist, setPlaylist] = React.useState<VideoCardProps[]>([]);
 	const handleDrawerOpen = () => {
-		setOpen(true)
-	}
+		setOpen(true);
+	};
 
 	const handleDrawerClose = () => {
-		setOpen(false)
-	}
+		setOpen(false);
+	};
 
-	const [user, setUser] = useState<User | null>(null)
 	useEffect(() => {
 		initUser().then((response) => {
-			setUser(response.data.user)
-		})
-	},[])
+			setUser(response.data.user);
+		});
+	}, []);
 
-	const [playlist, setPlaylist] = React.useState<VideoCardProps[]>([])
 	useEffect(() => {
 		if (user) {
 			getPlaylistByIdAction(user.playlist as string).then((data) => {
-				setPlaylist(data)
-			})
+				setPlaylist(data);
+			});
 		}
-	}, [user])
-	const navigate = useNavigate()
+	}, [user]);
+	const navigate = useNavigate();
 	return (
 		<UserContext.Provider
 			value={{
@@ -125,7 +124,7 @@ export default function MainScreen() {
 								sx={ListItemStyle}
 								key={index}
 								onClick={() => {
-									navigate(listItem.path)
+									navigate(listItem.path);
 								}}
 							>
 								<ListItemButton>
@@ -143,8 +142,7 @@ export default function MainScreen() {
 						<Outlet />
 					</DashboardContext.Provider>
 				</Main>
-			</MainBox>{" "}
+			</MainBox>
 		</UserContext.Provider>
-	)
+	);
 }
-

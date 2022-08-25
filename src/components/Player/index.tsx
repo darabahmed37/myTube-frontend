@@ -4,6 +4,7 @@ import { IYouTubeVideo } from "types/YouTube";
 import { LinearProgress, Paper, Typography } from "@mui/material";
 import YouTube from "elements/YouTube";
 import { PaperSx } from "components/Player/style";
+import { Box } from "./style";
 
 interface VideoValues {
 	embedHTML: string;
@@ -32,7 +33,7 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 	}, [initialize]);
 
 	return (
-		<>
+		<Box>
 			{video.embedHTML ? (
 				<Paper sx={PaperSx}>
 					<YouTube embedHtml={video?.embedHTML} title={video?.title} />
@@ -45,7 +46,7 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 			) : (
 				<LinearProgress />
 			)}
-		</>
+		</Box>
 	);
 };
 

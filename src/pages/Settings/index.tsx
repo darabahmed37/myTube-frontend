@@ -91,7 +91,7 @@ const Settings: FC = () => {
 				setPlaylistDisabled(false);
 			});
 		}
-	}, [playlists, user]);
+	}, [user]);
 
 	function closeSnackbar() {
 		setSnackbarOpen(false);

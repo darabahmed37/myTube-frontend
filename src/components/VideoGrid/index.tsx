@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import { Grid, LinearProgress } from "@mui/material";
 import VideoCard from "components/VideoCard";
 import { CardGrid } from "components/VideoGrid/style";
@@ -9,9 +9,6 @@ interface VideoGridProps {
 }
 
 const VideoGrid: FC<VideoGridProps> = ({ playlist }) => {
-	useEffect(() => {
-		console.log(playlist);
-	});
 	return (
 		<Grid container gap={"2.5em"}>
 			{playlist.length !== 0 ? (
