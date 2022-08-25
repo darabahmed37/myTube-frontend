@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useContext } from "react"
 import Box from "@mui/material/Box"
 import Avatar from "@mui/material/Avatar"
 import Menu from "@mui/material/Menu"
@@ -10,10 +11,11 @@ import Tooltip from "@mui/material/Tooltip"
 import Settings from "@mui/icons-material/Settings"
 import Logout from "@mui/icons-material/Logout"
 import { MenuBoxSxProps, MenuPaperSxProps } from "components/ProfileMenu/style"
-import {  logOut } from "utils/user"
+import { logOut } from "utils/user"
 import { useNavigate } from "react-router-dom"
 import { ERoutes } from "routes"
-import {getUser} from "utils"
+import { IUserContext, UserContext } from "context/usercontext"
+import { CircularProgress } from "@mui/material"
 
 export default function ProfileMenu() {
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -25,8 +27,10 @@ export default function ProfileMenu() {
 		setAnchorEl(null)
 	}
 	const navigate = useNavigate()
-	const user = getUser()
-	return (
+
+	const { user } = useContext(UserContext) as IUserContext
+
+	return user ? (
 		<>
 			<Box sx={MenuBoxSxProps}>
 				<Tooltip title="Account settings">
@@ -42,7 +46,7 @@ export default function ProfileMenu() {
 							imgProps={{
 								referrerPolicy: "no-referrer",
 							}}
-							src={user?.picture}
+							src={user.picture}
 						/>
 					</IconButton>
 				</Tooltip>
@@ -62,10 +66,10 @@ export default function ProfileMenu() {
 						imgProps={{
 							referrerPolicy: "no-referrer",
 						}}
-						src={getUser()?.picture}
-						alt={getUser()?.given_name}
+						src={user.picture}
+						alt={user.given_name}
 					/>{" "}
-					{getUser()?.given_name}
+					{user.given_name}
 				</MenuItem>
 
 				<Divider />
@@ -87,5 +91,7 @@ export default function ProfileMenu() {
 				</MenuItem>
 			</Menu>
 		</>
+	) : (
+		<CircularProgress color={"secondary"} size={35} />
 	)
 }

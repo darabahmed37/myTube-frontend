@@ -1,4 +1,4 @@
-import { createContext } from "react"
-import { VideoCardProps } from "types/ComponentProps"
+import { createContext } from "react";
+import { VideoCardProps } from "types/ComponentProps";
 
-export const DashboardContext = createContext<VideoCardProps[]>( [])
+export const DashboardContext = createContext<VideoCardProps[]>([]);

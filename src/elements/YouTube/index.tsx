@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useState } from "react"
-import parse from "html-react-parser"
-import { JSX } from "@emotion/react/dist/declarations/types/jsx-runtime"
-import { IFrameProps } from "types/YouTube"
-import { Iframe, IFrameContainer } from "elements/YouTube/emotion"
+import React, { FC, useEffect, useState } from "react";
+import parse from "html-react-parser";
+import { JSX } from "@emotion/react/dist/declarations/types/jsx-runtime";
+import { IFrameProps } from "types/YouTube";
+import { Iframe, IFrameContainer } from "elements/YouTube/emotion";
 
 interface YouTubeVideoProps {
 	embedHtml: string;
@@ -15,24 +15,24 @@ const YouTube: FC<YouTubeVideoProps> = ({ embedHtml, title }) => {
 		frameBorder: "0",
 		allow: "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",
 		allowFullScreen: "true",
-	})
+	});
 
 	useEffect(() => {
-		const iframe = parse(embedHtml) as JSX.Element
+		const iframe = parse(embedHtml) as JSX.Element;
 
 		setProps({
 			src: iframe.props.src,
 			frameBorder: iframe.props.frameBorder,
 			allow: iframe.props.allow,
 			allowFullScreen: iframe.props.allowFullScreen,
-		})
-	}, [embedHtml])
+		});
+	}, [embedHtml]);
 
 	return (
 		<IFrameContainer>
 			<Iframe title={title} allowFullScreen src={props.src} allow={props.allow} frameBorder={props.frameBorder} />
 		</IFrameContainer>
-	)
-}
+	);
+};
 
-export default React.memo(YouTube)
+export default React.memo(YouTube);

@@ -1,29 +1,29 @@
-import React, { FC } from "react"
-import { Card, CardContent, CardMedia, Typography } from "@mui/material"
-import { CardMediaSx, CardStyles } from "components/VideoCard/style"
-import { VideoCardProps } from "types/ComponentProps"
-import { useNavigate } from "react-router-dom"
+import React, { FC } from "react";
+import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { CardMediaSx, CardStyles } from "components/VideoCard/style";
+import { VideoCardProps } from "types/ComponentProps";
+import { useNavigate } from "react-router-dom";
 
 const VideoCard: FC<VideoCardProps> = ({ title, description, thumbnails, videoId }) => {
-	const [elevation, setElevation] = React.useState(0)
-	const navigate = useNavigate()
+	const [elevation, setElevation] = React.useState(0);
+	const navigate = useNavigate();
 	return (
 		<Card
 			sx={CardStyles}
 			elevation={elevation}
 			onMouseEnter={() => {
-				setElevation(5)
+				setElevation(5);
 			}}
 			onMouseLeave={() => {
-				setElevation(0)
+				setElevation(0);
 			}}
 			onClick={() => {
-				navigate(`/${videoId}`)
+				navigate(`/${videoId}`);
 				window.scroll({
 					top: 0,
 					left: 0,
 					behavior: "smooth",
-				})
+				});
 			}}
 		>
 			<CardMedia component={"img"} image={thumbnails.high.url} alt={"Video Logo"} sx={CardMediaSx} />
@@ -37,7 +37,7 @@ const VideoCard: FC<VideoCardProps> = ({ title, description, thumbnails, videoId
 				</Typography>
 			</CardContent>
 		</Card>
-	)
-}
+	);
+};
 
-export default VideoCard
+export default VideoCard;

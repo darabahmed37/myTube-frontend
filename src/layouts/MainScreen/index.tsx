@@ -25,7 +25,9 @@ import { AppBar, DrawerHeader, Main, MainBox, Profile } from "./emotion"
 import { DashboardContext } from "context/DashboardContext"
 import { VideoCardProps } from "types/ComponentProps"
 import { getPlaylistByIdAction } from "layouts/MainScreen/services"
-import { getUser } from "utils"
+import { UserContext } from "context/usercontext"
+import { User } from "types/IAuth"
+import { initUser } from "api/profile"
 
 interface IListItem {
 	title: string;
@@ -53,7 +55,7 @@ const items: IListItem[] = [
 	},
 ]
 
-export function MainScreen() {
+export default function MainScreen() {
 	const theme = useTheme()
 	/*eslint-disable-next-line*/
 	const [open, setOpen] = useState<boolean>(screen.width > 800)
@@ -66,76 +68,83 @@ export function MainScreen() {
 		setOpen(false)
 	}
 
-	const [playlist, setPlaylist] = React.useState<VideoCardProps[]>([])
-
-
-
-
+	const [user, setUser] = useState<User | null>(null)
 	useEffect(() => {
-		const user = getUser()
+		initUser().then((response) => {
+			setUser(response.data.user)
+		})
+	},[])
+
+	const [playlist, setPlaylist] = React.useState<VideoCardProps[]>([])
+	useEffect(() => {
 		if (user) {
 			getPlaylistByIdAction(user.playlist as string).then((data) => {
 				setPlaylist(data)
 			})
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [user])
 	const navigate = useNavigate()
 	return (
-		<MainBox>
-			<CssBaseline />
-			<AppBar position="fixed" open={open} elevation={0}>
-				<Toolbar>
-					<IconButton
-						color="inherit"
-						aria-label="open drawer"
-						onClick={handleDrawerOpen}
-						edge="start"
-						sx={{ mr: 2, ...(open && { display: "none" }) }}
-					>
-						<MenuIcon />
-					</IconButton>
-
-					<Profile>
-						<ProfileMenu />
-					</Profile>
-				</Toolbar>
-				<Divider />
-			</AppBar>
-			<Drawer sx={DrawerStyles} variant="persistent" anchor="left" open={open}>
-				<DrawerHeader>
-					<IconButton onClick={handleDrawerClose} sx={textWhite}>
-						{theme.direction === "ltr" ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-					</IconButton>
-				</DrawerHeader>
-				<Divider />
-				<List>
-					{items.map((listItem, index) => (
-						<ListItem
-							disablePadding
-							sx={ListItemStyle}
-							key={index}
-							onClick={() => {
-								navigate(listItem.path)
-							}}
+		<UserContext.Provider
+			value={{
+				setUser,
+				user,
+			}}
+		>
+			<MainBox>
+				<CssBaseline />
+				<AppBar position="fixed" open={open} elevation={0}>
+					<Toolbar>
+						<IconButton
+							color="inherit"
+							aria-label="open drawer"
+							onClick={handleDrawerOpen}
+							edge="start"
+							sx={{ mr: 2, ...(open && { display: "none" }) }}
 						>
-							<ListItemButton>
-								<ListItemIcon sx={{ minWidth: "38px" }}>{createElement(listItem.iconButton)}</ListItemIcon>
-								<ListItemText primary={listItem.title} />
-							</ListItemButton>
-						</ListItem>
-					))}
-				</List>
-			</Drawer>
-			<Main open={open}>
-				<DrawerHeader />
+							<MenuIcon />
+						</IconButton>
 
-				<DashboardContext.Provider value={playlist}>
-					<Outlet />
-				</DashboardContext.Provider>
-			</Main>
-		</MainBox>
+						<Profile>
+							<ProfileMenu />
+						</Profile>
+					</Toolbar>
+					<Divider />
+				</AppBar>
+				<Drawer sx={DrawerStyles} variant="persistent" anchor="left" open={open}>
+					<DrawerHeader>
+						<IconButton onClick={handleDrawerClose} sx={textWhite}>
+							{theme.direction === "ltr" ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+						</IconButton>
+					</DrawerHeader>
+					<Divider />
+					<List>
+						{items.map((listItem, index) => (
+							<ListItem
+								disablePadding
+								sx={ListItemStyle}
+								key={index}
+								onClick={() => {
+									navigate(listItem.path)
+								}}
+							>
+								<ListItemButton>
+									<ListItemIcon sx={{ minWidth: "38px" }}>{createElement(listItem.iconButton)}</ListItemIcon>
+									<ListItemText primary={listItem.title} />
+								</ListItemButton>
+							</ListItem>
+						))}
+					</List>
+				</Drawer>
+				<Main open={open}>
+					<DrawerHeader />
+
+					<DashboardContext.Provider value={playlist}>
+						<Outlet />
+					</DashboardContext.Provider>
+				</Main>
+			</MainBox>{" "}
+		</UserContext.Provider>
 	)
 }
 
-export default MainScreen

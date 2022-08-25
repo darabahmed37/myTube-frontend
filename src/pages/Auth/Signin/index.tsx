@@ -1,56 +1,56 @@
-import React, { ChangeEvent, FC, FormEventHandler, useState } from "react"
-import { AxiosResponse } from "axios"
-import { ICredentials, IValidation } from "types/IAuth"
-import { useNavigate } from "react-router-dom"
-import { InputForm, lightText, Link, navigationTitle } from "layouts/AuthenticateLayout/styles"
-import GoogleButton from "react-google-button"
-import { Link as MuiLink, TextField } from "@mui/material"
-import { RoundedButton } from "elements/Button"
-import { ERoutes } from "routes"
-import { isValidEmail } from "utils"
+import React, { ChangeEvent, FC, FormEventHandler, useState } from "react";
+import { AxiosResponse } from "axios";
+import { ICredentials, IValidation } from "types/IAuth";
+import { useNavigate } from "react-router-dom";
+import { InputForm, lightText, Link, navigationTitle } from "layouts/AuthenticateLayout/styles";
+import GoogleButton from "react-google-button";
+import { Link as MuiLink, TextField } from "@mui/material";
+import { RoundedButton } from "elements/Button";
+import { ERoutes } from "routes";
+import { isValidEmail } from "utils";
 import {
 	getGoogleAuthUrlAction,
 	handleGoogleRedirectAction,
 	signInWithEmailAndPasswordAction,
-} from "pages/Auth/service"
+} from "pages/Auth/service";
 
 const Signin: FC = () => {
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	const [signInForm, setSignInForm] = useState<ICredentials>({
 		email: "",
 		password: "",
-	})
+	});
 	const [emailValidation, setEmailValidation] = useState<IValidation>({
 		helperText: "",
 		error: false,
-	})
+	});
 	const [passwordValidation, setPasswordValidation] = useState<IValidation>({
 		helperText: "",
 		error: false,
-	})
+	});
 
 	async function signin() {
-		let response: AxiosResponse
+		let response: AxiosResponse;
 		try {
-			await signInWithEmailAndPasswordAction(signInForm.email, signInForm.password)
+			await signInWithEmailAndPasswordAction(signInForm.email, signInForm.password);
 
-			navigate(ERoutes.DASHBOARD)
+			navigate(ERoutes.DASHBOARD);
 		} catch (e) {
 			// @ts-ignore
-			response = e.response as AxiosResponse
+			response = e.response as AxiosResponse;
 			if (response?.status === 403) {
 				setPasswordValidation({
 					error: true,
 					helperText: "Invalid password",
-				})
+				});
 			} else if (response?.status === 404) {
 				setEmailValidation({
 					error: true,
 					helperText: "User not found",
-				})
+				});
 			} else if (response.status === 307) {
-				await handleGoogleRedirectAction(response.data.redirectUrl)
+				await handleGoogleRedirectAction(response.data.redirectUrl);
 			}
 		}
 	}
@@ -60,55 +60,55 @@ const Signin: FC = () => {
 			setEmailValidation(() => ({
 				error: false,
 				helperText: "",
-			}))
+			}));
 		} else {
 			setEmailValidation(() => ({
 				error: true,
 				helperText: "Please enter a valid email",
-			}))
+			}));
 		}
 		if (signInForm.password.length > 6 || signInForm.password.length === 0) {
 			setPasswordValidation(() => ({
 				error: false,
 				helperText: "",
-			}))
+			}));
 		} else {
 			setPasswordValidation(() => ({
 				error: true,
 				helperText: "Password must be at least 7 characters",
-			}))
+			}));
 		}
-		return !(emailValidation.error && passwordValidation.error)
+		return !(emailValidation.error && passwordValidation.error);
 	}
 
 	const formSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
-		event.preventDefault()
+		event.preventDefault();
 
 		if (signInForm.email.length === 0) {
 			setEmailValidation({
 				error: true,
 				helperText: "Please enter an email",
-			})
-			return
+			});
+			return;
 		}
 		if (signInForm.password.length === 0) {
 			setPasswordValidation({
 				error: true,
 				helperText: "Please enter a password",
-			})
-			return
+			});
+			return;
 		}
 
 		if (validation()) {
-			await signin()
+			await signin();
 		}
-	}
+	};
 
 	function onStateChange(event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
 		setSignInForm({
 			...signInForm,
 			[event.target.name]: event.target.value,
-		})
+		});
 	}
 
 	return (
@@ -119,7 +119,7 @@ const Signin: FC = () => {
 			<div>
 				<GoogleButton
 					onClick={async () => {
-						await getGoogleAuthUrlAction()
+						await getGoogleAuthUrlAction();
 					}}
 					label={"SignIn with Google"}
 					type={"light"}
@@ -160,14 +160,14 @@ const Signin: FC = () => {
 				<MuiLink
 					sx={Link}
 					onClick={() => {
-						navigate(ERoutes.SIGN_UP)
+						navigate(ERoutes.SIGN_UP);
 					}}
 				>
 					SignUp
 				</MuiLink>
 			</div>
 		</>
-	)
-}
+	);
+};
 
-export default Signin
+export default Signin;

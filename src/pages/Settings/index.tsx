@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, FormEvent, useEffect } from "react"
+import React, { ChangeEvent, FC, FormEvent, useContext, useEffect } from "react";
 import {
 	Alert,
 	Button,
@@ -11,7 +11,7 @@ import {
 	SelectChangeEvent,
 	Slide,
 	Snackbar,
-} from "@mui/material"
+} from "@mui/material";
 import {
 	Form,
 	Input,
@@ -21,80 +21,80 @@ import {
 	PlaylistBox,
 	SettingItems,
 	SettingsContainer,
-} from "pages/Settings/emotion"
-import { Body1, H1, H3 } from "elements/Typography"
-import { IYouTubePlayListItems } from "types/YouTube"
-import { getUser } from "utils"
-import { changePasswordAction, getAllPlayListsAction, setUserPlaylistAction } from "pages/Settings/service"
+} from "pages/Settings/emotion";
+import { Body1, H1, H3 } from "elements/Typography";
+import { IYouTubePlayListItems } from "types/YouTube";
+import { changePasswordAction, getAllPlayListsAction, setUserPlaylistAction } from "pages/Settings/service";
+import { IUserContext, UserContext } from "context/usercontext";
+import { initUser } from "api/profile";
 
 const Settings: FC = () => {
-	const user = getUser()
-	const [playlists, setPlaylists] = React.useState<IYouTubePlayListItems>()
-	const [playlistDisabled, setPlaylistDisabled] = React.useState(true)
-	const [selectedPlaylist, setSelectedPlaylist] = React.useState<string | undefined>()
-	const [buttonDisabled, setButtonDisabled] = React.useState(true)
-	const [snackbarOpen, setSnackbarOpen] = React.useState(false)
+	const [playlists, setPlaylists] = React.useState<IYouTubePlayListItems>();
+	const [playlistDisabled, setPlaylistDisabled] = React.useState(true);
+	const [selectedPlaylist, setSelectedPlaylist] = React.useState<string | undefined>();
+	const [buttonDisabled, setButtonDisabled] = React.useState(true);
+	const [snackbarOpen, setSnackbarOpen] = React.useState(false);
 	const [passwordForm, setPasswordForm] = React.useState<{
 		password: string;
 		passwordConfirm: string;
 	}>({
 		password: "",
 		passwordConfirm: "",
-	})
+	});
 
 	function onPasswordChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
 		setPasswordForm({
 			...passwordForm,
 			[event.target.name]: event.target.value,
-		})
+		});
 	}
 
 	useEffect(() => {
 		if (passwordForm.password === passwordForm.passwordConfirm) {
 			if (passwordForm.password.length > 6) {
-				setButtonDisabled(false)
-				return
+				setButtonDisabled(false);
+				return;
 			}
 		}
-		setButtonDisabled(true)
-	}, [passwordForm])
+		setButtonDisabled(true);
+	}, [passwordForm]);
+
+	const { user, setUser } = useContext(UserContext) as IUserContext;
 
 	function handleChange(e: SelectChangeEvent) {
-		setUserPlaylistAction(e.target.value).then(() => {
-			setSelectedPlaylist(e.target.value)
-			localStorage.setItem(
-				"user",
-				JSON.stringify({
-					user: {
-						...user,
-						playlist: e.target.value,
-					},
-				}),
-			)
-		})
+		if (user) {
+			setUserPlaylistAction(e.target.value).then(() => {
+				setSelectedPlaylist(e.target.value);
+				initUser().then((r) => {
+					setUser(r.data.user);
+				});
+			});
+		}
 	}
 
 	function submitPasswordForm(event: FormEvent<HTMLFormElement>) {
-		event.preventDefault()
+		event.preventDefault();
 		changePasswordAction(passwordForm.password).then(() => {
 			setPasswordForm({
 				password: "",
 				passwordConfirm: "",
-			})
-			setSnackbarOpen(true)
-		})
+			});
+			setSnackbarOpen(true);
+		});
 	}
 
 	useEffect(() => {
-		getAllPlayListsAction().then((data) => {
-			setPlaylists(data)
-			setSelectedPlaylist(getUser()?.playlist)
-			setPlaylistDisabled(false)
-		})
-	}, [playlists])
+		if (user) {
+			getAllPlayListsAction().then((data) => {
+				setPlaylists(data);
+				setSelectedPlaylist(user?.playlist);
+				setPlaylistDisabled(false);
+			});
+		}
+	}, [playlists, user]);
 
 	function closeSnackbar() {
-		setSnackbarOpen(false)
+		setSnackbarOpen(false);
 	}
 
 	return (
@@ -187,7 +187,7 @@ const Settings: FC = () => {
 				</Alert>
 			</Snackbar>
 		</SettingsContainer>
-	)
-}
+	);
+};
 
-export default Settings
+export default Settings;

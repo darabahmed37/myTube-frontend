@@ -6,7 +6,9 @@ import { createRoutes, Routes as RouteList } from "routes"
 import { ThemeProvider as EmotionThemeProvider } from "@emotion/react"
 
 const App: FC = () => {
+
 	return (
+
 		<EmotionThemeProvider theme={theme}>
 			<ThemeProvider theme={theme}>
 				<BrowserRouter>
@@ -14,6 +16,7 @@ const App: FC = () => {
 				</BrowserRouter>
 			</ThemeProvider>
 		</EmotionThemeProvider>
+
 	)
 }
 

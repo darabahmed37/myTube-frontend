@@ -1,8 +1,8 @@
-import { styled } from "@mui/material/styles"
-import { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar/AppBar"
-import MuiAppBar from "@mui/material/AppBar"
-import { drawerWidth } from "layouts/MainScreen/style"
-import Box from "@mui/material/Box"
+import { styled } from "@mui/material/styles";
+import { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar/AppBar";
+import MuiAppBar from "@mui/material/AppBar";
+import { drawerWidth } from "layouts/MainScreen/style";
+import Box from "@mui/material/Box";
 
 export const Main = styled("main", {
 	shouldForwardProp: (prop) => prop !== "open",
@@ -23,7 +23,7 @@ export const Main = styled("main", {
 		}),
 		marginLeft: 0,
 	}),
-}))
+}));
 
 export interface AppBarProps extends MuiAppBarProps {
 	open?: boolean;
@@ -46,7 +46,7 @@ export const AppBar = styled(MuiAppBar, {
 			duration: theme.transitions.duration.enteringScreen,
 		}),
 	}),
-}))
+}));
 
 export const DrawerHeader = styled("div")(({ theme }) => ({
 	display: "flex",
@@ -54,15 +54,15 @@ export const DrawerHeader = styled("div")(({ theme }) => ({
 	padding: theme.spacing(0, 1),
 	...theme.mixins.toolbar,
 	justifyContent: "flex-end",
-}))
+}));
 
 export const Profile = styled("div")`
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  color: #000;
-`
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+	color: #000;
+`;
 
 export const MainBox = styled(Box)`
-  display: flex;
-`
+	display: flex;
+`;

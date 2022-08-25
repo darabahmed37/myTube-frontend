@@ -1,14 +1,14 @@
-import React, { ReactNode } from "react"
-import AuthenticateLayout from "layouts/AuthenticateLayout"
-import Signin from "pages/Auth/Signin"
-import Signup from "pages/Auth/Signup"
-import Dashboard from "pages/Dashboard"
-import Redirecting from "pages/Redirecting"
-import { Navigate, Route } from "react-router-dom"
-import MainScreen from "layouts/MainScreen"
-import { PrivateRoutes, PublicRoutes } from "routes/AuthRoutes"
-import PlayerScreen from "pages/PlayerScreen"
-import Settings from "pages/Settings"
+import React, { ReactNode } from "react";
+import AuthenticateLayout from "layouts/AuthenticateLayout";
+import Signin from "pages/Auth/Signin";
+import Signup from "pages/Auth/Signup";
+import Dashboard from "pages/Dashboard";
+import Redirecting from "pages/Redirecting";
+import { Navigate, Route } from "react-router-dom";
+import MainScreen from "layouts/MainScreen";
+import { PrivateRoutes, PublicRoutes } from "routes/AuthRoutes";
+import PlayerScreen from "pages/PlayerScreen";
+import Settings from "pages/Settings";
 
 export interface IRoute {
 	path: string;
@@ -68,7 +68,7 @@ export const Routes: IRoute[] = [
 		path: "/redirecting",
 		element: <Redirecting />,
 	},
-]
+];
 
 export function createRoutes(Routes: IRoute[]) {
 	let outputRoutes: ReactNode[] = Routes.map((route, index) => {
@@ -79,7 +79,7 @@ export function createRoutes(Routes: IRoute[]) {
 				</Route>
 			) : (
 				<Route {...route} key={index} />
-			)
+			);
 		}
 		return route.protected ? (
 			<Route element={<PrivateRoutes />} key={index}>
@@ -93,8 +93,8 @@ export function createRoutes(Routes: IRoute[]) {
 					{createRoutes(route.child)}
 				</Route>
 			</Route>
-		)
-	})
-	outputRoutes.push(<Route key={3000} path="*" element={<Navigate to={"/"} />} />)
-	return outputRoutes
+		);
+	});
+	outputRoutes.push(<Route key={3000} path="*" element={<Navigate to={"/"} />} />);
+	return outputRoutes;
 }

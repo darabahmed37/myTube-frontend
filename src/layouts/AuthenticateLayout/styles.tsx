@@ -1,6 +1,6 @@
-import { Grid, styled, SxProps, Theme } from "@mui/material"
-import background from "assets/beautiful-african-american-woman-wearing-earphones-city-remixed-media.jpg"
-import { CSSProperties } from "react"
+import { Grid, styled, SxProps, Theme } from "@mui/material";
+import background from "assets/beautiful-african-american-woman-wearing-earphones-city-remixed-media.jpg";
+import { CSSProperties } from "react";
 
 export const HomeMain = styled("div")(({ theme }) => ({
 	display: "flex",
@@ -8,7 +8,7 @@ export const HomeMain = styled("div")(({ theme }) => ({
 	alignItems: "center",
 	height: "100vh",
 	backgroundColor: theme.palette.secondary.main,
-}))
+}));
 
 export const HomeContainer = styled(Grid)(({ theme }) => ({
 	overflow: "hidden",
@@ -30,10 +30,10 @@ export const HomeContainer = styled(Grid)(({ theme }) => ({
 		width: "100vw",
 		height: "100vh",
 	},
-}))
+}));
 HomeContainer.defaultProps = {
 	container: true,
-}
+};
 
 export const Left = styled(Grid)(({ theme }) => ({
 	[theme.breakpoints.down("lg")]: {
@@ -47,7 +47,7 @@ export const Left = styled(Grid)(({ theme }) => ({
 	justifyContent: "center",
 	alignItems: "center",
 	padding: "3rem",
-}))
+}));
 
 export const Right = styled(Grid)(({ theme }) => ({
 	[theme.breakpoints.down("lg")]: {
@@ -70,18 +70,18 @@ export const Right = styled(Grid)(({ theme }) => ({
 		background: `url(${background}) -126% `,
 		backgroundSize: "cover",
 	},
-}))
+}));
 
 export const InputForm = styled("form")(({ theme }) => ({
 	display: "flex",
 	flexDirection: "column",
 	gap: "2em",
 	width: "80%",
-}))
+}));
 
 export const lightText: CSSProperties = {
 	color: "#7C7B7B",
-}
+};
 
 export const Link: SxProps<Theme> = (theme) => ({
 	cursor: "pointer",
@@ -92,10 +92,10 @@ export const Link: SxProps<Theme> = (theme) => ({
 
 	display: "inline-block",
 	marginLeft: "4px",
-})
+});
 
 export const navigationTitle: CSSProperties = {
 	display: "inline-block",
 	fontSize: "0.8rem",
 	transform: "translateY(4rem)",
-}
+};

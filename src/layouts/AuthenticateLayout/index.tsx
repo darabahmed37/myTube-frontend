@@ -1,6 +1,6 @@
-import React, { FC } from "react"
-import { Outlet } from "react-router-dom"
-import { HomeContainer, HomeMain, Left, Right } from "layouts/AuthenticateLayout/styles"
+import React, { FC } from "react";
+import { Outlet } from "react-router-dom";
+import { HomeContainer, HomeMain, Left, Right } from "layouts/AuthenticateLayout/styles";
 
 const AuthenticateLayout: FC = () => {
 	return (
@@ -15,6 +15,6 @@ const AuthenticateLayout: FC = () => {
 				<Right lg={6} item container></Right>
 			</HomeContainer>
 		</HomeMain>
-	)
-}
-export default AuthenticateLayout
+	);
+};
+export default AuthenticateLayout;

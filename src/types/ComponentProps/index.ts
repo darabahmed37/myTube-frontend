@@ -1,4 +1,4 @@
-import { IThumbnails } from "types/YouTube"
+import { IThumbnails } from "types/YouTube";
 
 export interface VideoCardProps {
 	title: string;

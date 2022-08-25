@@ -1,4 +1,4 @@
-import { SxProps, Theme } from "@mui/material"
+import { SxProps, Theme } from "@mui/material";
 
 export const CardStyles: SxProps<Theme> = (theme) => ({
 	background: "#FBF9F9",
@@ -10,9 +10,9 @@ export const CardStyles: SxProps<Theme> = (theme) => ({
 	"&:hover": {
 		cursor: "pointer",
 	},
-})
+});
 
 export const CardMediaSx: SxProps<Theme> = (theme) => ({
 	maxWidth: "50%",
 	objectFit: "contain",
-})
+});

@@ -1,13 +1,13 @@
-import React, { FC, useContext } from "react"
-import Player from "components/Player"
-import { useParams } from "react-router-dom"
-import VideoGrid from "components/VideoGrid"
-import { Container } from "./emotion"
-import { DashboardContext } from "context/DashboardContext"
+import React, { FC, useContext } from "react";
+import Player from "components/Player";
+import { useParams } from "react-router-dom";
+import VideoGrid from "components/VideoGrid";
+import { Container } from "./emotion";
+import { DashboardContext } from "context/DashboardContext";
 
 const PlayerScreen: FC = () => {
-	const { videoId } = useParams()
-	const playlist = useContext(DashboardContext)
+	const { videoId } = useParams();
+	const playlist = useContext(DashboardContext);
 
 	return (
 		<Container>
@@ -15,7 +15,7 @@ const PlayerScreen: FC = () => {
 
 			<VideoGrid playlist={playlist} />
 		</Container>
-	)
-}
+	);
+};
 
-export default PlayerScreen
+export default PlayerScreen;

@@ -1,4 +1,4 @@
-import { PaperProps } from "@mui/material"
+import { PaperProps } from "@mui/material";
 
 export const MenuPaperSxProps: Partial<PaperProps> = {
 	elevation: 0,
@@ -14,7 +14,7 @@ export const MenuPaperSxProps: Partial<PaperProps> = {
 			mr: 1,
 		},
 		"&:before": {
-			content: "\"\"",
+			content: '""',
 			display: "block",
 			position: "absolute",
 			top: 0,
@@ -25,6 +25,6 @@ export const MenuPaperSxProps: Partial<PaperProps> = {
 			zIndex: 0,
 		},
 	},
-}
+};
 
-export const MenuBoxSxProps = { display: "flex", alignItems: "center", textAlign: "center" }
+export const MenuBoxSxProps = { display: "flex", alignItems: "center", textAlign: "center" };
