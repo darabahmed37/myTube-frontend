@@ -6,9 +6,9 @@ export enum YoutubeRoutes {
 }
 
 export function generatePlayListByIdUrl(id: string): string {
-	return YoutubeRoutes.PLAYLIST_BY_ID + id + "/";
+	return YoutubeRoutes.PLAYLIST_BY_ID + id + "/"
 }
 
 export function generateVideoByIdUrl(id: string): string {
-	return YoutubeRoutes.GET_VIDEO_BY_ID + id + "/";
+	return YoutubeRoutes.GET_VIDEO_BY_ID + id + "/"
 }
