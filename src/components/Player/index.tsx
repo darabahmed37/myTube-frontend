@@ -1,16 +1,24 @@
 import React, { FC, useCallback, useEffect } from "react";
 import { getVideoById } from "api/youtube";
 import { IYouTubeVideo } from "types/YouTube";
-import { LinearProgress, Paper, Typography } from "@mui/material";
+import { Divider, LinearProgress, Typography } from "@mui/material";
 import YouTube from "elements/YouTube";
-import { PaperSx } from "components/Player/style";
-import { Box } from "./style";
-import { TextArea } from "components/Player/emotion";
+import { Clock, CountDownBox, PlayerArea, PlayerContainer, TextArea, TimerTypography } from "components/Player/emotion";
+import { H3 } from "elements/Typography";
+import { CountdownRenderProps } from "react-countdown";
 
 interface VideoValues {
 	embedHTML: string;
 	title: string;
 	description: string;
+}
+
+function render({ hours, minutes, seconds }: CountdownRenderProps) {
+	return (
+		<TimerTypography variant="h4">
+			{hours}:{minutes}:{seconds}
+		</TimerTypography>
+	);
 }
 
 const Player: FC<{ videoId: string }> = ({ videoId }) => {
@@ -30,24 +38,32 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 	}, [videoId]);
 
 	useEffect(() => {
-		initialize().then(() => {});
+		initialize().then(() => {
+		});
 	}, [initialize]);
 
 	return (
-		<Box>
+		<>
 			{video.embedHTML ? (
-				<Paper sx={PaperSx}>
-					<YouTube embedHtml={video?.embedHTML} title={video?.title} />
+				<PlayerContainer>
+					<PlayerArea>
+						<YouTube embedHtml={video?.embedHTML} title={video?.title} />
 
-					<Typography variant={"h5"} fontWeight={"600"}>
-						{video?.title}
-					</Typography>
-					<TextArea contentEditable={false} value={video?.description} readOnly />
-				</Paper>
+						<Typography variant={"h5"} fontWeight={"600"}>
+							{video?.title}
+						</Typography>
+						<TextArea contentEditable={false} value={video?.description} readOnly />
+					</PlayerArea>
+					<CountDownBox>
+						<H3>Time Remaining</H3>
+						<Divider />
+						<Clock date={Date.now() + 9000000000} renderer={render} />
+					</CountDownBox>
+				</PlayerContainer>
 			) : (
 				<LinearProgress />
 			)}
-		</Box>
+		</>
 	);
 };
 

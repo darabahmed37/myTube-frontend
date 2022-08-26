@@ -5,11 +5,9 @@ export const PaperSx: SxProps = {
 	p: "1rem",
 	mb: "1rem",
 	background: "#FBF9F9",
-	display:"flex",
-	flexDirection:"column",
-	gap:"2rem",
+	display: "flex",
+	flexDirection: "column",
+	gap: "2rem",
+	maxWidth:"80%",
+	flex:"0.8"
 };
-
-export const Box = styled(MuiBox)`
-	min-width: 90%;
-`;

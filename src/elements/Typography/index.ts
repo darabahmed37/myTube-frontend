@@ -22,6 +22,7 @@ H1.defaultProps = {
 export const Body1 = styled(Typography)`
   font-size: 0.9rem;
   font-weight: 400;
+	
 `;
 
 Body1.defaultProps = {
