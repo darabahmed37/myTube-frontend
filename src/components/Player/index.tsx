@@ -5,6 +5,7 @@ import { LinearProgress, Paper, Typography } from "@mui/material";
 import YouTube from "elements/YouTube";
 import { PaperSx } from "components/Player/style";
 import { Box } from "./style";
+import { TextArea } from "components/Player/emotion";
 
 interface VideoValues {
 	embedHTML: string;
@@ -41,7 +42,7 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 					<Typography variant={"h5"} fontWeight={"600"}>
 						{video?.title}
 					</Typography>
-					<Typography variant={"body1"}>{video.description}</Typography>
+					<TextArea contentEditable={false} value={video?.description} readOnly />
 				</Paper>
 			) : (
 				<LinearProgress />

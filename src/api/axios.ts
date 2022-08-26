@@ -25,7 +25,7 @@ axiosApiInstance.interceptors.response.use(
 	(response) => {
 		return response;
 	},
-	async function (error) {
+	async function(error) {
 		const originalRequest = error.config;
 
 		if (error.response.status === 401) {
@@ -53,7 +53,7 @@ axiosApiInstance.interceptors.response.use(
 			logOut();
 			return Promise.reject(error);
 		}
-	}
+	},
 );
 
 export default axiosApiInstance;
@@ -107,7 +107,7 @@ export const deleteRequest = (route: string, data = {}, instance = axiosApiInsta
 export const putRequest = (route: string, data = {}, instance = axiosApiInstance) => {
 	const backendRoute = route.includes(BASE_BACKEND_URL) ? route : `${BASE_BACKEND_URL}${route}`;
 	return instance
-		.post(backendRoute, data)
+		.put(backendRoute, data)
 		.then((response) => {
 			return response;
 		})

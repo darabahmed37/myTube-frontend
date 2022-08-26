@@ -16,7 +16,8 @@ const Redirecting: FC = () => {
 	}
 
 	useEffect(() => {
-		googleAuthentication().then(() => {});
+		googleAuthentication().then(() => {
+		});
 	});
 	return <Typography variant={"h2"}>Redirecting...</Typography>;
 };
