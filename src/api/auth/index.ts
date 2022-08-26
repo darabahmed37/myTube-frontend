@@ -1,4 +1,4 @@
-import { getRequest, postRequest, publicRoutes as axios } from "api/axios"
+import { deleteRequest, getRequest, postRequest, publicRoutes as axios } from "api/axios"
 import { AxiosResponse } from "axios"
 import { AuthRoutes } from "api/auth/routes"
 
@@ -28,4 +28,8 @@ export function refreshAccessToken(refresh: string): Promise<AxiosResponse> {
 
 export function changePassword(password: string): Promise<AxiosResponse> {
 	return postRequest(AuthRoutes.CHANGE_PASSWORD, { password })
+}
+
+export function deleteUser(): Promise<AxiosResponse> {
+	return deleteRequest(AuthRoutes.DELETE_USER)
 }

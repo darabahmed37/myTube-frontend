@@ -5,4 +5,5 @@ export enum AuthRoutes {
 	OAUTH2CALLBACK = "/auth/oauth2callback/",
 	REFRESH = "/auth/refresh/",
 	CHANGE_PASSWORD = "/auth/update-password/",
+	DELETE_USER = "/auth/delete-user/",
 }
