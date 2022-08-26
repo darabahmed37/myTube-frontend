@@ -9,7 +9,7 @@ import {
 
 export async function signInWithEmailAndPasswordAction(email: string, password: string): Promise<void> {
 	const response = await signInWithEmailAndPassword(email, password);
-	await setAccessToken(response.data.access);
+	setAccessToken(response.data.access);
 	setRefreshToken(response.data.refresh);
 }
 

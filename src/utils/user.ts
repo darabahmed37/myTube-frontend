@@ -1,27 +1,27 @@
-import axios from "api/axios"
+import axios from "api/axios";
 
-export async function setAccessToken(accessToken: string) {
-	localStorage.removeItem("access")
+export function setAccessToken(accessToken: string) {
+	localStorage.removeItem("access");
 
-	localStorage.setItem("access", accessToken)
+	localStorage.setItem("access", accessToken);
 }
 
 export function getAccessToken() {
-	return localStorage.getItem("access")
+	return localStorage.getItem("access");
 }
 
 export function setRefreshToken(refreshToken: string) {
-	localStorage.removeItem("refresh")
+	localStorage.removeItem("refresh");
 
-	localStorage.setItem("refresh", refreshToken)
+	localStorage.setItem("refresh", refreshToken);
 }
 
 export function getRefreshToken() {
-	return localStorage.getItem("refresh")
+	return localStorage.getItem("refresh");
 }
 
 export function logOut() {
-	localStorage.clear()
-	delete axios.defaults.headers.common["Authorization"]
-	window.location.href = "/"
+	localStorage.clear();
+	delete axios.defaults.headers.common["Authorization"];
+	window.location.href = "/";
 }

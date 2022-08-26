@@ -1,34 +1,34 @@
-import { changePassword, deleteUser } from "api/auth"
-import { getAllPlayLists, setUserPlaylist } from "api/youtube"
-import { IYouTubePlayListItems } from "types/YouTube"
+import { changePassword, deleteUser } from "api/auth";
+import { getAllPlayLists, setUserPlaylist } from "api/youtube";
+import { IYouTubePlayListItems } from "types/YouTube";
 
 export async function changePasswordAction(password: string): Promise<string> {
-	return (await changePassword(password)).data.message
+	return (await changePassword(password)).data.message;
 }
 
 export async function getAllPlayListsAction() {
-	let data: IYouTubePlayListItems
+	let data: IYouTubePlayListItems;
 	try {
-		data = (await getAllPlayLists()).data
-		return data
+		data = (await getAllPlayLists()).data;
+		return data;
 	} catch (e) {
-		console.error(e)
+		console.error(e);
 	}
 }
 
 export async function setUserPlaylistAction(playlistId: string) {
 	try {
-		await setUserPlaylist(playlistId)
+		await setUserPlaylist(playlistId);
 	} catch (e) {
-		console.error(e)
+		console.error(e);
 	}
 }
 
-export async function deleteUserAction(event:any) {
+export async function deleteUserAction(event: any) {
 	try {
-		await deleteUser()
-		window.location.href = "/"
+		await deleteUser();
+		window.location.href = "/";
 	} catch (e) {
-		console.error(e)
+		console.error(e);
 	}
 }

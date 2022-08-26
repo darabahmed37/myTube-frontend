@@ -25,7 +25,7 @@ import { AppBar, DrawerHeader, Main, MainBox, Profile } from "./emotion";
 import { DashboardContext } from "context/DashboardContext";
 import { VideoCardProps } from "types/ComponentProps";
 import { getPlaylistByIdAction } from "layouts/MainScreen/services";
-import { UserContext } from "context/usercontext";
+import { UserContext } from "context/UserContext";
 import { User } from "types/IAuth";
 import { initUser } from "api/profile";
 

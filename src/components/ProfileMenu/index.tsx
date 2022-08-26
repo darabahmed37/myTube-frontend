@@ -14,7 +14,7 @@ import { MenuBoxSxProps, MenuPaperSxProps } from "components/ProfileMenu/style";
 import { logOut } from "utils/user";
 import { useNavigate } from "react-router-dom";
 import { ERoutes } from "routes";
-import { IUserContext, UserContext } from "context/usercontext";
+import { IUserContext, UserContext } from "context/UserContext";
 import { CircularProgress } from "@mui/material";
 
 export default function ProfileMenu() {

@@ -6,7 +6,7 @@ import { handleGoogleRedirectAction } from "pages/Auth/service";
 export async function getAccessTokenFromGoogleAction(code: string) {
 	try {
 		let response = await getAccessTokenFromGoogle(code);
-		await setAccessToken(response.data.access);
+		setAccessToken(response.data.access);
 		setRefreshToken(response.data.refresh);
 	} catch (e) {
 		// @ts-ignore
