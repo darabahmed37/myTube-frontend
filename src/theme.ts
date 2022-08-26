@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material"
+import { createTheme } from "@mui/material";
 
 export const theme = createTheme({
 	typography: {
@@ -9,6 +9,16 @@ export const theme = createTheme({
 		MuiCssBaseline: {
 			styleOverrides: {
 				fontFamily: "Inter, Arial, Helvetica, sans-serif",
+			},
+		},
+		MuiLinearProgress: {
+			styleOverrides: {
+				root: {
+					width: "100%",
+				},
+			},
+			defaultProps: {
+				color: "secondary",
 			},
 		},
 	},
@@ -23,4 +33,4 @@ export const theme = createTheme({
 			contrastText: "#fff",
 		},
 	},
-})
+});

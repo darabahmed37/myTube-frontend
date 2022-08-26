@@ -1,55 +1,53 @@
 interface IYTImage {
-	url: string
-	width: number
-	height: number
+	url: string;
+	width: number;
+	height: number;
 }
 
 export interface IThumbnails {
-	default: IYTImage
-	medium: IYTImage
-	high: IYTImage
-	standard: IYTImage
-	maxres: IYTImage
+	default: IYTImage;
+	medium: IYTImage;
+	high: IYTImage;
+	standard: IYTImage;
+	maxres: IYTImage;
 }
 
-export interface YouTubePlayLists {
-
+export interface IYouTubePlayListItems {
 	items: {
-		id: string
+		id: string;
 		snippet: {
-			title: string
-			thumbnails: IThumbnails
-			description:string
-		}
-	}[]
+			title: string;
+			description: string;
+			thumbnails: IThumbnails;
+			resourceId: {
+				videoId: string;
+			};
+		};
+	}[];
 }
 
-export interface YouTubePlayListItems {
-	items: {
-		id: string
-		snippet: {
-			title: string
-			description: string
-			thumbnails: IThumbnails
-		}
-		resourceId: {
-			videoId: string
-		}
-	}[]
-}
-
-export interface YouTubeVideo {
+export interface IYouTubeVideo {
 	items: [
 		{
-			id: string
+			id: string;
 			snippet: {
-				title: string
-				description: string
-				thumbnails: IThumbnails
-				tags: string[]
-				categoryId: string
-			}
-			player: string
+				title: string;
+				description: string;
+				thumbnails: IThumbnails;
+				tags: string[];
+				categoryId: string;
+			};
+			player: {
+				embedHtml: string;
+			};
 		}
-	]
+	];
+}
+
+export interface IFrameProps {
+	allow: string;
+	allowFullScreen: string;
+	frameBorder: string;
+
+	src: string;
 }

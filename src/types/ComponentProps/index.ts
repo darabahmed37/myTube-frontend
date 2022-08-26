@@ -1,8 +1,9 @@
-import { IThumbnails } from "types/YouTube"
+import { IThumbnails } from "types/YouTube";
 
 export interface VideoCardProps {
-	title: string
-	description: string
-	thumbnails: IThumbnails
-	id: string
+	title: string;
+	description: string;
+	thumbnails: IThumbnails;
+	id: string;
+	videoId: string;
 }

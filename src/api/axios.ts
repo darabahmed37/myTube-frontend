@@ -1,13 +1,16 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios"
-import { BASE_BACKEND_URL } from "config"
-import { BackendRoutes } from "api/auth/backend.routes"
-
-const accessToken = localStorage.getItem("access")
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
+import { BASE_BACKEND_URL } from "config";
+import { getAccessToken, getRefreshToken, logOut, setAccessToken } from "utils/user";
+import { refreshAccessToken } from "api/auth";
 
 function AuthorizationHeader(config: AxiosRequestConfig) {
-	if (config.headers && accessToken) config.headers.Authorization = `Bearer ${accessToken}`
-
-	return config
+	return {
+		...config,
+		headers: {
+			...config.headers,
+			Authorization: getAccessToken() ? `Bearer ${getAccessToken()}` : "",
+		},
+	};
 }
 
 const axiosApiInstance: AxiosInstance = axios.create({
@@ -15,37 +18,111 @@ const axiosApiInstance: AxiosInstance = axios.create({
 	headers: {
 		"Content-Type": "application/json",
 	},
-})
-axiosApiInstance.interceptors.request.use(AuthorizationHeader)
-
-async function refreshAccessToken() {
-	const refreshToken = localStorage.getItem("refresh")
-	if (!refreshToken) return
-	const response = await axiosApiInstance.post(BackendRoutes.REFRESH, {
-		refresh: refreshToken,
-	})
-	localStorage.removeItem("access")
-	localStorage.setItem("access", response.data.access)
-}
+});
+axiosApiInstance.interceptors.request.use(AuthorizationHeader);
 
 axiosApiInstance.interceptors.response.use(
 	(response) => {
-		return response
+		return response;
 	},
-	async function(error) {
-		const originalRequest = error.config
-		if (error.response.status === 401 && !originalRequest._retry && error.response.data.code === "token_not_valid") {
-			originalRequest._retry = true
-			const access_token = await refreshAccessToken()
-			axios.defaults.headers.common["Authorization"] = "Bearer " + access_token
-			return axiosApiInstance(originalRequest)
+	async function (error) {
+		const originalRequest = error.config;
+
+		if (error.response.status === 401) {
+			if (!originalRequest._retry && error.response.data.code === "token_not_valid") {
+				originalRequest._retry = true;
+				let access_token: string;
+				const refreshToken = getRefreshToken();
+				if (refreshToken) {
+					try {
+						const response = await refreshAccessToken(refreshToken);
+
+						setAccessToken(response.data.access);
+						access_token = response.data.access as string;
+						axiosApiInstance.defaults.headers.common["Authorization"] = "Bearer " + access_token;
+					} catch (e) {
+						console.error(e);
+						logOut();
+					}
+				} else {
+					logOut();
+				}
+
+				return axiosApiInstance(originalRequest);
+			}
+			logOut();
+			return Promise.reject(error);
 		}
+	}
+);
 
-		localStorage.clear()
-		axios.defaults.headers.common["Authorization"] = ""
-		return Promise.reject(error)
+export default axiosApiInstance;
+export const publicRoutes: AxiosInstance = axios.create({
+	baseURL: BASE_BACKEND_URL,
+	headers: {
+		"Content-Type": "application/json",
 	},
-)
+});
 
+// Requests format
+export const failedResponse = (error: AxiosError) => {
+	console.log(error);
+	return Promise.reject(error);
+};
 
-export default axiosApiInstance
+export const getRequest = (route: string, instance = axiosApiInstance) => {
+	const backendRoute = route.includes(BASE_BACKEND_URL) ? route : `${BASE_BACKEND_URL}${route}`;
+	return instance
+		.get(backendRoute)
+		.then((response) => {
+			return response;
+		})
+		.catch((error) => {
+			return failedResponse(error);
+		});
+};
+export const postRequest = (route: string, data = {}, instance = axiosApiInstance) => {
+	const backendRoute = route.includes(BASE_BACKEND_URL) ? route : `${BASE_BACKEND_URL}${route}`;
+
+	return instance
+		.post(backendRoute, data)
+		.then((response) => {
+			return response;
+		})
+		.catch((error) => {
+			return failedResponse(error);
+		});
+};
+export const deleteRequest = (route: string, data = {}, instance = axiosApiInstance) => {
+	const backendRoute = route.includes(BASE_BACKEND_URL) ? route : `${BASE_BACKEND_URL}${route}`;
+	return instance
+		.delete(backendRoute, data)
+		.then((response) => {
+			return response;
+		})
+		.catch((error) => {
+			return failedResponse(error);
+		});
+};
+export const putRequest = (route: string, data = {}, instance = axiosApiInstance) => {
+	const backendRoute = route.includes(BASE_BACKEND_URL) ? route : `${BASE_BACKEND_URL}${route}`;
+	return instance
+		.post(backendRoute, data)
+		.then((response) => {
+			return response;
+		})
+		.catch((error) => {
+			return failedResponse(error);
+		});
+};
+export const patchRequest = (route: string, data = {}, instance = axiosApiInstance) => {
+	const backendRoute = route.includes(BASE_BACKEND_URL) ? route : `${BASE_BACKEND_URL}${route}`;
+	return instance
+		.patch(backendRoute, data)
+		.then((response) => {
+			return response;
+		})
+		.catch((error) => {
+			return failedResponse(error);
+		});
+};

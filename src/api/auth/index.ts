@@ -1,72 +1,35 @@
-import axios from "api/axios"
-import { AxiosResponse } from "axios"
-import { BackendRoutes } from "api/auth/backend.routes"
+import { deleteRequest, getRequest, postRequest, publicRoutes as axios } from "api/axios";
+import { AxiosResponse } from "axios";
+import { AuthRoutes } from "api/auth/routes";
 
-export function setAccessToken(accessToken: string) {
-	localStorage.setItem("access", accessToken)
+export function signInWithEmailAndPassword(email: string, password: string): Promise<AxiosResponse> {
+	return postRequest(AuthRoutes.SIGN_IN, { email, password }, axios);
 }
 
-export function setRefreshToken(refreshToken: string) {
-	localStorage.setItem("refresh", refreshToken)
+export function signUpWithEmailAndPassword(email: string, password: string): Promise<AxiosResponse> {
+	return postRequest(AuthRoutes.SIGN_UP, { email, password }, axios);
 }
 
-
-export async function signInWithEmailAndPassword(email: string, password: string): Promise<AxiosResponse> {
-	let response: AxiosResponse
-
-	response = await axios.post(BackendRoutes.SIGN_IN, {
-		email,
-		password,
-	})
-	setAccessToken(response.data.access)
-	setRefreshToken(response.data.refresh)
-
-	return response
+export function getGoogleAuthUrl(): Promise<AxiosResponse> {
+	return getRequest(AuthRoutes.LOGIN_WITH_GOOGLE, axios);
 }
 
-export async function signUpWithEmailAndPassword(email: string, password: string): Promise<AxiosResponse> {
-	let response: AxiosResponse
-
-	response = await axios.post(BackendRoutes.SIGN_UP, {
-		email,
-		password,
-	})
-
-	return response
+export function getAccessTokenFromGoogle(code: string): Promise<AxiosResponse> {
+	return postRequest(AuthRoutes.OAUTH2CALLBACK, { code }, axios);
 }
 
-export async function getGoogleAuthUrl(): Promise<void> {
-	let response: AxiosResponse
-
-	response = await axios.get(BackendRoutes.LOGIN_WITH_GOOGLE)
-
-	window.location.href = response.data.authorization_url
+export function handleRedirectGoogle(redirectUrl: string): Promise<AxiosResponse> {
+	return getRequest(redirectUrl, axios);
 }
 
-export async function getAccessTokenFromGoogle(code: string): Promise<AxiosResponse> {
-	let response: AxiosResponse
-	try {
-		response = await axios.post(BackendRoutes.OAUTH2CALLBACK, {
-			code,
-		})
-		setAccessToken(response.data.access)
-		setRefreshToken(response.data.refresh)
-	} catch (e) {
-		// @ts-ignore
-		response = e.response as AxiosResponse
-
-		if (response.status === 307) {
-			const { redirectUrl } = response.data
-			window.location.href = (await axios.get(redirectUrl)).data.authorization_url
-		}
-	}
-	return response
+export function refreshAccessToken(refresh: string): Promise<AxiosResponse> {
+	return postRequest(AuthRoutes.REFRESH, { refresh }, axios);
 }
 
+export function changePassword(password: string): Promise<AxiosResponse> {
+	return postRequest(AuthRoutes.CHANGE_PASSWORD, { password });
+}
 
-export async function GetAllPlayLists(): Promise<AxiosResponse> {
-	let response: AxiosResponse
-
-	response = await axios.get(BackendRoutes.ALL_PLAYLISTS, {})
-	return response
+export function deleteUser(): Promise<AxiosResponse> {
+	return deleteRequest(AuthRoutes.DELETE_USER);
 }
