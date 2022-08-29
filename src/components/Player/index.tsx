@@ -35,11 +35,7 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 		description: "",
 	});
 	const [time, setTime] = useState<ITimer | undefined>(undefined);
-	const [clock, setClock] = useState<IRunningTime>({
-		hours: 0,
-		minutes: 0,
-		seconds: 0,
-	});
+	let clock: IRunningTime;
 	const initialize = useCallback(async () => {
 		const videoTemp: IYouTubeVideo = (await getVideoById(videoId as string)).data;
 		setVideo({
@@ -50,7 +46,7 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 	}, [videoId]);
 
 	function render({ hours, minutes, seconds }: CountdownRenderProps) {
-		setClock({ hours, minutes, seconds });
+		clock = { hours, minutes, seconds };
 		return (
 			<TimerTypography variant="h4">
 				{hours}:{minutes}:{seconds}
@@ -65,13 +61,13 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 			});
 		});
 	}, [initialize]);
-
 	useEffect(() => {
 		return () => {
-			const hours = convertIntoHours(clock);
-			setTimeAction(hours).then(() => {
-				alert("Timer saved");
-			});
+			if (clock !== undefined) {
+				console.log("clock", clock);
+				const hours = convertIntoHours(clock);
+				setTimeAction(hours).then(() => {});
+			}
 		};
 	});
 

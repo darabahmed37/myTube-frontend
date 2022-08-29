@@ -69,4 +69,5 @@ export const ClockDiv = styled("div")`
 	justify-content: center;
 	align-items: center;
 	transform: translateY(-1em);
+	min-width: 15em;
 `;
