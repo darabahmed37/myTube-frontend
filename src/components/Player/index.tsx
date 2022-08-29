@@ -87,7 +87,12 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 						<Typography variant={"h5"} fontWeight={"600"}>
 							{video?.title}
 						</Typography>
-						<TextArea contentEditable={false} value={video?.description} readOnly />
+						<TextArea
+							contentEditable={false}
+							value={video?.description.length > 500 ? video.description.substring(0, 500) + "..." : video.description}
+							rows={10}
+							readOnly
+						/>
 					</PlayerArea>
 					<CountDownBox>
 						<H3>Time Remaining</H3>
