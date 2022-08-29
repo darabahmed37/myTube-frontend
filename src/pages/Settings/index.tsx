@@ -107,10 +107,9 @@ const Settings: FC = () => {
 				setSelectedPlaylist(user?.playlist);
 				setPlaylistDisabled(false);
 				getTimerAction().then((data) => {
+					console.log(data);
 					setSetIncreaseTimeDisabled(data.availed_time);
 				});
-
-
 			});
 		}
 	}, [user]);
@@ -125,6 +124,7 @@ const Settings: FC = () => {
 			.then(() => {
 				setSnackbarOpen(true);
 				setSnackbarMessage("Time increased");
+				setSetIncreaseTimeDisabled(true);
 			})
 			.catch(() => {
 				setSnackbarOpen(true);
@@ -237,10 +237,12 @@ const Settings: FC = () => {
 					<ItemHeader>
 						<H3>Add 2 more hours</H3>
 						<Body1>
-							<span>Warning!</span> Dear user you are about to add 2 more hours to your account
+							<span>Warning!</span> Dear user you are about to add 2 more hours to your account{" "}
+							<strong>for today</strong>
 						</Body1>
-						<IncreaseTime disabled={increaseTimeDisabled} onClick={increaseTimeOnClick}>Yes! I want to waste 2 more
-							hours</IncreaseTime>
+						<IncreaseTime disabled={increaseTimeDisabled} onClick={increaseTimeOnClick}>
+							Yes! I want to waste 2 more hours
+						</IncreaseTime>
 						{increaseTimeDisabled ? <Body1>You can't increase time</Body1> : ""}
 					</ItemHeader>
 				</Item>

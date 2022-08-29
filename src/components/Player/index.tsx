@@ -11,6 +11,7 @@ import {
 	PlayerContainer,
 	TextArea,
 	TimerTypography,
+	TimeUpMessage,
 } from "components/Player/emotion";
 import { H3 } from "elements/Typography";
 import { CountdownRenderProps } from "react-countdown";
@@ -35,7 +36,6 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 		description: "",
 	});
 	const [time, setTime] = useState<ITimer | undefined>(undefined);
-	let clock: IRunningTime;
 	const initialize = useCallback(async () => {
 		const videoTemp: IYouTubeVideo = (await getVideoById(videoId as string)).data;
 		setVideo({
@@ -44,6 +44,7 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 			description: videoTemp.items[0].snippet.description,
 		});
 	}, [videoId]);
+	let clock: IRunningTime | undefined;
 
 	function render({ hours, minutes, seconds }: CountdownRenderProps) {
 		clock = { hours, minutes, seconds };
@@ -81,19 +82,28 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 		<>
 			{video.embedHTML ? (
 				<PlayerContainer>
-					<PlayerArea>
-						<YouTube embedHtml={video?.embedHTML} title={video?.title} />
+					{time?.total_time ? (
+						<PlayerArea>
+							<YouTube embedHtml={video?.embedHTML} title={video?.title} />
 
-						<Typography variant={"h5"} fontWeight={"600"}>
-							{video?.title}
-						</Typography>
-						<TextArea
-							contentEditable={false}
-							value={video?.description.length > 500 ? video.description.substring(0, 500) + "..." : video.description}
-							rows={10}
-							readOnly
-						/>
-					</PlayerArea>
+							<Typography variant={"h5"} fontWeight={"600"}>
+								{video?.title}
+							</Typography>
+							<TextArea
+								contentEditable={false}
+								value={
+									video?.description.length > 500 ? video.description.substring(0, 500) + "..." : video.description
+								}
+								rows={10}
+								readOnly
+							/>
+						</PlayerArea>
+					) : (
+						<TimeUpMessage>
+							Dear User you have used all your time. Please give yourself some time to relax and then come back to watch
+							more videos. <p>{!time?.availed_time ? "You can get 2 more hours visit settings" : ""}</p>
+						</TimeUpMessage>
+					)}
 					<CountDownBox>
 						<H3>Time Remaining</H3>
 						<Divider />
