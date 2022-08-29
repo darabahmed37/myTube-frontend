@@ -58,7 +58,7 @@ const items: IListItem[] = [
 export default function MainScreen() {
 	const theme = useTheme();
 	/*eslint-disable-next-line*/
-	const [open, setOpen] = useState<boolean>(screen.width > 800);
+	const [open, setOpen] = useState<boolean>(window.innerWidth > 900);
 	const [user, setUser] = useState<User | null>(null);
 	const [playlist, setPlaylist] = React.useState<VideoCardProps[]>([]);
 	const handleDrawerOpen = () => {

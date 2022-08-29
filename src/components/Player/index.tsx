@@ -54,6 +54,15 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 		);
 	}
 
+	function updateTime() {
+		if (clock !== undefined) {
+			const hours = convertIntoHours(clock);
+			setTimeAction(hours).then(() => {});
+		}
+	}
+
+	const interval = setInterval(updateTime, 120000);
+
 	useEffect(() => {
 		initialize().then(() => {
 			getTimerAction().then((data) => {
@@ -63,11 +72,8 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 	}, [initialize]);
 	useEffect(() => {
 		return () => {
-			if (clock !== undefined) {
-				console.log("clock", clock);
-				const hours = convertIntoHours(clock);
-				setTimeAction(hours).then(() => {});
-			}
+			updateTime();
+			clearInterval(interval);
 		};
 	});
 
