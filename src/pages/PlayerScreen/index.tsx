@@ -10,14 +10,11 @@ const PlayerScreen: FC = () => {
 	const playlist = useContext(DashboardContext);
 
 	return (
-
 		<Container>
 			<Player videoId={videoId as string} />
 
 			<VideoGrid playlist={playlist} />
 		</Container>
-
-
 	);
 };
 

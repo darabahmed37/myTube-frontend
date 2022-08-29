@@ -1,24 +1,31 @@
-import React, { FC, useCallback, useEffect } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { getVideoById } from "api/youtube";
 import { IYouTubeVideo } from "types/YouTube";
 import { Divider, LinearProgress, Typography } from "@mui/material";
 import YouTube from "elements/YouTube";
-import { Clock, CountDownBox, PlayerArea, PlayerContainer, TextArea, TimerTypography } from "components/Player/emotion";
+import {
+	Clock,
+	ClockDiv,
+	CountDownBox,
+	PlayerArea,
+	PlayerContainer,
+	TextArea,
+	TimerTypography,
+} from "components/Player/emotion";
 import { H3 } from "elements/Typography";
 import { CountdownRenderProps } from "react-countdown";
+import { IRunningTime, ITimer } from "types/Timer";
+import {
+	convertHoursToMilliseconds,
+	convertIntoHours,
+	getTimerAction,
+	setTimeAction,
+} from "components/Player/services";
 
 interface VideoValues {
 	embedHTML: string;
 	title: string;
 	description: string;
-}
-
-function render({ hours, minutes, seconds }: CountdownRenderProps) {
-	return (
-		<TimerTypography variant="h4">
-			{hours}:{minutes}:{seconds}
-		</TimerTypography>
-	);
 }
 
 const Player: FC<{ videoId: string }> = ({ videoId }) => {
@@ -27,7 +34,12 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 		title: "",
 		description: "",
 	});
-
+	const [time, setTime] = useState<ITimer | undefined>(undefined);
+	const [clock, setClock] = useState<IRunningTime>({
+		hours: 0,
+		minutes: 0,
+		seconds: 0,
+	});
 	const initialize = useCallback(async () => {
 		const videoTemp: IYouTubeVideo = (await getVideoById(videoId as string)).data;
 		setVideo({
@@ -37,10 +49,31 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 		});
 	}, [videoId]);
 
+	function render({ hours, minutes, seconds }: CountdownRenderProps) {
+		setClock({ hours, minutes, seconds });
+		return (
+			<TimerTypography variant="h4">
+				{hours}:{minutes}:{seconds}
+			</TimerTypography>
+		);
+	}
+
 	useEffect(() => {
 		initialize().then(() => {
+			getTimerAction().then((data) => {
+				setTime(data);
+			});
 		});
 	}, [initialize]);
+
+	useEffect(() => {
+		return () => {
+			const hours = convertIntoHours(clock);
+			setTimeAction(hours).then(() => {
+				alert("Timer saved");
+			});
+		};
+	});
 
 	return (
 		<>
@@ -57,7 +90,9 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 					<CountDownBox>
 						<H3>Time Remaining</H3>
 						<Divider />
-						<Clock date={Date.now() + 9000000000} renderer={render} />
+						<ClockDiv>
+							{time ? <Clock date={Date.now() + convertHoursToMilliseconds(time.total_time)} renderer={render} /> : ""}
+						</ClockDiv>
 					</CountDownBox>
 				</PlayerContainer>
 			) : (
