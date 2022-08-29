@@ -20,3 +20,9 @@ export function newTimer() {
 export function getPreviousTimer() {
 	return getRequest(TimerRoutes.PREVIOUS_TIMER);
 }
+
+export function increaseCurrentTime() {
+	return patchRequest(TimerRoutes.CURRENT_TIMER, {
+		availed_time: true,
+	});
+}

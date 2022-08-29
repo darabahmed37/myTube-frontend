@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FC, FormEvent, useContext, useEffect } from "react";
 import {
 	Alert,
+	AlertColor,
 	Button,
 	Checkbox,
 	CircularProgress,
@@ -18,6 +19,7 @@ import {
 	DeleteButton,
 	DeleteForm,
 	Form,
+	IncreaseTime,
 	Input,
 	Item,
 	ItemHeader,
@@ -32,10 +34,12 @@ import {
 	changePasswordAction,
 	deleteUserAction,
 	getAllPlayListsAction,
+	increaseTimeAction,
 	setUserPlaylistAction,
 } from "pages/Settings/service";
 import { IUserContext, UserContext } from "context/UserContext";
 import { initUser } from "api/profile";
+import { getTimerAction } from "components/Player/services";
 
 const Settings: FC = () => {
 	const [playlists, setPlaylists] = React.useState<IYouTubePlayListItems>();
@@ -43,7 +47,10 @@ const Settings: FC = () => {
 	const [selectedPlaylist, setSelectedPlaylist] = React.useState<string | undefined>();
 	const [buttonDisabled, setButtonDisabled] = React.useState(true);
 	const [snackbarOpen, setSnackbarOpen] = React.useState(false);
+	const [snackbarMessage, setSnackbarMessage] = React.useState("");
+	const [severity, setSeverity] = React.useState<AlertColor>("success");
 	const [deleteButtonDisabled, setDeleteButtonDisabled] = React.useState(true);
+	const [increaseTimeDisabled, setSetIncreaseTimeDisabled] = React.useState(true);
 	const [passwordForm, setPasswordForm] = React.useState<{
 		password: string;
 		passwordConfirm: string;
@@ -89,6 +96,7 @@ const Settings: FC = () => {
 				passwordConfirm: "",
 			});
 			setSnackbarOpen(true);
+			setSnackbarMessage("Password changed");
 		});
 	}
 
@@ -98,12 +106,31 @@ const Settings: FC = () => {
 				setPlaylists(data);
 				setSelectedPlaylist(user?.playlist);
 				setPlaylistDisabled(false);
+				getTimerAction().then((data) => {
+					setSetIncreaseTimeDisabled(data.availed_time);
+				});
+
+
 			});
 		}
 	}, [user]);
 
 	function closeSnackbar() {
 		setSnackbarOpen(false);
+		setSnackbarMessage("");
+	}
+
+	function increaseTimeOnClick() {
+		increaseTimeAction()
+			.then(() => {
+				setSnackbarOpen(true);
+				setSnackbarMessage("Time increased");
+			})
+			.catch(() => {
+				setSnackbarOpen(true);
+				setSnackbarMessage("Time not increased");
+				setSeverity("error");
+			});
 	}
 
 	return (
@@ -205,6 +232,18 @@ const Settings: FC = () => {
 						</DeleteButton>
 					</DeleteForm>
 				</Item>
+
+				<Item>
+					<ItemHeader>
+						<H3>Add 2 more hours</H3>
+						<Body1>
+							<span>Warning!</span> Dear user you are about to add 2 more hours to your account
+						</Body1>
+						<IncreaseTime disabled={increaseTimeDisabled} onClick={increaseTimeOnClick}>Yes! I want to waste 2 more
+							hours</IncreaseTime>
+						{increaseTimeDisabled ? <Body1>You can't increase time</Body1> : ""}
+					</ItemHeader>
+				</Item>
 			</SettingItems>
 			<Snackbar
 				open={snackbarOpen}
@@ -216,8 +255,8 @@ const Settings: FC = () => {
 					horizontal: "right",
 				}}
 			>
-				<Alert severity="success" variant="filled">
-					Password Changed
+				<Alert severity={severity} variant="filled">
+					{snackbarMessage}
 				</Alert>
 			</Snackbar>
 		</SettingsContainer>

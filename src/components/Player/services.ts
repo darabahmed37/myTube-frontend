@@ -10,12 +10,10 @@ export async function getTimerAction() {
 	} catch (e) {
 		// @ts-ignore
 		response = e.response;
-		if (response.status === 404) {
-			return (await newTimer()).data as ITimer;
-		}
+
+		return (await newTimer()).data as ITimer;
 	}
 }
-
 
 export async function setTimeAction(time: number) {
 	try {
@@ -24,7 +22,6 @@ export async function setTimeAction(time: number) {
 		console.error(e);
 	}
 }
-
 
 export function convertHoursToMilliseconds(hours: number) {
 	return hours * 60 * 60 * 1000;
