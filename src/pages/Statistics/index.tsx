@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from "recharts";
+import { CartesianGrid, Line, LineChart, ReferenceLine, Tooltip, XAxis, YAxis } from "recharts";
 import { ITimer } from "types/Timer";
 import { convertToTime, getPreviousTimers } from "pages/Statistics/service";
 import { StatH1, TimeChart } from "pages/Statistics/emotion";
@@ -21,9 +21,8 @@ const Statistics: FC = () => {
 					<CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
 					<XAxis dataKey="date" />
 					<YAxis domain={[0, 4]} tickFormatter={(value) => convertToTime(value)} tickMargin={5} />
-					<Tooltip
-						formatter={(...args: any) => convertToTime(args[0])}
-					/>
+					<Tooltip formatter={(...args: any) => convertToTime(args[0])} />
+					<ReferenceLine y={2}  stroke="green"  />
 				</LineChart>
 			</TimeChart>
 		</>

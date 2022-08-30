@@ -22,7 +22,12 @@ import {
 	getTimerAction,
 	setTimeAction,
 } from "components/Player/services";
-import { DoNotDisturb } from "@mui/icons-material";
+import {
+	DoNotDisturb,
+	SentimentDissatisfied,
+	SentimentVeryDissatisfied,
+	SentimentVeryDissatisfiedOutlined,
+} from "@mui/icons-material";
 
 interface VideoValues {
 	embedHTML: string;
@@ -101,7 +106,7 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 						</PlayerArea>
 					) : (
 						<TimeUpMessage>
-							<DoNotDisturb />
+							<SentimentVeryDissatisfiedOutlined />
 							Dear User you have used time quota for today. Please give yourself some time to relax and then come back to watch
 							more videos. <p>{!time?.availed_time ? "You can get 2 more hours... visit settings" : ""}</p>
 						</TimeUpMessage>
