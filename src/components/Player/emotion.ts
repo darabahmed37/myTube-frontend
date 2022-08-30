@@ -81,16 +81,22 @@ export const ClockDiv = styled("div")`
   }
 `;
 
-
-export const TimeUpMessage = styled(Typography)`
-  margin-top: 2em;
-	max-width: 100%;
+export const TimeUpMessage = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  max-width: 100%;
   margin-right: 2em;
   color: ${(props) => props.theme.palette.error.main};
-	font-size: 2rem;
-	p{
-		color: ${(props) => props.theme.palette.warning.main};
+  font-size: 1.5rem;
+
+  p {
+    color: ${(props) => props.theme.palette.warning.main};
     font-weight: 600;
-	}
-	
+  }
+
+  & .MuiSvgIcon-root {
+    font-size: 12rem;
+  }
 `;
