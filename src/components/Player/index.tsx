@@ -22,12 +22,7 @@ import {
 	getTimerAction,
 	setTimeAction,
 } from "components/Player/services";
-import {
-	DoNotDisturb,
-	SentimentDissatisfied,
-	SentimentVeryDissatisfied,
-	SentimentVeryDissatisfiedOutlined,
-} from "@mui/icons-material";
+import { SentimentVeryDissatisfiedOutlined } from "@mui/icons-material";
 
 interface VideoValues {
 	embedHTML: string;
@@ -95,20 +90,24 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 							<Typography variant={"h5"} fontWeight={"600"}>
 								{video?.title}
 							</Typography>
-							<TextArea
-								contentEditable={false}
-								value={
-									video?.description.length > 500 ? video.description.substring(0, 500) + "..." : video.description
-								}
-								rows={10}
-								readOnly
-							/>
+							{video.description.length > 200 ? (
+								<TextArea
+									contentEditable={false}
+									value={
+										video?.description.length > 500 ? video.description.substring(0, 500) + "..." : video.description
+									}
+									rows={10}
+									readOnly
+								/>
+							) : (
+								""
+							)}
 						</PlayerArea>
 					) : (
 						<TimeUpMessage>
 							<SentimentVeryDissatisfiedOutlined />
-							Dear User you have used time quota for today. Please give yourself some time to relax and then come back to watch
-							more videos. <p>{!time?.availed_time ? "You can get 2 more hours... visit settings" : ""}</p>
+							Dear User you have used time quota for today. Please give yourself some time to relax and then come back
+							to watch more videos. <p>{!time?.availed_time ? "You can get 2 more hours... visit settings" : ""}</p>
 						</TimeUpMessage>
 					)}
 					<CountDownBox>
