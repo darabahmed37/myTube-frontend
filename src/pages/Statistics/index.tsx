@@ -14,7 +14,7 @@ import {
 } from "recharts";
 import { ITimer } from "types/Timer";
 import { convertToTime, getAllTagsAction, getPreviousTimersAction } from "pages/Statistics/service";
-import { Graph, StatH1, TimeChart } from "pages/Statistics/emotion";
+import { Graph, StatH1, ChatsCom } from "pages/Statistics/emotion";
 import { H3 } from "elements/Typography";
 import { ITags } from "types/Tags";
 
@@ -53,7 +53,7 @@ const Statistics: FC = () => {
 			{timeData.length ? (
 				<Graph>
 					<H3>Watch Time</H3>
-					<TimeChart>
+					<ChatsCom>
 						<LineChart width={600} height={300} data={timeData}>
 							<Line type="monotone" dataKey="total_time" stroke="#8884d8" />
 							<CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
@@ -62,7 +62,7 @@ const Statistics: FC = () => {
 							<Tooltip formatter={(...args: any) => convertToTime(args[0])} />
 							<ReferenceLine y={2} stroke="green" />
 						</LineChart>
-					</TimeChart>
+					</ChatsCom>
 				</Graph>
 			) : (
 				""
@@ -70,7 +70,9 @@ const Statistics: FC = () => {
 			{tagsData.length ? (
 				<Graph>
 					<H3>User Tags</H3>
-					<TimeChart>
+					<ChatsCom sx={{
+						margin:"auto"
+					}}>
 						<ResponsiveContainer height={300} width={"100%"}>
 							<PieChart width={500} height={700}>
 								<Pie
@@ -91,7 +93,7 @@ const Statistics: FC = () => {
 								<Tooltip />
 							</PieChart>
 						</ResponsiveContainer>
-					</TimeChart>
+					</ChatsCom>
 				</Graph>
 			) : (
 				""

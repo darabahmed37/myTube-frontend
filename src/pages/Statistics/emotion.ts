@@ -1,7 +1,7 @@
 import { Box, styled } from "@mui/material";
 import { H1, H3 } from "elements/Typography";
 
-export const TimeChart = styled(Box)`
+export const ChatsCom = styled(Box)`
   margin-top: 4em;
   display: flex;
   width: 100%;
