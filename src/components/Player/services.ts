@@ -1,6 +1,8 @@
 import { getTimer, newTimer, setTimer } from "api/timer";
 import { AxiosResponse } from "axios";
 import { IRunningTime, ITimer } from "types/Timer";
+import { IYouTubeVideo } from "types/YouTube";
+import { getVideoById } from "api/youtube";
 
 export async function getTimerAction() {
 	let response: AxiosResponse;
@@ -31,4 +33,14 @@ export function convertHoursToMilliseconds(hours: number) {
 export function convertIntoHours(time: IRunningTime) {
 	const { hours, minutes, seconds } = time;
 	return hours + minutes / 60 + seconds / 3600;
+}
+
+
+export async function getVideoByIdAction(id: string) {
+	const videoTemp: IYouTubeVideo = (await getVideoById(id as string)).data;
+	return {
+		embedHTML: videoTemp.items[0].player.embedHtml,
+		title: videoTemp.items[0].snippet.title,
+		description: videoTemp.items[0].snippet.description,
+	};
 }

@@ -1,12 +1,18 @@
 import { Box, styled } from "@mui/material";
-import { H1 } from "elements/Typography";
+import { H1, H3 } from "elements/Typography";
 
 export const TimeChart = styled(Box)`
-  margin-top: 4em;
+	margin-top: 4em;
 `;
 
-
 export const StatH1 = styled(H1)`
-  margin-left: 2em;
-  margin-top: 2em;
+	margin-left: 2em;
+	margin-top: 2em;
+`;
+
+export const Graph = styled(Box)`
+	${H3} {
+		margin-top: 2em;
+		margin-left: 3.5em;
+	}
 `;

@@ -9,5 +9,4 @@ export interface IRunningTime {
 	hours: number;
 	minutes: number;
 	seconds: number;
-
 }

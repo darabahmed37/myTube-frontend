@@ -1,6 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from "react";
-import { getVideoById } from "api/youtube";
-import { IYouTubeVideo } from "types/YouTube";
+import React, { FC, useEffect, useState } from "react";
 import { Divider, LinearProgress, Typography } from "@mui/material";
 import YouTube from "elements/YouTube";
 import {
@@ -11,7 +9,8 @@ import {
 	PlayerContainer,
 	TextArea,
 	TimerTypography,
-	TimeUpMessage, VideoInfo,
+	TimeUpMessage,
+	VideoInfo,
 } from "components/Player/emotion";
 import { H3 } from "elements/Typography";
 import { CountdownRenderProps } from "react-countdown";
@@ -20,6 +19,7 @@ import {
 	convertHoursToMilliseconds,
 	convertIntoHours,
 	getTimerAction,
+	getVideoByIdAction,
 	setTimeAction,
 } from "components/Player/services";
 import { SentimentVeryDissatisfiedOutlined } from "@mui/icons-material";
@@ -37,14 +37,7 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 		description: "",
 	});
 	const [time, setTime] = useState<ITimer | undefined>(undefined);
-	const initialize = useCallback(async () => {
-		const videoTemp: IYouTubeVideo = (await getVideoById(videoId as string)).data;
-		setVideo({
-			embedHTML: videoTemp.items[0].player.embedHtml,
-			title: videoTemp.items[0].snippet.title,
-			description: videoTemp.items[0].snippet.description,
-		});
-	}, [videoId]);
+
 	let clock: IRunningTime | undefined;
 
 	function render({ hours, minutes, seconds }: CountdownRenderProps) {
@@ -59,20 +52,18 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 	function updateTime() {
 		if (clock !== undefined) {
 			const hours = convertIntoHours(clock);
-			setTimeAction(hours).then(() => {
-			});
+			setTimeAction(hours).then(() => {});
 		}
 	}
 
 	const interval = setInterval(updateTime, 120000);
 
 	useEffect(() => {
-		initialize().then(() => {
-			getTimerAction().then((data) => {
-				setTime(data);
-			});
+		Promise.all([getVideoByIdAction(videoId), getTimerAction()]).then(([video, time]) => {
+			setVideo(video);
+			setTime(time);
 		});
-	}, [initialize]);
+	}, [videoId]);
 	useEffect(() => {
 		return () => {
 			updateTime();

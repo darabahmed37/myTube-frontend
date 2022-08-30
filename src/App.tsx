@@ -7,7 +7,6 @@ import { createRoutes, Routes as RouteList } from "routes";
 const App: FC = () => {
 	return (
 		<ThemeProvider theme={theme}>
-
 			<BrowserRouter>
 				<Routes>{createRoutes(RouteList)}</Routes>
 			</BrowserRouter>

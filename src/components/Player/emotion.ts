@@ -4,36 +4,36 @@ import CountdownReact from "react-countdown";
 import styled from "@mui/material/styles/styled";
 
 export const PlayerArea = styled(Paper)`
-  padding: 1em;
-  margin-bottom: 1em;
-  display: flex;
-  flex-direction: column;
-  gap: 2em;
-  flex: 0.72;
-  max-width: 80%;
+	padding: 1em;
+	margin-bottom: 1em;
+	display: flex;
+	flex-direction: column;
+	gap: 2em;
+	flex: 0.72;
+	max-width: 80%;
 
-  ${({ theme }) => theme.breakpoints.down("md")} {
-    min-width: 100%;
-    box-shadow: none;
-    background: transparent;
-    padding: 0;
-    margin-bottom: 0;
+	${({ theme }) => theme.breakpoints.down("md")} {
+		min-width: 100%;
+		box-shadow: none;
+		background: transparent;
+		padding: 0;
+		margin-bottom: 0;
 
-    & > h5 {
-      margin-left: 1em;
-    }
-  }
+		& > h5 {
+			margin-left: 1em;
+		}
+	}
 `;
 
 export const TextArea = styled(Typography)`
-  outline: none;
-  border: none;
-  background: transparent;
-  resize: none;
+	outline: none;
+	border: none;
+	background: transparent;
+	resize: none;
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
+	&::-webkit-scrollbar {
+		display: none;
+	}
 `.withComponent("textarea");
 
 TextArea.defaultProps = {
@@ -42,80 +42,80 @@ TextArea.defaultProps = {
 
 export const Clock = styled(CountdownReact)``;
 export const CountDownBox = styled(Paper)`
-  height: 15em;
-  flex: 0.2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 1em;
-  margin-top: 4em !important;
-  max-width: 16em;
-  transform: translateX(-1.6em);
+	height: 15em;
+	flex: 0.2;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 1em;
+	margin-top: 4em !important;
+	max-width: 16em;
+	transform: translateX(-1.6em);
 
-  ${H3} {
-    padding: 1.2em;
-  }
+	${H3} {
+		padding: 1.2em;
+	}
 
-  & .MuiDivider-root {
-    height: 1px;
-    width: 100%;
-  }
+	& .MuiDivider-root {
+		height: 1px;
+		width: 100%;
+	}
 `;
 
 export const PlayerContainer = styled(Box)`
-  display: flex;
-  justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 
-  ${(props) => props.theme.breakpoints.down("md")} {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+	${(props) => props.theme.breakpoints.down("md")} {
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
 
-  width: 100%;
+	width: 100%;
 `;
 
 export const TimerTypography = styled(Typography)`
-  color: ${(props) => props.theme.palette.primary.main};
+	color: ${(props) => props.theme.palette.primary.main};
 `;
 
 export const ClockDiv = styled("div")`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: translateY(-1em);
-  min-width: 15em;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transform: translateY(-1em);
+	min-width: 15em;
 
-  ${(props) => props.theme.breakpoints.down("md")} {
-    height: 10em;
-  }
+	${(props) => props.theme.breakpoints.down("md")} {
+		height: 10em;
+	}
 `;
 
 export const TimeUpMessage = styled(Box)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  max-width: 100%;
-  margin-right: 2em;
-  color: ${(props) => props.theme.palette.error.main};
-  font-size: 1.5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	max-width: 100%;
+	margin-right: 2em;
+	color: ${(props) => props.theme.palette.error.main};
+	font-size: 1.5rem;
 
-  p {
-    color: ${(props) => props.theme.palette.warning.main};
-    font-weight: 600;
-  }
+	p {
+		color: ${(props) => props.theme.palette.warning.main};
+		font-weight: 600;
+	}
 
-  & .MuiSvgIcon-root {
-    font-size: 12rem;
-  }
+	& .MuiSvgIcon-root {
+		font-size: 12rem;
+	}
 `;
 
 export const VideoInfo = styled(Box)`
-  padding: 1em;
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
+	padding: 1em;
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
 `;

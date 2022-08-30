@@ -6,12 +6,10 @@ export function getTimer() {
 }
 
 export function setTimer(updatedTimer: number) {
-
 	return patchRequest(TimerRoutes.CURRENT_TIMER, {
 		total_time: updatedTimer,
 	});
 }
-
 
 export function newTimer() {
 	return postRequest(TimerRoutes.NEW_TIMER);

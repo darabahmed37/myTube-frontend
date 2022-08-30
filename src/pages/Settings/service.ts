@@ -3,7 +3,6 @@ import { getAllPlayLists, setUserPlaylist } from "api/youtube";
 import { IYouTubePlayListItems } from "types/YouTube";
 import { increaseCurrentTime } from "api/timer";
 
-
 export async function changePasswordAction(password: string): Promise<string> {
 	return (await changePassword(password)).data.message;
 }
@@ -34,7 +33,6 @@ export async function deleteUserAction(event: any) {
 		console.error(e);
 	}
 }
-
 
 export async function increaseTimeAction() {
 	try {
