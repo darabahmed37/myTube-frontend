@@ -11,7 +11,7 @@ import {
 	PlayerContainer,
 	TextArea,
 	TimerTypography,
-	TimeUpMessage,
+	TimeUpMessage, VideoInfo,
 } from "components/Player/emotion";
 import { H3 } from "elements/Typography";
 import { CountdownRenderProps } from "react-countdown";
@@ -59,7 +59,8 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 	function updateTime() {
 		if (clock !== undefined) {
 			const hours = convertIntoHours(clock);
-			setTimeAction(hours).then(() => {});
+			setTimeAction(hours).then(() => {
+			});
 		}
 	}
 
@@ -86,22 +87,23 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 					{time?.total_time ? (
 						<PlayerArea>
 							<YouTube embedHtml={video?.embedHTML} title={video?.title} />
-
-							<Typography variant={"h5"} fontWeight={"600"}>
-								{video?.title}
-							</Typography>
-							{video.description.length > 200 ? (
-								<TextArea
-									contentEditable={false}
-									value={
-										video?.description.length > 500 ? video.description.substring(0, 500) + "..." : video.description
-									}
-									rows={10}
-									readOnly
-								/>
-							) : (
-								""
-							)}
+							<VideoInfo>
+								<Typography variant={"h5"} fontWeight={"600"}>
+									{video?.title}
+								</Typography>
+								{video.description.length > 200 ? (
+									<TextArea
+										contentEditable={false}
+										value={
+											video?.description.length > 500 ? video.description.substring(0, 500) + "..." : video.description
+										}
+										rows={10}
+										readOnly
+									/>
+								) : (
+									""
+								)}
+							</VideoInfo>
 						</PlayerArea>
 					) : (
 						<TimeUpMessage>
