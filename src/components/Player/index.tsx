@@ -42,6 +42,9 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 
 	function render({ hours, minutes, seconds }: CountdownRenderProps) {
 		clock = { hours, minutes, seconds };
+		if (convertIntoHours(clock) === 0) {
+			updateTime();
+		}
 		return (
 			<TimerTypography variant="h4">
 				{hours}:{minutes}:{seconds}
@@ -52,7 +55,9 @@ const Player: FC<{ videoId: string }> = ({ videoId }) => {
 	function updateTime() {
 		if (clock !== undefined) {
 			const hours = convertIntoHours(clock);
-			setTimeAction(hours).then(() => {});
+			setTimeAction(hours).then(() => {
+
+			});
 		}
 	}
 
