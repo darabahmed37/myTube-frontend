@@ -16,7 +16,7 @@ const Clock: FC<IClockProps> = ({time,render}) => {
 				<H3>Time Remaining</H3>
 				<Divider />
 				<ClockDiv>
-					{time ? (
+					{time&&time.total_time ? (
 						<RClock date={Date.now() + convertHoursToMilliseconds(time.total_time)} renderer={render} />
 					) : (
 						""

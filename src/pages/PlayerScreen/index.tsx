@@ -53,8 +53,9 @@ const PlayerScreen: FC = () => {
 	function updateTime() {
 		if (clock !== undefined) {
 			const hours = convertIntoHours(clock);
-			setTimeAction(hours).then(() => {
-			});
+
+			setTimeAction(hours).then(() => {});
+			setTime(undefined);
 		}
 	}
 
@@ -107,7 +108,6 @@ const PlayerScreen: FC = () => {
 								Dear User you have used time quota for today. Please give yourself some time to relax and then come back
 								to watch more videos. <p>{!time?.availed_time ? "You can get 2 more hours... visit settings" : ""}</p>
 							</TimeUpMessage>
-
 						)}
 						<Clock time={time} render={render} />
 					</PlayerContainer>
