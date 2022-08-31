@@ -4,6 +4,7 @@
 
 >example REACT_APP_BASE_BACKEND_URL=http://localhost:8000
 
-
+Run
+> npm install
 
 *You are Good to Go*

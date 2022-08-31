@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useRef } from "react";
 import {
 	CartesianGrid,
 	Cell,
@@ -17,15 +17,12 @@ import { convertToTime, getAllTagsAction, getPreviousTimersAction } from "pages/
 import { ChatsCom, Graph, PieSxProps, StatH1, StatPage } from "pages/Statistics/emotion";
 import { H3 } from "elements/Typography";
 import { ITags } from "types/Tags";
-import { useMediaQuery, useTheme } from "@mui/material";
 
 const Statistics: FC = () => {
-	const theme = useTheme();
-	const md = useMediaQuery(theme.breakpoints.down("md"));
 	const [timeData, setTimeData] = React.useState<ITimer[]>([]);
 	const [tagsData, setTagsData] = React.useState<ITags[]>([]);
-	const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#ab47bc", "#f73378", "#3f51b5"];
-
+	const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#ab47bc", "#3f51b5"];
+	const total = useRef<number>(0);
 	const RADIAN = Math.PI / 180;
 	const renderCustomizedLabel = (props: any) => {
 		const { cx, cy, midAngle, innerRadius, outerRadius, name } = props;
@@ -41,12 +38,13 @@ const Statistics: FC = () => {
 	};
 
 	useEffect(() => {
-		getPreviousTimersAction().then((output) => {
-			setTimeData(output);
-		});
-		getAllTagsAction().then((output) => {
-			setTagsData(output);
-			console.log(output);
+		Promise.all([getPreviousTimersAction(), getAllTagsAction()]).then(([timeData, tagsData]) => {
+			setTimeData(timeData);
+			setTagsData(tagsData);
+			total.current = tagsData.reduce((acc, curr) => {
+				return acc + curr.count;
+			}, 0);
+			total.current/=100;
 		});
 	}, []);
 
@@ -96,7 +94,11 @@ const Statistics: FC = () => {
 											<Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
 										))}
 									</Pie>
-									<Tooltip />
+									<Tooltip
+										formatter={(value:number) => {
+											return `${Math.round(value / total.current)}%`;
+										}}
+									/>
 								</PieChart>
 							</ResponsiveContainer>
 						</ChatsCom>

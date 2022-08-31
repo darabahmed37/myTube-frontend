@@ -12,7 +12,7 @@ import {
 	TimeUpMessage,
 	VideoInfo,
 } from "pages/PlayerScreen/emotion";
-import YouTube from "elements/YouTube";
+import YouTube from "components/YouTube";
 import { LinearProgress, Typography } from "@mui/material";
 import { SentimentVeryDissatisfiedOutlined } from "@mui/icons-material";
 import { getTimerAction, getVideoByIdAction, setTimeAction } from "pages/PlayerScreen/services";
