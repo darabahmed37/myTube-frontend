@@ -42,6 +42,7 @@ const PlayerScreen: FC = () => {
 		clock = { hours, minutes, seconds };
 		if (convertIntoHours(clock) === 0) {
 			updateTime();
+			setTime(undefined)
 		}
 		return (
 			<TimerTypography variant="h4">
@@ -54,8 +55,9 @@ const PlayerScreen: FC = () => {
 		if (clock !== undefined) {
 			const hours = convertIntoHours(clock);
 
-			setTimeAction(hours).then(() => {});
-			setTime(undefined);
+			setTimeAction(hours).then(() => {
+			});
+
 		}
 	}
 
