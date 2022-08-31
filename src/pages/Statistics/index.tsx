@@ -70,7 +70,6 @@ const Statistics: FC = () => {
 							</ResponsiveContainer>
 						</ChatsCom>
 					</Graph>
-
 				) : (
 					""
 				)}
@@ -78,7 +77,7 @@ const Statistics: FC = () => {
 			<div>
 				{tagsData.length ? (
 					<Graph>
-						<H3 >Top Watched</H3>
+						<H3>Top Watched</H3>
 						<ChatsCom sx={PieSxProps}>
 							<ResponsiveContainer height={"100%"} width={"100%"}>
 								<PieChart>
@@ -104,7 +103,8 @@ const Statistics: FC = () => {
 					</Graph>
 				) : (
 					""
-				)}</div>
+				)}
+			</div>
 		</StatPage>
 	);
 };

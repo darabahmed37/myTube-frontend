@@ -81,6 +81,7 @@ export const DeleteForm = styled(FormGroup)`
 
 export const IncreaseTime = styled(Button)`
 	max-width: 24em;
+  margin-bottom: 4em;
 `;
 IncreaseTime.defaultProps = {
 	color: "warning",

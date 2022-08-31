@@ -39,7 +39,7 @@ import {
 } from "pages/Settings/service";
 import { IUserContext, UserContext } from "context/UserContext";
 import { initUser } from "api/profile";
-import { getTimerAction } from "components/Player/services";
+import { getTimerAction } from "pages/PlayerScreen/services";
 
 const Settings: FC = () => {
 	const [playlists, setPlaylists] = React.useState<IYouTubePlayListItems>();
