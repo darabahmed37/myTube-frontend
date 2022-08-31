@@ -5,21 +5,26 @@ import { ITimer } from "types/Timer";
 import RClock, { CountdownRendererFn } from "react-countdown";
 import { convertHoursToMilliseconds } from "utils";
 import { ClockDiv, CountDownBox } from "components/Clock/emotion";
-interface IClockProps{
-	time:ITimer|undefined
+import { TimerTypography } from "pages/PlayerScreen/emotion";
+
+interface IClockProps {
+	time: ITimer | undefined;
 	render: CountdownRendererFn;
 }
-const Clock: FC<IClockProps> = ({time,render}) => {
+
+const Clock: FC<IClockProps> = ({ time, render }) => {
 	return (
 		<>
 			<CountDownBox>
 				<H3>Time Remaining</H3>
 				<Divider />
 				<ClockDiv>
-					{time&&time.total_time ? (
+					{time && time.total_time ? (
 						<RClock date={Date.now() + convertHoursToMilliseconds(time.total_time)} renderer={render} />
 					) : (
-						""
+						<TimerTypography variant="h4">
+							00:00:00
+						</TimerTypography>
 					)}
 				</ClockDiv>
 			</CountDownBox>
