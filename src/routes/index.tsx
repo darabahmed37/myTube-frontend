@@ -9,6 +9,7 @@ import MainScreen from "layouts/MainScreen";
 import { PrivateRoutes, PublicRoutes } from "routes/AuthRoutes";
 import PlayerScreen from "pages/PlayerScreen";
 import Settings from "pages/Settings";
+import Statistics from "pages/Statistics";
 
 export interface IRoute {
 	path: string;
@@ -24,6 +25,7 @@ export enum ERoutes {
 	DASHBOARD = "/",
 	REDIRECTING = "/redirecting",
 	SETTINGS = "/settings",
+	STATISTICS = "/statistics",
 }
 
 export const Routes: IRoute[] = [
@@ -60,6 +62,10 @@ export const Routes: IRoute[] = [
 			{
 				path: "settings",
 				element: <Settings />,
+			},
+			{
+				path: "statistics",
+				element: <Statistics />,
 			},
 		],
 	},

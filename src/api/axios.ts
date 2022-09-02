@@ -107,7 +107,7 @@ export const deleteRequest = (route: string, data = {}, instance = axiosApiInsta
 export const putRequest = (route: string, data = {}, instance = axiosApiInstance) => {
 	const backendRoute = route.includes(BASE_BACKEND_URL) ? route : `${BASE_BACKEND_URL}${route}`;
 	return instance
-		.post(backendRoute, data)
+		.put(backendRoute, data)
 		.then((response) => {
 			return response;
 		})

@@ -15,7 +15,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
-import { SvgIconTypeMap } from "@mui/material";
+import { SvgIconTypeMap, useMediaQuery } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Outlet, useNavigate } from "react-router-dom";
 import { SettingsOutlined, StackedLineChart } from "@mui/icons-material";
@@ -57,8 +57,9 @@ const items: IListItem[] = [
 
 export default function MainScreen() {
 	const theme = useTheme();
+	const md = useMediaQuery(theme.breakpoints.down("md"));
 	/*eslint-disable-next-line*/
-	const [open, setOpen] = useState<boolean>(screen.width > 800);
+	const [open, setOpen] = useState<boolean>(window.innerWidth > 900);
 	const [user, setUser] = useState<User | null>(null);
 	const [playlist, setPlaylist] = React.useState<VideoCardProps[]>([]);
 	const handleDrawerOpen = () => {
@@ -125,6 +126,7 @@ export default function MainScreen() {
 								key={index}
 								onClick={() => {
 									navigate(listItem.path);
+									setOpen(!md);
 								}}
 							>
 								<ListItemButton>

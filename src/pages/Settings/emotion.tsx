@@ -78,3 +78,12 @@ DeleteButton.defaultProps = {
 export const DeleteForm = styled(FormGroup)`
 	user-select: none;
 `;
+
+export const IncreaseTime = styled(Button)`
+	max-width: 24em;
+  margin-bottom: 4em;
+`;
+IncreaseTime.defaultProps = {
+	color: "warning",
+	variant: "contained",
+};

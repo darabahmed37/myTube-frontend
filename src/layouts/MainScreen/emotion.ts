@@ -23,6 +23,12 @@ export const Main = styled("main", {
 		}),
 		marginLeft: 0,
 	}),
+
+	[theme.breakpoints.down("md")]: {
+		padding: 0,
+	},
+
+	maxWidth: "100vw",
 }));
 
 export interface AppBarProps extends MuiAppBarProps {
@@ -65,4 +71,6 @@ export const Profile = styled("div")`
 
 export const MainBox = styled(Box)`
 	display: flex;
+	max-width: 100vw;
+	overflow-x: hidden;
 `;
