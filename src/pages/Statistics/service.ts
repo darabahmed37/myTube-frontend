@@ -8,8 +8,11 @@ export async function getPreviousTimersAction() {
 	const output: ITimer[] = [];
 	response.forEach((timer) => {
 		const date: string = new Date(timer.date).toLocaleDateString();
-		const total_time: number = 4 - timer.total_time;
+		let total_time: number = timer.total_time;
 		const availed_time: boolean = timer.availed_time;
+		if (availed_time) {
+			total_time = total_time + 2;
+		}
 		output.push({ date, total_time, availed_time });
 	});
 
